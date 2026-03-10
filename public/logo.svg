@@ -1,0 +1,36 @@
+<svg width="1600" height="240" viewBox="0 0 1600 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer circle - dark blue -->
+  <circle cx="120" cy="120" r="108" stroke="#1E5A9B" stroke-width="10" fill="none"/>
+  
+  <!-- Inner arc - light blue (top right quarter) -->
+  <path d="M 120 12 A 108 108 0 0 1 228 120" stroke="#5BA8E5" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- G letter - dark blue -->
+  <path d="M 60 85 Q 50 85 50 95 L 50 145 Q 50 155 60 155 L 85 155 Q 85 155 85 145 L 85 115 L 70 115" 
+        stroke="#1E5A9B" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- S letter - light blue -->
+  <path d="M 135 85 Q 155 85 155 95 Q 155 105 135 105 Q 115 105 115 120 Q 115 130 135 130 Q 155 130 155 140 Q 155 150 135 150" 
+        stroke="#5BA8E5" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- A letter -->
+  <path d="M 330 180 L 380 60 L 430 180 M 355 135 L 405 135" stroke="#1E5A9B" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- C letter -->
+  <path d="M 530 80 Q 480 80 480 120 Q 480 160 530 160 Q 545 160 555 155" stroke="#5BA8E5" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- A letter -->
+  <path d="M 600 180 L 650 60 L 700 180 M 625 135 L 675 135" stroke="#1E5A9B" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- D letter -->
+  <path d="M 750 80 L 750 160 Q 750 160 780 160 Q 820 160 820 120 Q 820 80 780 80 Q 750 80 750 80" stroke="#5BA8E5" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- E letter -->
+  <path d="M 920 80 L 870 80 L 870 120 L 910 120 M 870 160 L 920 160 M 870 80 L 870 160" stroke="#1E5A9B" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- M letter -->
+  <path d="M 970 180 L 970 80 L 1020 140 L 1070 80 L 1070 180" stroke="#5BA8E5" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Y letter -->
+  <path d="M 1120 80 L 1170 130 L 1170 180 M 1220 80 L 1170 130" stroke="#1E5A9B" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,49 @@
+{
+  "hero": {
+    "badge": "Часть команды Alliance · 14-кратные чемпионы мира",
+    "title1": "ЕДИНОБОРСТВА",
+    "title2": "ДЛЯ ДЕТЕЙ",
+    "title3": "И ВЗРОСЛЫХ",
+    "subtitle": "Академия единоборств в Перми, где спорт помогает развивать не только тело, но и личность. Стань сильнее, увереннее и счастливее.",
+    "ctaPrimary": "Записаться на бесплатное занятие ",
+    "ctaSecondary": "Наши направления",
+    "stats": [
+      {
+        "target": 8,
+        "suffix": "",
+        "label": "Тренеров",
+        "value": 8
+      },
+      {
+        "target": 8,
+        "suffix": "",
+        "label": "Чёрных поясов BJJ",
+        "value": 8
+      },
+      {
+        "target": 88,
+        "suffix": "+",
+        "label": "Отзывов 5★"
+      },
+      {
+        "target": 500,
+        "suffix": "+",
+        "label": "Учеников",
+        "value": 513
+      }
+    ],
+    "titleLine1": "",
+    "titleLine2": "",
+    "titleLine3": ""
+  },
+  "contacts": {
+    "address": "г. Пермь, ул. Аркадия Гайдара 8б",
+    "phone": "8 (995) 865-42-44",
+    "phoneLink": "tel:+79958654244",
+    "whatsapp": "https://wa.me/79958636285",
+    "vk": "https://vk.com/bjjperm59",
+    "yandexMaps": "https://yandex.ru/maps/org/gsacademy/13932890682/",
+    "yandexReviews": "https://yandex.ru/maps/org/gsacademy/13932890682/reviews/",
+    "reviewsCount": "88"
+  }
+}
