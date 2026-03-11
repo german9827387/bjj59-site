@@ -45,7 +45,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden xl:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-5 ml-8">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
@@ -61,10 +61,10 @@ export default function Navbar() {
           </div>
 
           {/* CTA + Phone */}
-          <div className="hidden xl:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4 ml-6">
             <a
               href="tel:+79124906455"
-              className="flex items-center gap-2 text-sm text-gray-300 hover:text-[#3B82F6] transition-colors"
+              className="flex items-center gap-2 text-sm text-gray-300 hover:text-[#3B82F6] transition-colors whitespace-nowrap"
             >
               <Phone size={16} />
               <span>8 (995) 865-42-44</span>
