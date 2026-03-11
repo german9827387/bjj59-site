@@ -66,7 +66,7 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
           ))}
         </ul>
         <a
-          href="https://wa.me/79958636285?text=Здравствуйте! Хочу записаться на тренировку в GSAcademy"
+          href="https://t.me/+79958636285"
           target="_blank"
           rel="noopener noreferrer"
           className="block text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-xs font-bold py-2 rounded-xl hover:bg-blue-500/30 transition-all"

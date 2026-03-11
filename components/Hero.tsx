@@ -115,7 +115,7 @@ export default function Hero() {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a
-            href="https://wa.me/79958636285?text=Здравствуйте! Хочу записаться на БЕСПЛАТНОЕ пробное занятие в GSAcademy"
+            href="https://t.me/+79958636285"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-full text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-blue-500/30"

@@ -77,14 +77,14 @@ export default function FirstTraining() {
               <span className="text-white font-semibold">Экипировка на первый урок в подарок!</span>
             </motion.p>
             <motion.a
-              href="https://wa.me/79958636285?text=Здравствуйте! Хочу записаться на бесплатное пробное занятие в GSAcademy"
+              href="https://t.me/+79958636285"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="inline-block bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-2xl hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/25 text-base"
+              className="inline-block bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 hover:scale-105 hover:from-blue-500 hover:to-cyan-400 active:scale-95 text-base"
             >
               Записаться бесплатно
             </motion.a>

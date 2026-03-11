@@ -8,9 +8,10 @@ const navLinks = [
   { label: "Главная", href: "/" },
   { label: "Направления", href: "/#directions" },
   { label: "Тренеры", href: "/#trainers" },
-  { label: "Расписание", href: "/#schedule" },
+  { label: "Расписание", href: "/schedule" },
   { label: "Цены", href: "/#pricing" },
   { label: "Контакты", href: "/#contacts" },
+  { label: "Личный кабинет", href: "https://g-sacademy.vercel.app", external: true },
 ];
 
 export default function Navbar() {
@@ -49,7 +50,10 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-gray-300 hover:text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"
+                {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className={link.external
+                  ? "bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-blue-400/50 transition-all duration-200 text-sm font-medium tracking-wide uppercase py-1.5 px-3 rounded-full"
+                  : "text-gray-300 hover:text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"}
               >
                 {link.label}
               </Link>
@@ -66,7 +70,7 @@ export default function Navbar() {
               <span>8 (995) 865-42-44</span>
             </a>
             <a
-              href="https://wa.me/79958636285?text=Здравствуйте! Хочу записаться на тренировку в GSAcademy"
+              href="https://t.me/+79958636285"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-2 px-5 rounded-full text-sm hover:opacity-90 transition-opacity"
@@ -94,7 +98,10 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-gray-300 hover:text-[#3B82F6] transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"
+                {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className={link.external
+                  ? "text-blue-400 hover:text-blue-300 transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"
+                  : "text-gray-300 hover:text-[#3B82F6] transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"}
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
@@ -109,7 +116,7 @@ export default function Navbar() {
                 <span>8 (995) 865-42-44</span>
               </a>
               <a
-                href="https://wa.me/79958636285?text=Здравствуйте! Хочу записаться на тренировку в GSAcademy"
+                href="https://t.me/+79958636285"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-3 px-6 rounded-full text-center"

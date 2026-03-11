@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Phone, MessageCircle } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 
 export default function Contacts() {
   return (
@@ -73,31 +73,6 @@ export default function Contacts() {
               </div>
             </div>
 
-            <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-6">
-              <h3 className="text-white font-bold mb-3">Мы в соцсетях</h3>
-              <div className="flex gap-3">
-                <a
-                  href="https://vk.com/bjjperm59"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-[#1e1e1e] hover:bg-[#3B82F6]/10 border border-[#2e2e2e] hover:border-[#3B82F6]/30 text-gray-300 hover:text-[#3B82F6] rounded-xl px-4 py-2.5 text-sm font-medium transition-all"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12.785 16.241s.288-.032.436-.194c.136-.148.132-.427.132-.427s-.02-1.304.576-1.496c.588-.188 1.341 1.26 2.14 1.816.605.421 1.064.329 1.064.329l2.137-.03s1.117-.071.587-.964c-.043-.073-.308-.661-1.588-1.87-1.34-1.264-1.16-1.059.453-3.246.983-1.332 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.31.056c-.13.079-.212.262-.212.262s-.382 1.03-.89 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.268-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.115-.858-.009-1.585.003-1.996.208-.274.138-.485.445-.356.462.16.02.521.099.713.364.248.341.239 1.107.239 1.107s.142 2.11-.333 2.372c-.327.179-.776-.187-1.739-1.865-.493-.859-.866-1.812-.866-1.812s-.07-.176-.198-.271c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161C3.94 8.176 4.043 8.5 4.043 8.5s1.793 4.261 3.821 6.408c1.861 1.972 3.977 1.841 3.977 1.841l.944-.012z"/>
-                  </svg>
-                  ВКонтакте
-                </a>
-                <a
-                  href="https://wa.me/79958636285"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-[#1e1e1e] hover:bg-[#3B82F6]/10 border border-[#2e2e2e] hover:border-[#3B82F6]/30 text-gray-300 hover:text-[#3B82F6] rounded-xl px-4 py-2.5 text-sm font-medium transition-all"
-                >
-                  <MessageCircle size={16} />
-                  WhatsApp
-                </a>
-              </div>
-            </div>
           </motion.div>
 
           {/* Map */}

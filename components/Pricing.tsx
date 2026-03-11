@@ -202,7 +202,7 @@ export default function Pricing() {
                 </ul>
 
                 <a
-                  href="https://wa.me/79958636285?text=Здравствуйте! Хочу записаться на тренировку в GSAcademy"
+                  href="https://t.me/+79958636285"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`mt-auto text-center font-bold py-3 px-6 rounded-xl text-sm transition-all duration-200 ${

@@ -88,47 +88,6 @@ export default function Awards() {
           ))}
         </div>
 
-        {/* Коллаж результатов */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mt-12"
-        >
-          <div className="text-center mb-6">
-            <span className="text-blue-500 text-xs font-medium uppercase tracking-widest">Соревнования</span>
-            <h3 className="text-2xl sm:text-3xl font-black text-white mt-1">
-              Наши{" "}
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">результаты</span>
-            </h3>
-          </div>
-          <div className="relative rounded-3xl overflow-hidden border border-blue-500/30 shadow-2xl shadow-blue-950/50"
-            style={{ background: "linear-gradient(135deg, #0d1525 0%, #0a0a0a 100%)" }}
-          >
-            {/* Градиентная рамка сверху */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500/60 to-transparent z-20 pointer-events-none" />
-
-            {/* Синий тон поверх картинки */}
-            <div className="absolute inset-0 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(135deg, rgba(59,130,246,0.18) 0%, rgba(6,182,212,0.10) 50%, rgba(99,102,241,0.15) 100%)", mixBlendMode: "color" }}
-            />
-
-            {/* Тёмный оверлей по краям */}
-            <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_40%,rgba(10,10,30,0.55)_100%)]" />
-
-            {/* Верхний и нижний градиент */}
-            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#0a0f1e]/60 to-transparent z-10 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#080d1a]/70 to-transparent z-10 pointer-events-none" />
-
-            <img
-              src="/result.png"
-              alt="Наши результаты"
-              className="w-full h-auto object-contain relative z-0"
-              style={{ filter: "saturate(1.1) contrast(1.05)" }}
-            />
-          </div>
-        </motion.div>
       </div>
     </section>
   );

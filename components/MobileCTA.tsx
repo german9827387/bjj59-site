@@ -28,7 +28,7 @@ export default function MobileCTA() {
         >
           <div className="bg-[#0d0d0d]/95 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-3 flex items-center gap-3 shadow-2xl shadow-blue-500/10">
             <a
-              href="https://wa.me/79958636285?text=Здравствуйте! Хочу записаться на БЕСПЛАТНОЕ пробное занятие в GSAcademy"
+              href="https://t.me/+79958636285"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 hover:opacity-95 transition-opacity active:scale-95"

@@ -107,7 +107,7 @@ export default function DirectionPage({
           </motion.p>
 
           <motion.a
-            href="https://wa.me/79958636285?text=Здравствуйте! Хочу записаться на бесплатное пробное занятие в GSAcademy"
+            href="https://t.me/+79958636285"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 20 }}

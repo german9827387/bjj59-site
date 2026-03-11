@@ -74,7 +74,7 @@ const tabs = [
 ];
 
 export default function ForWhom() {
-  const [active, setActive] = useState("adults");
+  const [active, setActive] = useState("children");
   const activeTab = tabs.find((t) => t.id === active)!;
 
   return (

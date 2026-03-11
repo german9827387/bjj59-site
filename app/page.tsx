@@ -5,10 +5,10 @@ import Directions from "@/components/Directions";
 import Trainers from "@/components/Trainers";
 import Reviews from "@/components/Reviews";
 import Awards from "@/components/Awards";
+import Results from "@/components/Results";
 import Pricing from "@/components/Pricing";
 import FirstTraining from "@/components/FirstTraining";
 import CTA from "@/components/CTA";
-import Contacts from "@/components/Contacts";
 
 export default function Home() {
   return (
@@ -19,11 +19,11 @@ export default function Home() {
       <Trainers />
       <Reviews />
       <Awards />
+      <Results />
       <Pricing />
       <FirstTraining />
       <WhyUs />
       <CTA />
-      <Contacts />
     </>
   );
 }
