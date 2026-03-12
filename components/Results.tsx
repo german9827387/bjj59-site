@@ -74,7 +74,7 @@ export default function Results() {
               <span className="text-2xl sm:text-3xl font-black text-white">
                 <AnimatedCounter target={target} suffix={suffix} />
               </span>
-              <span className="text-gray-500 text-xs mt-1 leading-tight">{label}</span>
+              <span className="text-gray-400 text-xs mt-1 leading-tight">{label}</span>
             </div>
           ))}
         </Reveal>

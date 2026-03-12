@@ -121,7 +121,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="mt-10 pt-6 border-t border-[#1e1e1e] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600 text-xs">
+          <p className="text-gray-400 text-xs">
             © {new Date().getFullYear()} GSAcademy. Все права защищены.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
@@ -129,7 +129,7 @@ export default function Footer() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="text-gray-600 hover:text-[#3B82F6] text-xs transition-colors"
+                className="text-gray-400 hover:text-[#3B82F6] text-xs transition-colors"
               >
                 {l.label}
               </Link>

@@ -146,7 +146,7 @@ export default function Hero() {
               <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
                 <AnimatedCounter target={stat.target} suffix={stat.suffix} />
               </div>
-              <div className="text-gray-500 text-xs mt-1 uppercase tracking-wider">{stat.label}</div>
+              <div className="text-gray-400 text-xs mt-1 uppercase tracking-wider">{stat.label}</div>
             </div>
           ))}
         </div>

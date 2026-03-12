@@ -64,7 +64,7 @@ export default function Awards() {
                   <div className="relative z-10 text-center px-5 py-4 flex-1 flex flex-col justify-center">
                     <div className="text-white font-black text-base leading-tight">{award.title}</div>
                     <div className="text-blue-400 text-xs mt-1 font-semibold tracking-wide">{award.source}</div>
-                    <div className="text-gray-500 text-xs mt-2 leading-snug">{award.description}</div>
+                    <div className="text-gray-400 text-xs mt-2 leading-snug">{award.description}</div>
                   </div>
                 </div>
               </div>

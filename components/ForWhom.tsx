@@ -99,7 +99,7 @@ export default function ForWhom() {
                 каждого
               </span>
             </h2>
-            <p className="mt-3 text-gray-500 text-base max-w-md mx-auto">
+            <p className="mt-3 text-gray-400 text-base max-w-md mx-auto">
               Подберём программу под любой возраст и уровень подготовки
             </p>
           </Reveal>

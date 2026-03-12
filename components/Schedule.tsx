@@ -112,7 +112,7 @@ export default async function Schedule() {
 
                   <div className="space-y-2">
                     {classes.length === 0 && (
-                      <div className="text-center text-gray-600 text-xs py-4">—</div>
+                      <div className="text-center text-gray-400 text-xs py-4">—</div>
                     )}
                     {classes.map((cls) => (
                       <div

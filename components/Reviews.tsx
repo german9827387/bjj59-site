@@ -133,7 +133,7 @@ export default function Reviews() {
                 </div>
                 <div>
                   <div className="text-white text-sm font-semibold">{review.name}</div>
-                  <div className="text-gray-600 text-xs">{review.date} · Яндекс</div>
+                  <div className="text-gray-400 text-xs">{review.date} · Яндекс</div>
                 </div>
               </div>
             </Reveal>
@@ -161,7 +161,7 @@ export default function Reviews() {
                 </div>
                 <div>
                   <div className="text-white text-sm font-semibold">{reviews[active].name}</div>
-                  <div className="text-gray-600 text-xs">{reviews[active].date} · Яндекс</div>
+                  <div className="text-gray-400 text-xs">{reviews[active].date} · Яндекс</div>
                 </div>
               </div>
             </div>
