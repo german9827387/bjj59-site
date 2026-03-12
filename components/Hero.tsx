@@ -78,7 +78,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-5xl sm:text-7xl lg:text-[96px] font-black text-white leading-[0.9] tracking-tight mb-6"
+          className="text-4xl sm:text-7xl lg:text-[96px] font-black text-white leading-[0.9] tracking-tight mb-6"
         >
           {hero.title1}
           <br />

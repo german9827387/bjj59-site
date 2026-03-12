@@ -47,7 +47,10 @@ export default function TgLinkHandler() {
         fullText += ` [${label}${campaign ? ` / ${campaign}` : ""}]`;
       }
 
-      url.searchParams.set("text", fullText);
+      // Используем encodeURIComponent чтобы пробелы стали %20, а не +
+      // (мобильный Telegram не декодирует + как пробел)
+      const finalUrl =
+        url.origin + url.pathname + "?text=" + encodeURIComponent(fullText);
 
       // Цель в Яндекс Метрике
       if (typeof window !== "undefined" && (window as any).ym) {
@@ -58,7 +61,7 @@ export default function TgLinkHandler() {
         );
       }
 
-      window.open(url.toString(), "_blank", "noopener,noreferrer");
+      window.open(finalUrl, "_blank", "noopener,noreferrer");
     }
 
     // Отслеживаем клики по номеру телефона
