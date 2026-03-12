@@ -1,7 +1,5 @@
-"use client";
-
-import { m as motion } from "framer-motion";
 import { Trophy, Users, GraduationCap, BookOpen } from "lucide-react";
+import Reveal from "./Reveal";
 
 const reasons = [
   {
@@ -47,35 +45,20 @@ export default function WhyUs() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-14">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="inline-block text-cyan-400 text-xs font-semibold uppercase tracking-widest border border-cyan-500/25 bg-cyan-500/8 rounded-full px-4 py-1.5 mb-4"
-          >
-            Почему выбирают нас
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl font-black text-white mt-2"
-          >
-            Место, куда хочется{" "}
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-300 text-transparent bg-clip-text">
-              возвращаться
+          <Reveal>
+            <span className="inline-block text-cyan-400 text-xs font-semibold uppercase tracking-widest border border-cyan-500/25 bg-cyan-500/8 rounded-full px-4 py-1.5 mb-4">
+              Почему выбирают нас
             </span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-blue-200/40 mt-4 max-w-xl mx-auto text-base"
-          >
-            Мы — первая академия в Перми, где спорт помогает развивать не только тело, но и личность
-          </motion.p>
+            <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
+              Место, куда хочется{" "}
+              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-300 text-transparent bg-clip-text">
+                возвращаться
+              </span>
+            </h2>
+            <p className="text-blue-200/40 mt-4 max-w-xl mx-auto text-base">
+              Мы — первая академия в Перми, где спорт помогает развивать не только тело, но и личность
+            </p>
+          </Reveal>
         </div>
 
         {/* Cards */}
@@ -83,45 +66,40 @@ export default function WhyUs() {
           {reasons.map((r, i) => {
             const Icon = r.icon;
             return (
-              <motion.div
-                key={r.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative rounded-2xl overflow-hidden"
-              >
-                {/* Card background */}
-                <div
-                  className="absolute inset-0 transition-opacity duration-500"
-                  style={{ background: `linear-gradient(145deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.05) 50%, ${r.color}18 100%)` }}
-                />
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `linear-gradient(145deg, rgba(255,255,255,0.13) 0%, ${r.color}22 100%)` }}
-                />
-                {/* Border */}
-                <div
-                  className="absolute inset-0 rounded-2xl"
-                  style={{ boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.12), inset 0 0 0 1px ${r.color}20` }}
-                />
-
-                <div className="relative z-10 p-6">
-                  {/* Icon */}
+              <Reveal key={r.title} delay={i * 80}>
+                <div className="group relative rounded-2xl overflow-hidden h-full">
+                  {/* Card background */}
                   <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
-                    style={{ background: `linear-gradient(135deg, ${r.color}30, ${r.color}15)`, border: `1px solid ${r.color}40` }}
-                  >
-                    <Icon size={22} style={{ color: r.color }} />
+                    className="absolute inset-0 transition-opacity duration-500"
+                    style={{ background: `linear-gradient(145deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.05) 50%, ${r.color}18 100%)` }}
+                  />
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: `linear-gradient(145deg, rgba(255,255,255,0.13) 0%, ${r.color}22 100%)` }}
+                  />
+                  {/* Border */}
+                  <div
+                    className="absolute inset-0 rounded-2xl"
+                    style={{ boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.12), inset 0 0 0 1px ${r.color}20` }}
+                  />
+
+                  <div className="relative z-10 p-6">
+                    {/* Icon */}
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
+                      style={{ background: `linear-gradient(135deg, ${r.color}30, ${r.color}15)`, border: `1px solid ${r.color}40` }}
+                    >
+                      <Icon size={22} style={{ color: r.color }} />
+                    </div>
+
+                    <h3 className="text-white font-bold text-base mb-3 leading-tight">{r.title}</h3>
+                    <p className="text-white/50 text-sm leading-relaxed">{r.desc}</p>
+
+                    {/* Bottom accent */}
+                    <div className="mt-5 h-px" style={{ background: `linear-gradient(to right, ${r.color}60, transparent)` }} />
                   </div>
-
-                  <h3 className="text-white font-bold text-base mb-3 leading-tight">{r.title}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{r.desc}</p>
-
-                  {/* Bottom accent */}
-                  <div className="mt-5 h-px" style={{ background: `linear-gradient(to right, ${r.color}60, transparent)` }} />
                 </div>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

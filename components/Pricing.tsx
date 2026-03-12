@@ -1,8 +1,6 @@
-"use client";
-
-import { m as motion } from "framer-motion";
 import { Check } from "lucide-react";
 import pricingJson from "@/data/pricing.json";
+import Reveal from "./Reveal";
 
 const plans = pricingJson;
 
@@ -18,46 +16,28 @@ export default function Pricing() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-4"
-          >
-            Инвестиции в себя
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl font-black text-white mt-2"
-          >
-            Стоимость{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-              занятий
+          <Reveal>
+            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-4">
+              Инвестиции в себя
             </span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-400 mt-4"
-          >
-            Первое занятие — бесплатно. Приходите и убедитесь сами!
-          </motion.p>
+            <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
+              Стоимость{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+                занятий
+              </span>
+            </h2>
+            <p className="text-gray-400 mt-4">
+              Первое занятие — бесплатно. Приходите и убедитесь сами!
+            </p>
+          </Reveal>
         </div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {plans.map((plan, i) => (
-            <motion.div
+            <Reveal
               key={plan.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
+              delay={i * 80}
               className={`relative rounded-2xl flex flex-col overflow-hidden ${
                 plan.highlight
                   ? "bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 shadow-[0_0_40px_rgba(59,130,246,0.35)] ring-1 ring-blue-400/40"
@@ -130,7 +110,7 @@ export default function Pricing() {
                   {plan.cta}
                 </a>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

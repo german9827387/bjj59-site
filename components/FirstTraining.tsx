@@ -1,6 +1,4 @@
-"use client";
-
-import { m as motion } from "framer-motion";
+import Reveal from "./Reveal";
 
 const items = [
   {
@@ -44,85 +42,53 @@ export default function FirstTraining() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Text */}
-          <div>
-            <motion.span
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-5"
-            >
+          <Reveal>
+            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-5">
               Готовься просто
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-3xl sm:text-5xl font-black text-white mb-5 leading-tight"
-            >
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-white mb-5 leading-tight">
               Что взять на{" "}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
                 первую тренировку
               </span>
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-gray-400 leading-relaxed mb-8 text-lg"
-            >
+            </h2>
+            <p className="text-gray-400 leading-relaxed mb-8 text-lg">
               Для первого пробного занятия не нужна специальная экипировка. Просто приходите
               в удобной спортивной одежде — всё остальное мы предоставим.{" "}
               <span className="text-white font-semibold">Экипировка на первый урок в подарок!</span>
-            </motion.p>
-            <motion.a
+            </p>
+            <a
               href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу прийти на первое бесплатное занятие')}`}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
               className="inline-block bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 hover:scale-105 hover:from-blue-500 hover:to-cyan-400 active:scale-95 text-base"
             >
               Записаться бесплатно
-            </motion.a>
-          </div>
+            </a>
+          </Reveal>
 
           {/* Cards */}
           <div className="grid grid-cols-2 gap-4">
             {items.map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative rounded-2xl overflow-hidden border border-white/[0.07] hover:border-white/[0.15] transition-all duration-300 cursor-default"
-              >
-                {/* Градиентный фон карточки */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color}`} />
-                <div className="absolute inset-0 bg-[#0a1020]/70" />
-
-                <div className="relative p-7 flex flex-col items-center gap-3">
-                  {/* Свечение под иконкой */}
-                  <div
-                    className="absolute top-6 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full blur-2xl opacity-60 group-hover:opacity-90 transition-opacity"
-                    style={{ background: item.glow }}
-                  />
-                  {/* Иконка */}
-                  <div className="relative text-6xl leading-none select-none group-hover:scale-110 transition-transform duration-300">
-                    {item.emoji}
-                  </div>
-                  <div className="relative text-center">
-                    <div className="text-white font-black text-lg uppercase tracking-wide">
-                      {item.label}
+              <Reveal key={item.label} delay={i * 80}>
+                <div className="group relative rounded-2xl overflow-hidden border border-white/[0.07] hover:border-white/[0.15] transition-all duration-300 cursor-default">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color}`} />
+                  <div className="absolute inset-0 bg-[#0a1020]/70" />
+                  <div className="relative p-7 flex flex-col items-center gap-3">
+                    <div
+                      className="absolute top-6 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full blur-2xl opacity-60 group-hover:opacity-90 transition-opacity"
+                      style={{ background: item.glow }}
+                    />
+                    <div className="relative text-6xl leading-none select-none group-hover:scale-110 transition-transform duration-300">
+                      {item.emoji}
                     </div>
-                    <div className="text-gray-500 text-xs mt-0.5">{item.desc}</div>
+                    <div className="relative text-center">
+                      <div className="text-white font-black text-lg uppercase tracking-wide">{item.label}</div>
+                      <div className="text-gray-500 text-xs mt-0.5">{item.desc}</div>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>

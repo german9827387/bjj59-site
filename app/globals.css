@@ -73,6 +73,17 @@ body:not([data-scroll-locked]) {
   overflow: auto !important;
 }
 
+/* Reveal animation (replaces framer-motion whileInView in server components) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Admin panel input style */
 .admin-input {
   width: 100%;

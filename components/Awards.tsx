@@ -1,7 +1,5 @@
-"use client";
-
-import { m as motion } from "framer-motion";
 import Image from "next/image";
+import Reveal from "./Reveal";
 
 const awards = [
   {
@@ -40,38 +38,23 @@ export default function Awards() {
 
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-blue-500 text-xs font-medium uppercase tracking-widest"
-          >
-            Признание
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-black text-white mt-2"
-          >
-            Наши{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-              награды
+          <Reveal>
+            <span className="text-blue-500 text-xs font-medium uppercase tracking-widest">
+              Признание
             </span>
-          </motion.h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-white mt-2">
+              Наши{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+                награды
+              </span>
+            </h2>
+          </Reveal>
         </div>
 
         <div className="flex flex-wrap justify-center items-stretch gap-10">
           {awards.map((award, i) => (
-            <motion.div
-              key={award.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              className="group relative flex flex-col w-44 self-stretch"
-            >
+            <Reveal key={award.id} delay={i * 120} className="flex flex-col w-44 self-stretch">
+              <div className="group relative flex flex-col w-44 self-stretch h-full">
               <div className="relative w-full flex-1 rounded-[2rem] p-[1px] bg-gradient-to-b from-blue-500/40 via-white/10 to-transparent shadow-xl shadow-blue-950/30">
                 <div className="relative flex flex-col bg-gradient-to-b from-[#111827] to-[#0d1117] rounded-[2rem] overflow-hidden h-full">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(59,130,246,0.12),transparent)] pointer-events-none z-10" />
@@ -85,7 +68,8 @@ export default function Awards() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+              </div>
+            </Reveal>
           ))}
         </div>
 
