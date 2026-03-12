@@ -70,7 +70,7 @@ export default function Contacts() {
           >
             {mapLoaded ? (
               <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=56.256389%2C58.014444&z=16&pt=56.256389,58.014444,pm2rdm&l=map"
+                src="https://yandex.ru/map-widget/v1/?ol=biz&oid=13932890682"
                 width="100%"
                 height="100%"
                 frameBorder="0"
