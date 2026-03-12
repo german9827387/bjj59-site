@@ -27,6 +27,14 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 }
 
 export default function Hero() {
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Загружаем видео после гидратации, чтобы не блокировать первый рендер
+    const id = setTimeout(() => setVideoSrc("/hero-compressed.mp4"), 300);
+    return () => clearTimeout(id);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background video */}
@@ -39,7 +47,7 @@ export default function Hero() {
           preload="none"
           className="absolute inset-0 w-full h-full object-cover opacity-50"
         >
-          <source src="/hero-compressed.mp4" type="video/mp4" />
+          {videoSrc && <source src={videoSrc} type="video/mp4" />}
         </video>
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />

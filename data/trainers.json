@@ -112,7 +112,7 @@
   {
     "id": "lyudmila",
     "name": "Кылосова Людмила",
-    "image": "/kilosova.PNG",
+    "image": "/kilosova.jpg",
     "role": "Тренер по Бразильскому джиу-джитсу и спортивной борьбе",
     "belt": "Пурпурный пояс по BJJ",
     "beltGradient": "from-purple-950 to-purple-800",
@@ -130,7 +130,7 @@
   {
     "id": "ilya",
     "name": "Корляков Илья",
-    "image": "/korlyakov.PNG",
+    "image": "/korlyakov.jpg",
     "role": "Тренер по Бразильскому джиу-джитсу и спортивной борьбе",
     "belt": "Коричневый пояс по BJJ",
     "beltGradient": "from-amber-950 to-amber-700",

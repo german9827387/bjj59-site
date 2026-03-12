@@ -118,7 +118,7 @@ export default function Results() {
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0d1525]/80 to-transparent z-10 pointer-events-none" />
 
             <Image
-              src="/result.png"
+              src="/result.jpg"
               alt="Наши результаты"
               width={1400}
               height={900}
