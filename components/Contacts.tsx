@@ -1,21 +1,11 @@
 "use client";
 
 import { MapPin, Phone } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import Reveal from "./Reveal";
 
 export default function Contacts() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const [mapVisible, setMapVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setMapVisible(true); observer.disconnect(); } },
-      { rootMargin: "200px" }
-    );
-    if (mapRef.current) observer.observe(mapRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [mapLoaded, setMapLoaded] = useState(false);
   return (
     <section id="contacts" className="section-card py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,12 +63,12 @@ export default function Contacts() {
 
           </div>
 
-          {/* Map */}
+          {/* Map — facade pattern: loads only on user click */}
           <div
-            ref={mapRef}
-            className="rounded-2xl overflow-hidden border border-[#1e1e1e] min-h-64"
+            className="rounded-2xl overflow-hidden border border-[#1e1e1e]"
+            style={{ minHeight: "320px" }}
           >
-            {mapVisible ? (
+            {mapLoaded ? (
               <iframe
                 src="https://yandex.ru/map-widget/v1/?ll=56.256389%2C58.014444&z=16&pt=56.256389,58.014444,pm2rdm&l=map"
                 width="100%"
@@ -86,16 +76,24 @@ export default function Contacts() {
                 frameBorder="0"
                 allowFullScreen
                 title="Карта GSAcademy — г. Пермь, ул. Аркадия Гайдара 8б"
-                className="w-full h-full min-h-64"
+                className="w-full h-full"
                 style={{ minHeight: "320px" }}
               />
             ) : (
-              <div
-                className="w-full flex items-center justify-center bg-[#0d0d0d] text-gray-600 text-sm"
+              <button
+                onClick={() => setMapLoaded(true)}
+                className="w-full h-full flex flex-col items-center justify-center gap-4 bg-[#0d0d0d] hover:bg-[#111] transition-colors cursor-pointer group"
                 style={{ minHeight: "320px" }}
+                aria-label="Показать карту"
               >
-                <MapPin size={20} className="mr-2" /> Загрузка карты…
-              </div>
+                <div className="w-14 h-14 rounded-full bg-[#3B82F6]/10 flex items-center justify-center group-hover:bg-[#3B82F6]/20 transition-colors">
+                  <MapPin size={28} className="text-[#3B82F6]" />
+                </div>
+                <div className="text-center">
+                  <div className="text-white font-semibold mb-1">г. Пермь, ул. Аркадия Гайдара 8б</div>
+                  <div className="text-[#3B82F6] text-sm">Нажмите, чтобы открыть карту</div>
+                </div>
+              </button>
             )}
           </div>
         </div>
