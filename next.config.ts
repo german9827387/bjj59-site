@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)\\.(mp4|webm)",
         headers: [
-          { key: "Cache-Control", value: "public, max-age=604800" },
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
         ],
       },
     ];
