@@ -42,10 +42,18 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
         {trainer.belt}
       </span>
 
-      {/* Always visible: name + role */}
+      {/* Always visible: name + role + CTA */}
       <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-10 group-hover:opacity-0 transition-opacity duration-300">
         <h3 className="text-white font-black text-sm sm:text-base leading-tight">{trainer.name}</h3>
         <p className="text-gray-400 text-[10px] sm:text-xs mt-0.5 leading-snug">{trainer.role}</p>
+        <a
+          href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на тренировку')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 block text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-[10px] font-bold py-1.5 rounded-lg hover:bg-blue-500/30 transition-all"
+        >
+          Записаться
+        </a>
       </div>
 
       {/* Hover overlay with achievements */}

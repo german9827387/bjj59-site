@@ -13,8 +13,8 @@ export default function CTA() {
               <span className="text-[#3B82F6] text-xs font-medium uppercase tracking-widest">Первое занятие бесплатно</span>
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
-              ЗАПИШИТЕСЬ НА<br />
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">БЕСПЛАТНОЕ ЗАНЯТИЕ</span>
+              Запишитесь на<br />
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">бесплатное занятие</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-xl mx-auto mb-10">
               И получите экипировку на первый урок в подарок. Попробуйте — вам точно понравится!

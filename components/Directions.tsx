@@ -63,10 +63,10 @@ function HexCard({ d, i }: { d: (typeof directions)[0]; i: number }) {
               {d.title}
             </span>
             <span
-              className="mt-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0"
+              className="mt-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest md:opacity-0 group-hover:opacity-100 transition-all duration-300 md:translate-y-1 group-hover:translate-y-0"
               style={{ color: accent }}
             >
-              Подробнее
+              Подробнее →
             </span>
           </div>
         </div>

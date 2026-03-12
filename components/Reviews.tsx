@@ -10,15 +10,21 @@ const reviews = reviewsJson;
 
 export default function Reviews() {
   const [active, setActive] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
 
   const next = useCallback(() => setActive((v) => (v + 1) % reviews.length), []);
   const prev = useCallback(() => setActive((v) => (v - 1 + reviews.length) % reviews.length), []);
 
-  // Auto-advance on mobile
+  const handleNext = useCallback(() => { next(); setAutoPlay(false); }, [next]);
+  const handlePrev = useCallback(() => { prev(); setAutoPlay(false); }, [prev]);
+  const handleDot = useCallback((i: number) => { setActive(i); setAutoPlay(false); }, []);
+
+  // Auto-advance on mobile — stops when user manually navigates
   useEffect(() => {
+    if (!autoPlay) return;
     const id = setInterval(next, 5000);
     return () => clearInterval(id);
-  }, [next]);
+  }, [next, autoPlay]);
 
   return (
     <section className="relative py-20 lg:py-28 bg-[#080808]">
@@ -169,20 +175,20 @@ export default function Reviews() {
 
           {/* Controls */}
           <div className="flex items-center justify-center gap-4 mt-4">
-            <button onClick={prev} aria-label="Предыдущий отзыв" className="p-2 rounded-full border border-[#1e1e1e] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
+            <button onClick={handlePrev} aria-label="Предыдущий отзыв" className="p-2 rounded-full border border-[#1e1e1e] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
               <ChevronLeft size={16} />
             </button>
             <div className="flex gap-2">
               {reviews.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setActive(i)}
+                  onClick={() => handleDot(i)}
                   aria-label={`Отзыв ${i + 1}`}
                   className={`rounded-full transition-all ${i === active ? "w-5 h-2 bg-blue-500" : "w-2 h-2 bg-[#333]"}`}
                 />
               ))}
             </div>
-            <button onClick={next} aria-label="Следующий отзыв" className="p-2 rounded-full border border-[#1e1e1e] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
+            <button onClick={handleNext} aria-label="Следующий отзыв" className="p-2 rounded-full border border-[#1e1e1e] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
               <ChevronRight size={16} />
             </button>
           </div>

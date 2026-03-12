@@ -1,4 +1,4 @@
-import { MapPin, Phone } from "lucide-react";
+import { MapPin, Phone, Clock } from "lucide-react";
 import Reveal from "./Reveal";
 
 export default function Contacts() {
@@ -36,6 +36,20 @@ export default function Contacts() {
                   >
                     Открыть на Яндекс Картах →
                   </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#3B82F6]/10 flex items-center justify-center shrink-0">
+                  <Clock size={20} className="text-[#3B82F6]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold mb-1">Часы работы</h3>
+                  <p className="text-gray-400 text-sm">Пн–Пт: <span className="text-white">8:00–22:00</span></p>
+                  <p className="text-gray-400 text-sm">Сб–Вс: <span className="text-white">9:00–20:00</span></p>
+                  <a href="/schedule" className="text-[#3B82F6] text-sm hover:underline mt-1 inline-block">Расписание занятий →</a>
                 </div>
               </div>
             </div>
