@@ -10,7 +10,7 @@ export async function GET() {
 
   try {
     const res = await fetch(
-      `https://api.vk.com/method/wall.get?owner_id=${groupId}&count=5&filter=owner&v=5.131&access_token=${token}`,
+      `https://api.vk.com/method/wall.get?owner_id=${groupId}&count=3&filter=owner&v=5.131&access_token=${token}`,
       { next: { revalidate: 3600 } }
     );
     const data = await res.json();
