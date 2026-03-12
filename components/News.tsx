@@ -8,10 +8,13 @@ async function getPosts(): Promise<VkPost[]> {
   try {
     const res = await fetch(
       `https://api.vk.com/method/wall.get?owner_id=${groupId}&count=10&filter=owner&v=5.131&access_token=${token}`,
-      { next: { revalidate: 3600 } }
+      { cache: 'no-store' }
     );
     const data = await res.json();
-    if (data.error) return [];
+    if (data.error) {
+      console.error('[News] VK API error:', data.error);
+      return [];
+    }
 
     return (data.response?.items ?? [])
       .filter((p: any) => p.text?.trim())
@@ -28,7 +31,8 @@ async function getPosts(): Promise<VkPost[]> {
           })
           .filter(Boolean) as string[];
         return { id: p.id, text: p.text, date: p.date, photos };      });
-  } catch {
+  } catch (e) {
+    console.error('[News] fetch error:', e);
     return [];
   }
 }
