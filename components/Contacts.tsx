@@ -33,7 +33,7 @@ export default function Contacts() {
                   <h3 className="text-white font-bold mb-1">Адрес</h3>
                   <p className="text-gray-400">г. Пермь, ул. Аркадия Гайдара 8б</p>
                   <a
-                    href="https://yandex.ru/maps/org/gsacademy/13932890682/"
+                    href="https://yandex.com/maps/-/CPB8MK7w"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#3B82F6] text-sm hover:underline mt-1 inline-block"
