@@ -29,7 +29,8 @@ async function getPosts(): Promise<VkPost[]> {
         let video: VkPost['video'] = null;
         if (videoAtt?.video) {
           const thumbs: any[] = videoAtt.video.image ?? [];
-          const thumb = thumbs[thumbs.length - 1];
+          // Берём самое большое превью (последнее в массиве)
+          const thumb = thumbs.reduce((best: any, s: any) => (!best || (s.width ?? 0) > (best.width ?? 0)) ? s : best, null);
           video = { ownerId: videoAtt.video.owner_id, id: videoAtt.video.id, thumb: thumb?.url ?? null, player: videoAtt.video.player ?? null };
         }
         return { id: p.id, text: p.text, date: p.date, photos, video };
@@ -49,18 +50,12 @@ export default async function News() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#0a0a0a] pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <span className="text-blue-500 text-xs font-medium uppercase tracking-widest">ВКонтакте</span>
           <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
             Наши{' '}
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">новости</span>
           </h2>
         </div>
         <NewsGrid posts={posts} />
-        <div className="text-center mt-10">
-          <a href="https://vk.com/bjjperm59" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-blue-500/30 text-blue-400 hover:bg-blue-500/10 text-sm font-semibold px-6 py-3 rounded-full transition-all">
-            Все новости ВКонтакте →
-          </a>
-        </div>
       </div>
     </section>
   );

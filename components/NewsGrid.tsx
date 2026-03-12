@@ -16,12 +16,11 @@ export interface VkPost {
   } | null;
 }
 
+const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+
 function formatDate(unix: number) {
-  return new Date(unix * 1000).toLocaleDateString("ru-RU", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  const d = new Date(unix * 1000);
+  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()} г.`;
 }
 
 function Modal({ post, onClose }: { post: VkPost; onClose: () => void }) {
@@ -46,6 +45,7 @@ function Modal({ post, onClose }: { post: VkPost; onClose: () => void }) {
     : null;
 
   const currentPhoto = post.photos[photoIdx] ?? null;
+  const videoCover = post.video?.thumb ?? null;
 
   return (
     <div
@@ -65,15 +65,27 @@ function Modal({ post, onClose }: { post: VkPost; onClose: () => void }) {
           ✕
         </button>
 
-        {/* Video embed */}
-        {videoUrl && (
-          <div className="relative w-full aspect-video">
-            <iframe
-              src={videoUrl}
-              className="w-full h-full rounded-t-2xl"
-              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-              allowFullScreen
-            />
+        {/* Video */}
+        {post.video && (
+          <div className="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
+            <button
+              onClick={() => window.open(`https://vk.com/video${post.video!.ownerId}_${post.video!.id}`, "_blank", "noopener,noreferrer")}
+              className="absolute inset-0 w-full h-full group"
+            >
+              {videoCover && (
+                <Image src={videoCover} alt="" fill className="object-cover" sizes="672px" />
+              )}
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-colors">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border border-white/40 flex items-center justify-center">
+                    <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <span className="text-white/70 text-xs">Смотреть в ВКонтакте</span>
+                </div>
+              </div>
+            </button>
           </div>
         )}
 
