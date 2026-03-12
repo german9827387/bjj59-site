@@ -88,7 +88,6 @@ export default function Hero() {
         {/* Main heading */}
         <h1
           className="hero-slide text-4xl sm:text-7xl lg:text-[96px] font-black text-white leading-[0.9] tracking-tight mb-6"
-          style={{ animationDelay: "0.1s" }}
         >
           {hero.title1}
           <br />

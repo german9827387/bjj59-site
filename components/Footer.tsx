@@ -26,7 +26,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="mb-4">
-              <Image src="/logo.png" alt="GS Academy" width={120} height={40} className="h-10 w-auto object-contain" />
+              <Image src="/logo.png" alt="GS Academy" width={120} height={40} quality={60} className="h-10 w-auto object-contain" />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Академия единоборств в Перми. Профессиональные тренировки для детей и взрослых. Часть команды Alliance, 14-кратные чемпионы мира.
