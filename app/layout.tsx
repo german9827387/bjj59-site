@@ -43,6 +43,8 @@ const jsonLd = {
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
   variable: "--font-inter",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
