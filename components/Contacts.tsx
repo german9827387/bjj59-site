@@ -2,8 +2,20 @@
 
 import { m as motion } from "framer-motion";
 import { MapPin, Phone } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 
 export default function Contacts() {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [mapVisible, setMapVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setMapVisible(true); observer.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    if (mapRef.current) observer.observe(mapRef.current);
+    return () => observer.disconnect();
+  }, []);
   return (
     <section id="contacts" className="section-card py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,21 +89,31 @@ export default function Contacts() {
 
           {/* Map */}
           <motion.div
+            ref={mapRef}
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="rounded-2xl overflow-hidden border border-[#1e1e1e] min-h-64"
           >
-            <iframe
-              src="https://yandex.ru/map-widget/v1/?ll=56.256389%2C58.014444&z=16&pt=56.256389,58.014444,pm2rdm&l=map"
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              allowFullScreen
-              title="Карта GSAcademy — г. Пермь, ул. Аркадия Гайдара 8б"
-              className="w-full h-full min-h-64"
-              style={{ minHeight: "320px" }}
-            />
+            {mapVisible ? (
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=56.256389%2C58.014444&z=16&pt=56.256389,58.014444,pm2rdm&l=map"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allowFullScreen
+                title="Карта GSAcademy — г. Пермь, ул. Аркадия Гайдара 8б"
+                className="w-full h-full min-h-64"
+                style={{ minHeight: "320px" }}
+              />
+            ) : (
+              <div
+                className="w-full flex items-center justify-center bg-[#0d0d0d] text-gray-600 text-sm"
+                style={{ minHeight: "320px" }}
+              >
+                <MapPin size={20} className="mr-2" /> Загрузка карты…
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
