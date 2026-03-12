@@ -77,7 +77,7 @@ export default function FirstTraining() {
               <span className="text-white font-semibold">Экипировка на первый урок в подарок!</span>
             </motion.p>
             <motion.a
-              href="https://t.me/+79958636285"
+              href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу прийти на первое бесплатное занятие')}`}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 10 }}

@@ -33,6 +33,8 @@ export default function MMAPage() {
         },
       ]}
       emoji="🥊"
+      image="/мма.jpg"
+      accent="#06b6d4"
     />
   );
 }

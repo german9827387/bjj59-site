@@ -1,9 +1,43 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileCTA from "@/components/MobileCTA";
+import TgLinkHandler from "@/components/TgLinkHandler";
+
+// ← Замени на свой ID счётчика Яндекс.Метрики
+const YM_ID = 44430424;
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  "name": "GSAcademy",
+  "url": "https://bjj59.ru",
+  "telephone": "+79958654244",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Аркадия Гайдара 8б",
+    "addressLocality": "Пермь",
+    "addressCountry": "RU"
+  },
+  "openingHours": "Mo-Su 08:00-22:00",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "88"
+  },
+  "sameAs": [
+    "https://vk.com/bjjperm59",
+    "https://t.me/GSAcademy59"
+  ]
+};
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -39,7 +73,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className="dark">
+      <head>
+        {/* JSON-LD структурированные данные */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {/* Яндекс Метрика */}
+        <Script id="ym-init" strategy="afterInteractive">{`
+          (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+          (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+          ym(${YM_ID},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+          window.__YM_COUNTER_ID__ = ${YM_ID};
+        `}</Script>
+        <noscript>
+          <div>
+            <img src={`https://mc.yandex.ru/watch/${YM_ID}`} style={{position:"absolute",left:"-9999px"}} alt="" />
+          </div>
+        </noscript>
+      </head>
       <body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`}>
+        <TgLinkHandler />
         <Navbar />
         <main>{children}</main>
         <Footer />

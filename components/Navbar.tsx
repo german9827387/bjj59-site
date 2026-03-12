@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 
 const navLinks = [
@@ -36,11 +37,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 xl:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/logo.png"
               alt="GS Academy"
+              width={120}
+              height={40}
               className="h-10 w-auto object-contain"
+              priority
             />
           </Link>
 
@@ -63,14 +66,14 @@ export default function Navbar() {
           {/* CTA + Phone */}
           <div className="hidden xl:flex items-center gap-4 ml-6">
             <a
-              href="tel:+79124906455"
+              href="tel:+79958654244"
               className="flex items-center gap-2 text-sm text-gray-300 hover:text-[#3B82F6] transition-colors whitespace-nowrap"
             >
               <Phone size={16} />
               <span>8 (995) 865-42-44</span>
             </a>
             <a
-              href="https://t.me/+79958636285"
+              href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-2 px-5 rounded-full text-sm hover:opacity-90 transition-opacity"
@@ -109,14 +112,14 @@ export default function Navbar() {
             ))}
             <div className="pt-4 flex flex-col gap-3">
               <a
-                href="tel:+79124906455"
+                href="tel:+79958654244"
                 className="flex items-center gap-2 text-gray-300 hover:text-[#3B82F6] transition-colors"
               >
                 <Phone size={16} />
                 <span>8 (995) 865-42-44</span>
               </a>
               <a
-                href="https://t.me/+79958636285"
+                href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-3 px-6 rounded-full text-center"

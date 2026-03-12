@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Phone, Instagram } from "lucide-react";
 
 const directions = [
@@ -22,8 +23,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="mb-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="GS Academy" className="h-10 w-auto object-contain" />
+              <Image src="/logo.png" alt="GS Academy" width={120} height={40} className="h-10 w-auto object-contain" />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Академия единоборств в Перми. Профессиональные тренировки для детей и взрослых. Часть команды Alliance, 14-кратные чемпионы мира.
@@ -43,7 +43,7 @@ export default function Footer() {
                 ВКонтакте
               </a>
               <a
-                href="https://t.me/+79958636285"
+                href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта gsacademy.ru')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#1e1e1e] hover:bg-blue-600/20 border border-[#2e2e2e] hover:border-blue-500/50 text-gray-200 hover:text-white rounded-2xl px-4 py-3 font-semibold text-sm transition-all group"
@@ -94,7 +94,7 @@ export default function Footer() {
               </li>
             </ul>
             <a
-              href="https://t.me/+79958636285"
+              href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-2 px-5 rounded-full text-sm hover:opacity-90 transition-opacity"

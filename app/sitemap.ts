@@ -8,6 +8,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/mma`, lastModified: new Date(), priority: 0.9 },
     { url: `${baseUrl}/boxing`, lastModified: new Date(), priority: 0.9 },
     { url: `${baseUrl}/grappling`, lastModified: new Date(), priority: 0.9 },
+    { url: `${baseUrl}/muaythai`, lastModified: new Date(), priority: 0.9 },
+    { url: `${baseUrl}/schedule`, lastModified: new Date(), priority: 0.7 },
     { url: `${baseUrl}/privacy`, lastModified: new Date(), priority: 0.3 },
     { url: `${baseUrl}/offer`, lastModified: new Date(), priority: 0.3 },
     { url: `${baseUrl}/consent`, lastModified: new Date(), priority: 0.3 },

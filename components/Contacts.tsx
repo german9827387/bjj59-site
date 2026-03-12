@@ -64,7 +64,7 @@ export default function Contacts() {
                 <div>
                   <h3 className="text-white font-bold mb-1">Телефон</h3>
                   <a
-                    href="tel:+79124906455"
+                    href="tel:+79958654244"
                     className="text-gray-400 hover:text-[#3B82F6] transition-colors text-lg font-medium"
                   >
                     8 (995) 865-42-44

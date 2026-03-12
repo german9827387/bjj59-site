@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const awards = [
   {
@@ -75,7 +76,7 @@ export default function Awards() {
                 <div className="relative flex flex-col bg-gradient-to-b from-[#111827] to-[#0d1117] rounded-[2rem] overflow-hidden h-full">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(59,130,246,0.12),transparent)] pointer-events-none z-10" />
                   <div className="relative overflow-hidden rounded-t-[2rem] h-80 group-hover:scale-[1.03] transition-transform duration-500 origin-top">
-                    <img src={award.image} alt={award.title} className="w-full h-full object-cover object-top" />
+                    <Image src={award.image} alt={award.title} fill className="object-cover object-top" sizes="176px" />
                   </div>
                   <div className="relative z-10 text-center px-5 py-4 flex-1 flex flex-col justify-center">
                     <div className="text-white font-black text-base leading-tight">{award.title}</div>

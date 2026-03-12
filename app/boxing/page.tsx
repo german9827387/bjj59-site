@@ -33,6 +33,8 @@ export default function BoxingPage() {
         },
       ]}
       emoji="🥊"
+      image="/boxing.jpg"
+      accent="#818cf8"
     />
   );
 }

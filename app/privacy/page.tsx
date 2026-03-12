@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Политика конфиденциальности | GSAcademy",
+  description: "Политика конфиденциальности и обработки персональных данных GSAcademy, Пермь.",
+  robots: { index: false },
+};
 
 export default function PrivacyPage() {
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import trainersJson from "@/data/trainers.json";
 
 const trainers = trainersJson;
@@ -21,10 +22,12 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
       style={{ aspectRatio: "3/4" }}
     >
       {hasImage ? (
-        <img
+        <Image
           src={trainer.image}
           alt={trainer.name}
-          className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+          fill
+          className="absolute inset-0 object-cover object-top group-hover:scale-105 transition-transform duration-700"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
       ) : (
         <div className={`absolute inset-0 bg-gradient-to-br ${trainer.beltGradient}`}>
@@ -66,7 +69,7 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
           ))}
         </ul>
         <a
-          href="https://t.me/+79958636285"
+          href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на тренировку')}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-xs font-bold py-2 rounded-xl hover:bg-blue-500/30 transition-all"

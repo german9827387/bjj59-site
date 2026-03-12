@@ -202,7 +202,7 @@ export default function Pricing() {
                 </ul>
 
                 <a
-                  href="https://t.me/+79958636285"
+                  href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, интересует стоимость занятий')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`mt-auto text-center font-bold py-3 px-6 rounded-xl text-sm transition-all duration-200 ${

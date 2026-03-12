@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Согласие на обработку данных | GSAcademy",
+  description: "Согласие на обработку персональных данных GSAcademy, Пермь.",
+  robots: { index: false },
+};
 
 export default function ConsentPage() {
   return (

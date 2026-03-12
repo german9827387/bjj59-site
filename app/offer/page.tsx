@@ -1,5 +1,12 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Публичная оферта | GSAcademy",
+  description: "Публичная оферта GSAcademy на оказание физкультурно-оздоровительных услуг в Перми.",
+  robots: { index: false },
+};
 
 export default function OfferPage() {
   return (

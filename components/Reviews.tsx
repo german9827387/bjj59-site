@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Star, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import reviewsJson from "@/data/reviews.json";
 
 const reviews = reviewsJson;
@@ -92,14 +93,14 @@ export default function Reviews() {
                 name: "2ГИС",
                 score: "5.0",
                 icon: (
-                  <img src="/2gis.jpeg" alt="2GIS" className="w-14 h-14 rounded-2xl object-cover" />
+                  <Image src="/2gis.jpeg" alt="2ГИС" width={56} height={56} className="rounded-2xl object-cover" />
                 ),
               },
               {
                 name: "Яндекс",
                 score: "5.0",
                 icon: (
-                  <img src="/yandex.jpg" alt="Яндекс" className="w-14 h-14 rounded-2xl object-cover" />
+                  <Image src="/yandex.jpg" alt="Яндекс" width={56} height={56} className="rounded-2xl object-cover" />
                 ),
               },
               {
@@ -200,7 +201,7 @@ export default function Reviews() {
 
           {/* Controls */}
           <div className="flex items-center justify-center gap-4 mt-4">
-            <button onClick={prev} className="p-2 rounded-full border border-[#1e1e1e] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
+            <button onClick={prev} aria-label="Предыдущий отзыв" className="p-2 rounded-full border border-[#1e1e1e] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
               <ChevronLeft size={16} />
             </button>
             <div className="flex gap-2">
@@ -208,11 +209,12 @@ export default function Reviews() {
                 <button
                   key={i}
                   onClick={() => setActive(i)}
+                  aria-label={`Отзыв ${i + 1}`}
                   className={`rounded-full transition-all ${i === active ? "w-5 h-2 bg-blue-500" : "w-2 h-2 bg-[#333]"}`}
                 />
               ))}
             </div>
-            <button onClick={next} className="p-2 rounded-full border border-[#1e1e1e] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
+            <button onClick={next} aria-label="Следующий отзыв" className="p-2 rounded-full border border-[#1e1e1e] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
               <ChevronRight size={16} />
             </button>
           </div>

@@ -33,6 +33,8 @@ export default function BJJPage() {
         },
       ]}
       emoji="🥋"
+      image="/bjj.jpg"
+      accent="#3b82f6"
     />
   );
 }

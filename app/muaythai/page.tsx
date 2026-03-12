@@ -33,6 +33,8 @@ export default function MuaythaiPage() {
         },
       ]}
       emoji="🦵"
+      image="/highkis.jpg"
+      accent="#f59e0b"
     />
   );
 }

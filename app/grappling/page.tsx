@@ -33,6 +33,8 @@ export default function GrapplingPage() {
         },
       ]}
       emoji="🤼"
+      image="/grappling.jpg"
+      accent="#6366f1"
     />
   );
 }
