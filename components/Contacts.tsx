@@ -1,8 +1,8 @@
 "use client";
 
-import { m as motion } from "framer-motion";
 import { MapPin, Phone } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+import Reveal from "./Reveal";
 
 export default function Contacts() {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -21,33 +21,19 @@ export default function Contacts() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-[#3B82F6] text-xs font-medium uppercase tracking-widest"
-          >
-            Приходите к нам
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl font-black text-white mt-2"
-          >
-            Наши <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">контакты</span>
-          </motion.h2>
+          <Reveal>
+            <span className="text-[#3B82F6] text-xs font-medium uppercase tracking-widest">
+              Приходите к нам
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
+              Наши <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">контакты</span>
+            </h2>
+          </Reveal>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-[#3B82F6]/10 flex items-center justify-center shrink-0">
@@ -85,14 +71,11 @@ export default function Contacts() {
               </div>
             </div>
 
-          </motion.div>
+          </div>
 
           {/* Map */}
-          <motion.div
+          <div
             ref={mapRef}
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
             className="rounded-2xl overflow-hidden border border-[#1e1e1e] min-h-64"
           >
             {mapVisible ? (
@@ -114,7 +97,7 @@ export default function Contacts() {
                 <MapPin size={20} className="mr-2" /> Загрузка карты…
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

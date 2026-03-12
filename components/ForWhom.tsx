@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { m as motion } from "framer-motion";
 import { Shield, Zap, Heart } from "lucide-react";
+import Reveal from "./Reveal";
 
 const tabs = [
   {
@@ -89,35 +89,20 @@ export default function ForWhom() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-4"
-          >
-            Для кого
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl font-black text-white mt-2"
-          >
-            Тренировки для{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-              каждого
+          <Reveal>
+            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-4">
+              Для кого
             </span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="mt-3 text-gray-500 text-base max-w-md mx-auto"
-          >
-            Подберём программу под любой возраст и уровень подготовки
-          </motion.p>
+            <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
+              Тренировки для{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+                каждого
+              </span>
+            </h2>
+            <p className="mt-3 text-gray-500 text-base max-w-md mx-auto">
+              Подберём программу под любой возраст и уровень подготовки
+            </p>
+          </Reveal>
         </div>
 
         {/* Tabs */}
@@ -139,14 +124,12 @@ export default function ForWhom() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div key={active} className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {activeTab.items.map((item, i) => (
-            <motion.div
+            <div
               key={item.num}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08, duration: 0.45 }}
-              className="group relative rounded-2xl overflow-hidden"
+              className="tab-fade group relative rounded-2xl overflow-hidden"
+              style={{ animationDelay: `${i * 0.08}s` }}
             >
               {/* Glassmorphism background */}
               <div
@@ -174,7 +157,7 @@ export default function ForWhom() {
                 {/* Bottom accent line */}
                 <div className="mt-6 h-px bg-gradient-to-r from-blue-400/50 via-cyan-400/30 to-transparent" />
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

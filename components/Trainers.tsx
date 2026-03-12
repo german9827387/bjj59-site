@@ -1,8 +1,6 @@
-"use client";
-
-import { m as motion } from "framer-motion";
 import Image from "next/image";
 import trainersJson from "@/data/trainers.json";
+import Reveal from "./Reveal";
 
 const trainers = trainersJson;
 
@@ -13,14 +11,8 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
   const hasImage = !!trainer.image;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ delay: i * 0.07 }}
-      className="relative rounded-2xl overflow-hidden group cursor-pointer shadow-xl shadow-black/40"
-      style={{ aspectRatio: "3/4" }}
-    >
+    <Reveal delay={i * 60}>
+      <div className="relative rounded-2xl overflow-hidden group cursor-pointer shadow-xl shadow-black/40" style={{ aspectRatio: "3/4" }}>
       {hasImage ? (
         <Image
           src={trainer.image}
@@ -77,7 +69,8 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
           Записаться
         </a>
       </div>
-    </motion.div>
+      </div>
+    </Reveal>
   );
 }
 
@@ -90,36 +83,21 @@ export default function Trainers() {
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-b from-transparent to-[#0a0a0a] pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-blue-500 text-xs font-medium uppercase tracking-widest"
-          >
-            Команда профессионалов
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl font-black text-white mt-2"
-          >
-            Наши{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-              тренеры
+          <Reveal>
+            <span className="text-blue-500 text-xs font-medium uppercase tracking-widest">
+              Команда профессионалов
             </span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-500 mt-4 max-w-2xl mx-auto text-sm"
-          >
-            6 чёрных поясов по BJJ, чемпионы мира и России.
-            Все тренеры имеют педагогическое образование.
-          </motion.p>
+            <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
+              Наши{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+                тренеры
+              </span>
+            </h2>
+            <p className="text-gray-500 mt-4 max-w-2xl mx-auto text-sm">
+              6 чёрных поясов по BJJ, чемпионы мира и России.
+              Все тренеры имеют педагогическое образование.
+            </p>
+          </Reveal>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {trainers.map((trainer, i) => (

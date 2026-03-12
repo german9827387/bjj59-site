@@ -6,7 +6,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileCTA from "@/components/MobileCTA";
 import TgLinkHandler from "@/components/TgLinkHandler";
-import MotionProvider from "@/components/MotionProvider";
 
 // ← Замени на свой ID счётчика Яндекс.Метрики
 const YM_ID = 44430424;
@@ -101,13 +100,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://api.vk.com" />
       </head>
       <body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`}>
-        <MotionProvider>
           <TgLinkHandler />
           <Navbar />
           <main>{children}</main>
           <Footer />
           <MobileCTA />
-        </MotionProvider>
       </body>
     </html>
   );

@@ -5,9 +5,10 @@ interface RevealProps {
   children: React.ReactNode;
   className?: string;
   delay?: number; // ms
+  style?: React.CSSProperties;
 }
 
-export default function Reveal({ children, className = "", delay = 0 }: RevealProps) {
+export default function Reveal({ children, className = "", delay = 0, style }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function Reveal({ children, className = "", delay = 0 }: RevealPr
   }, [delay]);
 
   return (
-    <div ref={ref} className={`reveal ${className}`}>
+    <div ref={ref} className={`reveal ${className}`} style={style}>
       {children}
     </div>
   );

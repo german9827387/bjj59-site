@@ -1,6 +1,6 @@
 "use client";
 
-import { m as motion, useInView, useMotionValue, animate } from "framer-motion";
+
 import { Play } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
@@ -9,19 +9,27 @@ const { hero, contacts } = settingsJson;
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const count = useMotionValue(0);
   const [display, setDisplay] = useState("0");
 
   useEffect(() => {
-    if (!inView) return;
-    const controls = animate(count, target, {
-      duration: 1.8,
-      ease: "easeOut",
-      onUpdate: (v) => setDisplay(Math.round(v).toString()),
-    });
-    return controls.stop;
-  }, [inView, target, count]);
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      const start = Date.now();
+      const duration = 1800;
+      const tick = () => {
+        const t = Math.min((Date.now() - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        setDisplay(Math.round(eased * target).toString());
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { rootMargin: "0px" });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target]);
 
   return <span ref={ref}>{display}{suffix}</span>;
 }
@@ -70,24 +78,17 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20 lg:pt-24">
         {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-2 mb-8"
-        >
+        <div className="hero-fade inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-2 mb-8">
           <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
           <span className="text-blue-400 text-xs font-medium uppercase tracking-widest">
             {hero.badge}
           </span>
-        </motion.div>
+        </div>
 
         {/* Main heading */}
-        <motion.h1
-          initial={{ y: 30 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-4xl sm:text-7xl lg:text-[96px] font-black text-white leading-[0.9] tracking-tight mb-6"
+        <h1
+          className="hero-slide text-4xl sm:text-7xl lg:text-[96px] font-black text-white leading-[0.9] tracking-tight mb-6"
+          style={{ animationDelay: "0.1s" }}
         >
           {hero.title1}
           <br />
@@ -96,25 +97,18 @@ export default function Hero() {
           </span>
           <br />
           {hero.title3}
-        </motion.h1>
+        </h1>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mt-4 mb-10 leading-relaxed"
+        <p
+          className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mt-4 mb-10 leading-relaxed"
+          style={{ animationDelay: "0.3s" }}
         >
           {hero.subtitle}
-        </motion.p>
+        </p>
 
         {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-col items-center gap-4"
-        >
+        <div className="hero-fade flex flex-col items-center gap-4" style={{ animationDelay: "0.5s" }}>
           {/* UTP */}
           <div className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full px-5 py-2.5">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
@@ -140,15 +134,10 @@ export default function Hero() {
             {hero.ctaSecondary}
           </a>
           </div>
-        </motion.div>
+        </div>
 
         {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 max-w-3xl mx-auto"
-        >
+        <div className="hero-fade grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 max-w-3xl mx-auto" style={{ animationDelay: "0.7s" }}>
           {hero.stats.map((stat) => (
             <div
               key={stat.label}
@@ -160,7 +149,7 @@ export default function Hero() {
               <div className="text-gray-500 text-xs mt-1 uppercase tracking-wider">{stat.label}</div>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       {/* Smooth fade into next section */}

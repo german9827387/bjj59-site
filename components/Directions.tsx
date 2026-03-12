@@ -1,9 +1,7 @@
-"use client";
-
-import { m as motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import directionsJson from "@/data/directions.json";
+import Reveal from "./Reveal";
 
 const directions = directionsJson;
 const HEX = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
@@ -18,14 +16,7 @@ const ACCENTS: Record<string, string> = {
 function HexCard({ d, i }: { d: (typeof directions)[0]; i: number }) {
   const accent = ACCENTS[d.slug] ?? "#3b82f6";
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.92 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ delay: i * 0.1, duration: 0.5 }}
-      className="relative w-full"
-      style={{ paddingTop: "115.47%" }}
-    >
+    <Reveal delay={i * 80} className="relative w-full" style={{ paddingTop: "115.47%" }}>
       <Link href={`/${d.slug}`} className="absolute inset-0 group">
         {/* Glow ring */}
         <div
@@ -80,7 +71,7 @@ function HexCard({ d, i }: { d: (typeof directions)[0]; i: number }) {
           </div>
         </div>
       </Link>
-    </motion.div>
+    </Reveal>
   );
 }
 
@@ -91,20 +82,14 @@ export default function Directions() {
   return (
     <section id="directions" className="py-20 lg:py-28 bg-[#0a0a0a]">
       <div className="max-w-5xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
+        <Reveal className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">
             {"Наши"} <span className="text-[#3b82f6]">{"направления"}</span>
           </h2>
           <p className="mt-3 text-white/50 text-base sm:text-lg max-w-xl mx-auto">
             {"Выбери свою боевую дисциплину и начни тренироваться сегодня"}
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Desktop honeycomb */}
         <div className="hidden md:block">
