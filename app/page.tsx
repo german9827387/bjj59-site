@@ -1,15 +1,18 @@
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
 import ForWhom from "@/components/ForWhom";
-import WhyUs from "@/components/WhyUs";
 import Directions from "@/components/Directions";
 import Trainers from "@/components/Trainers";
-import Reviews from "@/components/Reviews";
-import Awards from "@/components/Awards";
 import News from "@/components/News";
-import Results from "@/components/Results";
-import Pricing from "@/components/Pricing";
-import FirstTraining from "@/components/FirstTraining";
-import CTA from "@/components/CTA";
+
+const Reviews = dynamic(() => import("@/components/Reviews"));
+const Awards = dynamic(() => import("@/components/Awards"));
+const Results = dynamic(() => import("@/components/Results"));
+const Pricing = dynamic(() => import("@/components/Pricing"));
+const FirstTraining = dynamic(() => import("@/components/FirstTraining"));
+const WhyUs = dynamic(() => import("@/components/WhyUs"));
+const CTA = dynamic(() => import("@/components/CTA"));
 
 export default function Home() {
   return (
@@ -20,7 +23,9 @@ export default function Home() {
       <Trainers />
       <Reviews />
       <Awards />
-      <News />
+      <Suspense>
+        <News />
+      </Suspense>
       <Results />
       <Pricing />
       <FirstTraining />

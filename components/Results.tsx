@@ -3,6 +3,7 @@
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Trophy, Medal } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -116,11 +117,14 @@ export default function Results() {
             {/* Нижний градиент */}
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0d1525]/80 to-transparent z-10 pointer-events-none" />
 
-            <img
+            <Image
               src="/result.png"
               alt="Наши результаты"
+              width={1400}
+              height={900}
               className="w-full h-auto object-contain relative z-0"
               style={{ filter: "saturate(1.15) contrast(1.05) brightness(0.97)" }}
+              loading="lazy"
             />
           </div>
         </motion.div>

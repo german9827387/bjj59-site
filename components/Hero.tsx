@@ -36,6 +36,7 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover opacity-50"
         >
           <source src="/hero-compressed.mp4" type="video/mp4" />

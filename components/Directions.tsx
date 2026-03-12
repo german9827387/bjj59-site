@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import directionsJson from "@/data/directions.json";
 
 const directions = directionsJson;
@@ -40,10 +41,13 @@ function HexCard({ d, i }: { d: (typeof directions)[0]; i: number }) {
         <div className="absolute inset-[3px] overflow-hidden" style={{ clipPath: HEX }}>
           <div className="absolute inset-0 bg-[#080808]" />
           {d.image ? (
-            <img
+            <Image
               src={d.image}
               alt={d.title}
-              className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700"
+              fill
+              className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700"
+              sizes="(max-width: 768px) 50vw, 33vw"
+              loading="lazy"
             />
           ) : (
             <>
