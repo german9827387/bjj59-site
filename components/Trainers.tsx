@@ -44,16 +44,16 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
         </div>
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
 
       <span className={`absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full ${trainer.beltBadge} z-10`}>
         {trainer.belt}
       </span>
 
       {/* Always visible: name + role */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 z-10 group-hover:opacity-0 transition-opacity duration-300">
-        <h3 className="text-white font-black text-base leading-tight">{trainer.name}</h3>
-        <p className="text-gray-400 text-xs mt-0.5 leading-snug">{trainer.role}</p>
+      <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-10 group-hover:opacity-0 transition-opacity duration-300">
+        <h3 className="text-white font-black text-sm sm:text-base leading-tight">{trainer.name}</h3>
+        <p className="text-gray-400 text-[10px] sm:text-xs mt-0.5 leading-snug">{trainer.role}</p>
       </div>
 
       {/* Hover overlay with achievements */}
