@@ -1,8 +1,6 @@
-"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
-import { useState } from "react";
 
 const directions = [
   { label: "Бразильское джиу-джитсу", href: "/bjj" },
@@ -18,7 +16,6 @@ const legalLinks = [
 ];
 
 export default function Footer() {
-  const [mapLoaded, setMapLoaded] = useState(false);
   return (
     <footer id="contacts" className="bg-[#080808] border-t border-[#1e1e1e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -110,28 +107,15 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Мы на карте</h3>
             <div className="rounded-xl overflow-hidden border border-[#1e1e1e] aspect-video">
-              {mapLoaded ? (
-                <iframe
-                  src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
-                  width="100%"
-                  height="100%"
-                  frameBorder="0"
-                  allowFullScreen
-                  title="Карта GSAcademy"
-                  className="w-full h-full"
-                />
-              ) : (
-                <button
-                  onClick={() => setMapLoaded(true)}
-                  className="w-full h-full flex flex-col items-center justify-center gap-2 bg-[#0d0d0d] hover:bg-[#111] transition-colors cursor-pointer group"
-                  aria-label="Показать карту"
-                >
-                  <div className="w-10 h-10 rounded-full bg-[#3B82F6]/10 flex items-center justify-center group-hover:bg-[#3B82F6]/20 transition-colors">
-                    <MapPin size={20} className="text-[#3B82F6]" />
-                  </div>
-                  <span className="text-[#3B82F6] text-xs">Показать карту</span>
-                </button>
-              )}
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allowFullScreen
+                title="Карта GSAcademy"
+                className="w-full h-full"
+              />
             </div>
           </div>
         </div>

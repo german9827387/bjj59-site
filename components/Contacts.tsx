@@ -1,11 +1,7 @@
-"use client";
-
 import { MapPin, Phone } from "lucide-react";
-import { useState } from "react";
 import Reveal from "./Reveal";
 
 export default function Contacts() {
-  const [mapLoaded, setMapLoaded] = useState(false);
   return (
     <section id="contacts" className="section-card py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,38 +59,21 @@ export default function Contacts() {
 
           </div>
 
-          {/* Map — facade pattern: loads only on user click */}
+          {/* Map */}
           <div
             className="rounded-2xl overflow-hidden border border-[#1e1e1e]"
             style={{ minHeight: "320px" }}
           >
-            {mapLoaded ? (
-              <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen
-                title="Карта GSAcademy — г. Пермь, ул. Аркадия Гайдара 8б"
-                className="w-full h-full"
-                style={{ minHeight: "320px" }}
-              />
-            ) : (
-              <button
-                onClick={() => setMapLoaded(true)}
-                className="w-full h-full flex flex-col items-center justify-center gap-4 bg-[#0d0d0d] hover:bg-[#111] transition-colors cursor-pointer group"
-                style={{ minHeight: "320px" }}
-                aria-label="Показать карту"
-              >
-                <div className="w-14 h-14 rounded-full bg-[#3B82F6]/10 flex items-center justify-center group-hover:bg-[#3B82F6]/20 transition-colors">
-                  <MapPin size={28} className="text-[#3B82F6]" />
-                </div>
-                <div className="text-center">
-                  <div className="text-white font-semibold mb-1">г. Пермь, ул. Аркадия Гайдара 8б</div>
-                  <div className="text-[#3B82F6] text-sm">Нажмите, чтобы открыть карту</div>
-                </div>
-              </button>
-            )}
+            <iframe
+              src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              allowFullScreen
+              title="Карта GSAcademy — г. Пермь, ул. Аркадия Гайдара 8б"
+              className="w-full h-full"
+              style={{ minHeight: "320px" }}
+            />
           </div>
         </div>
       </div>
