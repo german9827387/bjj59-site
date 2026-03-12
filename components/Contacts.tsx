@@ -70,7 +70,7 @@ export default function Contacts() {
           >
             {mapLoaded ? (
               <iframe
-                src="https://widgets.2gis.com/widget?type=firm&id=70000001006776807&locale=ru_RU&zoom=16"
+                src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
                 width="100%"
                 height="100%"
                 frameBorder="0"
