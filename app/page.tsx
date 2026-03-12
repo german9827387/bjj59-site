@@ -5,6 +5,7 @@ import Directions from "@/components/Directions";
 import Trainers from "@/components/Trainers";
 import Reviews from "@/components/Reviews";
 import Awards from "@/components/Awards";
+import News from "@/components/News";
 import Results from "@/components/Results";
 import Pricing from "@/components/Pricing";
 import FirstTraining from "@/components/FirstTraining";
@@ -19,6 +20,7 @@ export default function Home() {
       <Trainers />
       <Reviews />
       <Awards />
+      <News />
       <Results />
       <Pricing />
       <FirstTraining />
