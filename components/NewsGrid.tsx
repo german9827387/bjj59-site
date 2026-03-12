@@ -8,12 +8,6 @@ export interface VkPost {
   text: string;
   date: number;
   photos: string[];
-  video: {
-    ownerId: number;
-    id: number;
-    thumb: string | null;
-    player: string | null;
-  } | null;
 }
 
 const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
@@ -38,14 +32,7 @@ function Modal({ post, onClose }: { post: VkPost; onClose: () => void }) {
     };
   }, [onClose]);
 
-  const videoUrl = post.video?.player
-    ? post.video.player
-    : post.video
-    ? `https://vk.com/video_ext.php?oid=${post.video.ownerId}&id=${post.video.id}&hd=2`
-    : null;
-
   const currentPhoto = post.photos[photoIdx] ?? null;
-  const videoCover = post.video?.thumb ?? null;
 
   return (
     <div
@@ -65,32 +52,8 @@ function Modal({ post, onClose }: { post: VkPost; onClose: () => void }) {
           ✕
         </button>
 
-        {/* Video */}
-        {post.video && (
-          <div className="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
-            <button
-              onClick={() => window.open(`https://vk.com/video${post.video!.ownerId}_${post.video!.id}`, "_blank", "noopener,noreferrer")}
-              className="absolute inset-0 w-full h-full group"
-            >
-              {videoCover && (
-                <Image src={videoCover} alt="" fill className="object-cover" sizes="672px" />
-              )}
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-colors">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border border-white/40 flex items-center justify-center">
-                    <svg className="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  <span className="text-white/70 text-xs">Смотреть в ВКонтакте</span>
-                </div>
-              </div>
-            </button>
-          </div>
-        )}
-
         {/* Photos */}
-        {!videoUrl && currentPhoto && (
+        {currentPhoto && (
           <div className="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
             <Image
               src={currentPhoto}
@@ -156,8 +119,7 @@ export default function NewsGrid({ posts }: { posts: VkPost[] }) {
     <>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {posts.map((post) => {
-          const cover = post.photos[0] ?? post.video?.thumb ?? null;
-          const isVideo = !!post.video;
+          const cover = post.photos[0] ?? null;
 
           return (
             <button
@@ -174,19 +136,6 @@ export default function NewsGrid({ posts }: { posts: VkPost[] }) {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 640px) 100vw, 33vw"
                   />
-                  {isVideo && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm border border-white/40 flex items-center justify-center">
-                        <svg
-                          className="w-5 h-5 text-white ml-0.5"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
               <div className="flex flex-col flex-1 p-5">

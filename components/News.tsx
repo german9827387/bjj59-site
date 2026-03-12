@@ -7,7 +7,7 @@ async function getPosts(): Promise<VkPost[]> {
 
   try {
     const res = await fetch(
-      `https://api.vk.com/method/wall.get?owner_id=${groupId}&count=3&filter=owner&v=5.131&access_token=${token}`,
+      `https://api.vk.com/method/wall.get?owner_id=${groupId}&count=10&filter=owner&v=5.131&access_token=${token}`,
       { next: { revalidate: 3600 } }
     );
     const data = await res.json();
@@ -15,6 +15,8 @@ async function getPosts(): Promise<VkPost[]> {
 
     return (data.response?.items ?? [])
       .filter((p: any) => p.text?.trim())
+      .filter((p: any) => (p.attachments ?? []).some((a: any) => a.type === 'photo'))
+      .slice(0, 3)
       .map((p: any) => {
         const attachments: any[] = p.attachments ?? [];
         const photos = attachments
@@ -25,16 +27,7 @@ async function getPosts(): Promise<VkPost[]> {
             return img?.url ?? null;
           })
           .filter(Boolean) as string[];
-        const videoAtt = attachments.find((a) => a.type === 'video');
-        let video: VkPost['video'] = null;
-        if (videoAtt?.video) {
-          const thumbs: any[] = videoAtt.video.image ?? [];
-          // Берём самое большое превью (последнее в массиве)
-          const thumb = thumbs.reduce((best: any, s: any) => (!best || (s.width ?? 0) > (best.width ?? 0)) ? s : best, null);
-          video = { ownerId: videoAtt.video.owner_id, id: videoAtt.video.id, thumb: thumb?.url ?? null, player: videoAtt.video.player ?? null };
-        }
-        return { id: p.id, text: p.text, date: p.date, photos, video };
-      });
+        return { id: p.id, text: p.text, date: p.date, photos };      });
   } catch {
     return [];
   }
