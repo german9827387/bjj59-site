@@ -108,13 +108,12 @@ export default function Footer() {
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Мы на карте</h3>
             <div className="rounded-xl overflow-hidden border border-[#1e1e1e] aspect-video">
               <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=56.256389%2C58.014444&z=16&pt=56.256389,58.014444,pm2rdm"
+                src="https://widgets.2gis.com/widget?type=firm&id=70000001006776807&locale=ru_RU&zoom=16"
                 width="100%"
                 height="100%"
                 frameBorder="0"
                 allowFullScreen
                 title="Карта GSAcademy"
-                className="grayscale"
               />
             </div>
           </div>
