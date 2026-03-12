@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useMotionValue, animate } from "framer-motion";
+import { m as motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Play } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
@@ -84,8 +84,8 @@ export default function Hero() {
 
         {/* Main heading */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 30 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           className="text-4xl sm:text-7xl lg:text-[96px] font-black text-white leading-[0.9] tracking-tight mb-6"
         >

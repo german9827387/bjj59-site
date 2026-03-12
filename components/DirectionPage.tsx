@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Check, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import CTA from "./CTA";

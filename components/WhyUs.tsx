@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Trophy, Users, GraduationCap, BookOpen } from "lucide-react";
 
 const reasons = [

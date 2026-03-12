@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileCTA from "@/components/MobileCTA";
 import TgLinkHandler from "@/components/TgLinkHandler";
+import MotionProvider from "@/components/MotionProvider";
 
 // ← Замени на свой ID счётчика Яндекс.Метрики
 const YM_ID = 44430424;
@@ -94,13 +95,17 @@ export default function RootLayout({
             <img src={`https://mc.yandex.ru/watch/${YM_ID}`} style={{position:"absolute",left:"-9999px"}} alt="" />
           </div>
         </noscript>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://api.vk.com" />
       </head>
       <body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`}>
-        <TgLinkHandler />
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <MobileCTA />
+        <MotionProvider>
+          <TgLinkHandler />
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <MobileCTA />
+        </MotionProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useMotionValue, animate } from "framer-motion";
+import { m as motion, useInView, useMotionValue, animate } from "framer-motion";
 import { Trophy, Medal } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";

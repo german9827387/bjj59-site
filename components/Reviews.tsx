@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Star, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";

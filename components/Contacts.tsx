@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { MapPin, Phone } from "lucide-react";
 
 export default function Contacts() {
