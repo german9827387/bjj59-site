@@ -26,7 +26,7 @@ export default function Footer() {
               <Image src="/logo.png" alt="GS Academy" width={120} height={40} quality={60} className="h-10 w-auto object-contain" />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Академия единоборств в Перми. Профессиональные тренировки для детей и взрослых. Часть команды Alliance, 14-кратные чемпионы мира.
+              Академия единоборств в Перми. Профессиональные тренировки для детей и взрослых. Часть команды Alliance, 15-кратные чемпионы мира.
             </p>
             <div className="flex flex-col gap-3 mt-5">
               <a
