@@ -1,7 +1,7 @@
 "use client";
 
 import { Star, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import reviewsJson from "@/data/reviews.json";
 import Reveal from "./Reveal";
@@ -34,13 +34,35 @@ function Stars({ count, size = 14 }: { count: number; size?: number }) {
 export default function Reviews() {
   const [active, setActive] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [slideDir, setSlideDir] = useState<"left" | "right" | null>(null);
+  const [animKey, setAnimKey] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
-  const next = useCallback(() => setActive((v) => (v + 1) % reviews.length), []);
-  const prev = useCallback(() => setActive((v) => (v - 1 + reviews.length) % reviews.length), []);
+  const goTo = useCallback((index: number, dir: "left" | "right") => {
+    setSlideDir(dir);
+    setAnimKey(k => k + 1);
+    setActive(index);
+  }, []);
+
+  const next = useCallback(() => goTo((active + 1) % reviews.length, "left"), [active, goTo]);
+  const prev = useCallback(() => goTo((active - 1 + reviews.length) % reviews.length, "right"), [active, goTo]);
 
   const handleNext = useCallback(() => { next(); setAutoPlay(false); }, [next]);
   const handlePrev = useCallback(() => { prev(); setAutoPlay(false); }, [prev]);
-  const handleDot = useCallback((i: number) => { setActive(i); setAutoPlay(false); }, []);
+  const handleDot = useCallback((i: number) => { goTo(i, i > active ? "left" : "right"); setAutoPlay(false); }, [active, goTo]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const delta = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 40) {
+      if (delta > 0) { handleNext(); } else { handlePrev(); }
+    }
+    touchStartX.current = null;
+  };
 
   useEffect(() => {
     if (!autoPlay) return;
@@ -175,11 +197,30 @@ export default function Reviews() {
 
         {/* ── Mobile carousel ── */}
         <div className="md:hidden mb-8">
-          <div className="relative overflow-hidden">
+          {/* Swipe hint */}
+          <div className="flex items-center justify-center gap-2 mb-4 text-blue-400/50 text-xs font-medium select-none">
+            <ChevronLeft size={14} className="animate-pulse" />
+            <span>свайп для переключения</span>
+            <ChevronRight size={14} className="animate-pulse" />
+          </div>
+
+          <div
+            className="relative overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div
-              key={active}
+              key={animKey}
               className="relative rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 overflow-hidden"
-              style={{ borderLeftColor: CARD_ACCENTS[active % CARD_ACCENTS.length], borderLeftWidth: "3px" }}
+              style={{
+                borderLeftColor: CARD_ACCENTS[active % CARD_ACCENTS.length],
+                borderLeftWidth: "3px",
+                animation: slideDir === "left"
+                  ? "slideInLeft 0.28s ease-out"
+                  : slideDir === "right"
+                  ? "slideInRight 0.28s ease-out"
+                  : undefined,
+              }}
             >
               <div
                 className="absolute top-3 right-4 text-[80px] font-black leading-none select-none pointer-events-none opacity-[0.06]"
@@ -219,7 +260,7 @@ export default function Reviews() {
                   key={i}
                   onClick={() => handleDot(i)}
                   aria-label={`Отзыв ${i + 1}`}
-                  className={`rounded-full transition-all ${i === active ? "w-5 h-2 bg-blue-500" : "w-2 h-2 bg-[#333]"}`}
+                  className={`rounded-full transition-all duration-300 ${i === active ? "w-5 h-2 bg-blue-500" : "w-2 h-2 bg-[#333]"}`}
                 />
               ))}
             </div>
@@ -228,6 +269,17 @@ export default function Reviews() {
             </button>
           </div>
         </div>
+
+        <style>{`
+          @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(40px); }
+            to   { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(-40px); }
+            to   { opacity: 1; transform: translateX(0); }
+          }
+        `}</style>
 
         {/* ── Ссылка ── */}
         <div className="text-center">
