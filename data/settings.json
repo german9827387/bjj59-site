@@ -9,16 +9,16 @@
     "ctaSecondary": "Наши направления",
     "stats": [
       {
-        "target": 8,
-        "suffix": "",
-        "label": "Тренеров",
-        "value": 8
+        "target": 100,
+        "suffix": "+",
+        "label": "Парковочных мест",
+        "value": 100
       },
       {
-        "target": 8,
+        "target": 13,
         "suffix": "",
-        "label": "Чёрных поясов BJJ",
-        "value": 8
+        "label": "Лет на рынке",
+        "value": 13
       },
       {
         "target": 88,
