@@ -38,7 +38,9 @@ export default function Hero() {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    const id = setTimeout(() => setVideoSrc("/hero-compressed1.mp4"), 300);
+    const isMobile = window.innerWidth < 768;
+    const src = isMobile ? "/hero-mobile.mp4" : "/hero-compressed1.mp4";
+    const id = setTimeout(() => setVideoSrc(src), 300);
     return () => clearTimeout(id);
   }, []);
 
