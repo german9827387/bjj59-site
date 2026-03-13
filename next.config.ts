@@ -3,9 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
-  experimental: {
-    optimizeCss: true,
-  },
+  experimental: {},
   async headers() {
     return [
       {

@@ -54,6 +54,7 @@ export default function Hero() {
           loop
           playsInline
           preload="none"
+          poster="/hero-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover opacity-50"
         >
           {videoSrc && <source src={videoSrc} type="video/mp4" />}
