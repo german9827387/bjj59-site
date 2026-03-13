@@ -33,7 +33,7 @@ export default function Pricing() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {plans.map((plan, i) => (
             <Reveal
               key={plan.title}
@@ -49,29 +49,21 @@ export default function Pricing() {
                 <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
               )}
 
-              <div className="p-6 flex flex-col flex-1">
+              <div className="p-3 sm:p-6 flex flex-col flex-1">
                 {/* Badge */}
                 <span
-                  className={`self-start text-[10px] font-bold px-3 py-1 rounded-full mb-4 tracking-wider ${
-                    plan.highlight
-                      ? "bg-white/20 text-white"
-                      : "bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                  }`}
+                  className={`self-start text-[10px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full mb-2 sm:mb-4 tracking-wider ${plan.highlight ? "bg-white/20 text-white" : "bg-blue-500/10 text-blue-400 border border-blue-500/20"}`}
                 >
                   {plan.label}
                 </span>
 
-                <h3 className={`font-bold text-lg mb-3 leading-tight ${plan.highlight ? "text-white" : "text-white"}`}>
+                <h3 className={`font-bold text-xs sm:text-lg mb-2 sm:mb-3 leading-tight ${plan.highlight ? "text-white" : "text-white"}`}>
                   {plan.title}
                 </h3>
 
-                <div className="flex items-baseline gap-1 mb-5">
+                <div className="flex items-baseline gap-1 mb-3 sm:mb-5">
                   <span
-                    className={`text-4xl font-black ${
-                      plan.highlight
-                        ? "text-white"
-                        : "bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text"
-                    }`}
+                    className={`text-2xl sm:text-4xl font-black ${plan.highlight ? "text-white" : "bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text"}`}
                   >
                     {plan.price}
                   </span>
@@ -83,14 +75,14 @@ export default function Pricing() {
                 {/* Разделитель */}
                 <div className={`h-px mb-5 ${plan.highlight ? "bg-white/20" : "bg-white/[0.06]"}`} />
 
-                <ul className="space-y-2.5 mb-6 flex-1">
+                <ul className="space-y-1 sm:space-y-2.5 mb-3 sm:mb-6 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5">
                       <Check
                         size={14}
                         className={`shrink-0 mt-0.5 ${plan.highlight ? "text-white" : "text-blue-400"}`}
                       />
-                      <span className={`text-sm leading-snug ${plan.highlight ? "text-white/85" : "text-gray-400"}`}>
+                      <span className={`text-[11px] sm:text-sm leading-snug ${plan.highlight ? "text-white/85" : "text-gray-400"}`}>
                         {f}
                       </span>
                     </li>
@@ -101,11 +93,7 @@ export default function Pricing() {
                   href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, интересует стоимость занятий')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`mt-auto text-center font-bold py-3 px-6 rounded-xl text-sm transition-all duration-200 ${
-                    plan.highlight
-                      ? "bg-white text-blue-600 hover:bg-blue-50 shadow-md"
-                      : "border border-blue-500/40 text-blue-400 hover:bg-blue-500/10 hover:border-blue-400/60"
-                  }`}
+                  className={`mt-auto text-center font-bold py-2 sm:py-3 px-3 sm:px-6 rounded-xl text-[11px] sm:text-sm transition-all duration-200 ${plan.highlight ? "bg-white text-blue-600 hover:bg-blue-50 shadow-md" : "border border-blue-500/40 text-blue-400 hover:bg-blue-500/10 hover:border-blue-400/60"}`}
                 >
                   {plan.cta}
                 </a>

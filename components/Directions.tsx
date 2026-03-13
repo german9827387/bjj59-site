@@ -4,113 +4,116 @@ import directionsJson from "@/data/directions.json";
 import Reveal from "./Reveal";
 
 const directions = directionsJson;
-const HEX = "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
 
-const ACCENTS: Record<string, string> = {
-  bjj: "#3b82f6",
-  mma: "#06b6d4",
-  boxing: "#818cf8",
-  grappling: "#6366f1",
+const ACCENTS: Record<string, { from: string; to: string }> = {
+  bjj:       { from: "#3b82f6", to: "#06b6d4" },
+  mma:       { from: "#06b6d4", to: "#6366f1" },
+  boxing:    { from: "#818cf8", to: "#3b82f6" },
+  grappling: { from: "#6366f1", to: "#818cf8" },
+  muaythai:  { from: "#f59e0b", to: "#ef4444" },
 };
 
-function HexCard({ d, i }: { d: (typeof directions)[0]; i: number }) {
-  const accent = ACCENTS[d.slug] ?? "#3b82f6";
+function DirectionCard({ d, i }: { d: (typeof directions)[0]; i: number }) {
+  const accent = ACCENTS[d.slug] ?? { from: "#3b82f6", to: "#06b6d4" };
+
   return (
-    <Reveal delay={i * 80} className="relative w-full" style={{ paddingTop: "115.47%" }}>
-      <Link href={`/${d.slug}`} className="absolute inset-0 group">
-        {/* Glow ring */}
+    <Reveal delay={i * 80}>
+      {/* Внешний контейнер скошен — параллелограмм */}
+      <div
+        className="group relative overflow-hidden transition-all duration-300 hover:-translate-y-1.5"
+        style={{ transform: "skewX(-6deg)" }}
+      >
+        {/* Акцентная линия сверху */}
         <div
-          className="absolute inset-0 transition-opacity duration-500 opacity-40 group-hover:opacity-90"
-          style={{
-            clipPath: HEX,
-            background: `linear-gradient(135deg, ${accent}ee, ${accent}33)`,
-            filter: "blur(8px)",
-            transform: "scale(1.07)",
-          }}
+          className="absolute top-0 left-0 right-0 h-[3px] z-10"
+          style={{ background: `linear-gradient(90deg, ${accent.from}, ${accent.to})` }}
         />
-        {/* Hex body */}
-        <div className="absolute inset-[3px] overflow-hidden" style={{ clipPath: HEX }}>
-          <div className="absolute inset-0 bg-[#080808]" />
+
+        {/* Картинка */}
+        <div className="relative overflow-hidden" style={{ paddingBottom: "120%" }}>
           {d.image ? (
             <Image
               src={d.image}
               alt={d.title}
               fill
-              className="object-cover opacity-60 group-hover:opacity-80 group-hover:scale-110 transition-all duration-700"
-              sizes="(max-width: 768px) 50vw, 33vw"
+              className="object-cover group-hover:scale-110 transition-transform duration-700"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               loading="lazy"
+              /* контр-скос картинки чтобы она не растягивалась */
+              style={{ transform: "skewX(6deg) scaleX(1.05)" }}
             />
           ) : (
-            <>
-              <div
-                className="absolute inset-0 opacity-70 group-hover:opacity-90 transition-opacity duration-500"
-                style={{ background: `radial-gradient(ellipse at 50% 85%, ${accent}66 0%, ${accent}11 55%, transparent 75%)` }}
-              />
-              <div
-                className="absolute inset-0 opacity-[0.06]"
-                style={{ backgroundImage: "repeating-linear-gradient(-45deg,#fff 0,#fff 1px,transparent 0,transparent 8px)" }}
-              />
-            </>
+            <div
+              className="absolute inset-0"
+              style={{ background: `linear-gradient(160deg, ${accent.from}55, ${accent.to}22)` }}
+            />
           )}
-          {/* Dark vignette */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(0,0,0,0.6)_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
-          {/* Label */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-            <span
-              className="text-white font-black text-base sm:text-xl lg:text-2xl uppercase tracking-wide leading-tight drop-shadow-[0_2px_20px_rgba(0,0,0,1)]"
-            >
+          {/* Затемнение */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10" />
+
+          {/* Контент поверх картинки — контр-скошен */}
+          <div
+            className="absolute bottom-0 left-0 right-0 p-4 sm:p-5"
+            style={{ transform: "skewX(6deg)" }}
+          >
+            <h3 className="text-white font-black text-sm sm:text-base lg:text-[15px] leading-tight mb-1.5 group-hover:text-blue-300 transition-colors duration-300 drop-shadow-lg">
               {d.title}
-            </span>
-            <span
-              className="mt-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest md:opacity-0 group-hover:opacity-100 transition-all duration-300 md:translate-y-1 group-hover:translate-y-0"
-              style={{ color: accent }}
+            </h3>
+            <p className="text-gray-400 text-[11px] sm:text-xs leading-relaxed line-clamp-2 mb-2.5">
+              {d.desc}
+            </p>
+            <Link
+              href={`/${d.slug}`}
+              className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest transition-all duration-300"
+              style={{ color: accent.from }}
             >
-              Подробнее →
-            </span>
+              <span>Подробнее</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-300 inline-block">→</span>
+            </Link>
           </div>
         </div>
-      </Link>
+
+        {/* Граница */}
+        <div
+          className="absolute inset-0 border border-white/[0.08] group-hover:border-white/20 transition-colors duration-300 pointer-events-none"
+        />
+
+        {/* Нижняя акцентная линия при ховере */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ background: `linear-gradient(90deg, ${accent.from}, ${accent.to})` }}
+        />
+      </div>
     </Reveal>
   );
 }
 
 export default function Directions() {
-  const top = directions.slice(0, 3);
-  const bottom = directions.slice(3);
-
   return (
-    <section id="directions" className="py-20 lg:py-28 bg-[#0a0a0a]">
-      <div className="max-w-5xl mx-auto px-4">
+    <section id="directions" className="relative py-20 lg:py-28 bg-[#0a0a0a] overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(59,130,246,0.07),transparent)] pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
+
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">
-            {"Наши"} <span className="text-[#3b82f6]">{"направления"}</span>
+          <span className="text-blue-500 text-xs font-medium uppercase tracking-widest">
+            Дисциплины
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mt-2">
+            Наши{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+              направления
+            </span>
           </h2>
-          <p className="mt-3 text-white/50 text-base sm:text-lg max-w-xl mx-auto">
-            {"Выбери свою боевую дисциплину и начни тренироваться сегодня"}
+          <p className="mt-3 text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+            Выбери свою боевую дисциплину и начни тренироваться сегодня
           </p>
         </Reveal>
 
-        {/* Desktop honeycomb */}
-        <div className="hidden md:block">
-          <div className="grid grid-cols-3 gap-6">
-            {top.map((d, i) => (
-              <HexCard key={d.slug} d={d} i={i} />
-            ))}
-          </div>
-          <div className="grid grid-cols-3 gap-6 -mt-[9%]">
-            <div />
-            {bottom.map((d, i) => (
-              <HexCard key={d.slug} d={d} i={i + 3} />
-            ))}
-            <div />
-          </div>
-        </div>
-
-        {/* Mobile 2-col grid */}
-        <div className="md:hidden grid grid-cols-2 gap-4">
+        {/* px увеличен чтобы параллелограммы не вылезали за края */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 px-4">
           {directions.map((d, i) => (
-            <HexCard key={d.slug} d={d} i={i} />
+            <DirectionCard key={d.slug} d={d} i={i} />
           ))}
         </div>
       </div>
