@@ -1,6 +1,6 @@
 "use client";
 
-import { Trophy, Medal } from "lucide-react";
+import { Trophy, Medal, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import Reveal from "./Reveal";
@@ -35,15 +35,37 @@ const stats = [
   { icon: Medal, target: 300, suffix: "+", label: "Наград всего" },
 ];
 
+const hallOfFame = [
+  { src: "/result1.JPG", name: "Шестериков Герман",  event: "Чемпионат мира AJP",    medal: "gold",   rotate: "-2deg"   },
+  { src: "/result2.JPG", name: "Амазарян Тигран",    event: "Чемпионат мира ACB",    medal: "gold",   rotate: "1.5deg"  },
+  { src: "/result3.JPG", name: "Коломыцев Данил",    event: "Чемпионат мира AJP",    medal: "silver", rotate: "-1deg"   },
+  { src: "/result4.JPG", name: "Шестериков Герман",  event: "Чемпионат России AJP",  medal: "gold",   rotate: "2.5deg"  },
+  { src: "/result5.JPG", name: "Gymnasium Cup",      event: "Разные медали",         medal: null,     rotate: "-1.5deg" },
+  { src: "/result6.JPG", name: "Шестериков Артём",   event: "RCC JJ Open Mat",       medal: "gold",   rotate: "1deg"    },
+  { src: "/result7.JPG", name: "Gymnasium Cup",      event: "Разные медали",         medal: null,     rotate: "-2.5deg" },
+];
+
+const MEDAL_STYLES = {
+  gold:   { label: "🥇 Золото",  glow: "#f59e0b", border: "#f59e0b60" },
+  silver: { label: "🥈 Серебро", glow: "#94a3b8", border: "#94a3b860" },
+  bronze: { label: "🥉 Бронза",  glow: "#b45309", border: "#b4530960" },
+};
+
 export default function Results() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+
+  const scroll = (dir: "left" | "right") => {
+    scrollRef.current?.scrollBy({ left: dir === "right" ? 320 : -320, behavior: "smooth" });
+  };
+
   return (
     <section className="relative py-16 lg:py-24 bg-[#0d1525] overflow-hidden">
-      {/* Фон */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(59,130,246,0.10),transparent)] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Заголовок */}
         <div className="text-center mb-12">
@@ -52,9 +74,9 @@ export default function Results() {
               Соревнования
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white mt-2">
-              Наши{" "}
+              Зал{" "}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-                результаты
+                Славы
               </span>
             </h2>
             <p className="text-gray-400 mt-3 max-w-xl mx-auto text-sm">
@@ -64,7 +86,7 @@ export default function Results() {
         </div>
 
         {/* Статы */}
-        <Reveal className="grid grid-cols-2 gap-4 mb-12 max-w-sm mx-auto">
+        <Reveal className="grid grid-cols-2 gap-4 mb-14 max-w-sm mx-auto">
           {stats.map(({ icon: Icon, target, suffix, label }) => (
             <div
               key={label}
@@ -79,35 +101,122 @@ export default function Results() {
           ))}
         </Reveal>
 
-        {/* Фото-коллаж */}
-        <Reveal className="relative">
-          {/* Свечение за картинкой */}
-          <div className="absolute -inset-4 bg-blue-600/10 blur-3xl rounded-[3rem] pointer-events-none" />
+        {/* Зал Славы — горизонтальный скролл */}
+        <Reveal>
+          {/* Подсказка скролла */}
+          <div className="flex items-center justify-between mb-5 px-1">
+            <p className="text-blue-400/60 text-xs font-medium flex items-center gap-1.5">
+              <ChevronLeft size={13} className="animate-pulse" />
+              листай
+              <ChevronRight size={13} className="animate-pulse" />
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => scroll("left")}
+                className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-500/40 transition-all"
+              >
+                <ChevronLeft size={15} />
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-500/40 transition-all"
+              >
+                <ChevronRight size={15} />
+              </button>
+            </div>
+          </div>
 
-          <div className="relative rounded-3xl overflow-hidden border border-blue-500/20 shadow-2xl shadow-blue-950/60">
-            {/* Верхняя градиентная линия */}
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400/50 to-transparent z-20 pointer-events-none" />
+          {/* Полоса с фейдом по краям */}
+          <div className="relative">
+            {/* Левый фейд */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#0d1525] to-transparent z-10 pointer-events-none" />
+            {/* Правый фейд */}
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#0d1525] to-transparent z-10 pointer-events-none" />
 
-            {/* Оверлей по краям */}
-            <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(ellipse_90%_80%_at_50%_50%,transparent_50%,rgba(13,21,37,0.6)_100%)]" />
+            {/* Скролл-контейнер */}
+            <div
+              ref={scrollRef}
+              className="flex gap-6 overflow-x-auto pb-8 pt-6 px-4 scrollbar-hide"
+              style={{ scrollSnapType: "x mandatory" }}
+              onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+              onTouchEnd={(e) => {
+                if (touchStartX.current === null) return;
+                const delta = touchStartX.current - e.changedTouches[0].clientX;
+                if (Math.abs(delta) > 30) scroll(delta > 0 ? "right" : "left");
+                touchStartX.current = null;
+              }}
+            >
+              {hallOfFame.map((item, i) => {
+                const medal = item.medal ? MEDAL_STYLES[item.medal as keyof typeof MEDAL_STYLES] : null;
+                return (
+                  <div
+                    key={i}
+                    className="group relative shrink-0 w-52 sm:w-60 cursor-pointer"
+                    style={{
+                      scrollSnapAlign: "start",
+                      transform: `rotate(${item.rotate})`,
+                      transition: "transform 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "rotate(0deg) scale(1.04)"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = `rotate(${item.rotate}) scale(1)`; }}
+                  >
+                    {/* Карточка-фото */}
+                    <div
+                      className="relative rounded-xl overflow-hidden shadow-2xl"
+                      style={{
+                        border: medal ? `2px solid ${medal.border}` : "2px solid rgba(255,255,255,0.08)",
+                        boxShadow: medal ? `0 0 24px ${medal.glow}25, 0 8px 32px rgba(0,0,0,0.6)` : "0 8px 32px rgba(0,0,0,0.6)",
+                      }}
+                    >
+                      {/* Фото */}
+                      <div className="relative aspect-[3/4]">
+                        <Image
+                          src={item.src}
+                          alt={item.name}
+                          fill
+                          className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                          sizes="240px"
+                          loading="lazy"
+                        />
+                        {/* Градиент снизу */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
 
-            {/* Нижний градиент */}
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0d1525]/80 to-transparent z-10 pointer-events-none" />
+                        {/* Медаль-бейджик сверху */}
+                        {medal && (
+                          <div
+                            className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full text-[10px] font-bold text-white backdrop-blur-sm"
+                            style={{ background: `${medal.glow}33`, border: `1px solid ${medal.glow}60` }}
+                          >
+                            {medal.label}
+                          </div>
+                        )}
+                      </div>
 
-            <Image
-              src="/result.jpg"
-              alt="Наши результаты"
-              width={1400}
-              height={900}
-              quality={90}
-              className="w-full h-auto object-contain relative z-0"
-              style={{ filter: "saturate(1.15) contrast(1.05) brightness(0.97)" }}
-              loading="lazy"
-            />
+                      {/* Подпись */}
+                      <div className="absolute bottom-0 left-0 right-0 px-3 pb-3 pt-2">
+                        <p className="text-white font-bold text-sm leading-tight">{item.name}</p>
+                        <p className="text-gray-400 text-[11px] mt-0.5">{item.event}</p>
+                      </div>
+                    </div>
+
+                    {/* "Скотч" сверху — декор */}
+                    <div
+                      className="absolute -top-3 left-1/2 -translate-x-1/2 w-10 h-4 rounded-sm opacity-30"
+                      style={{ background: "linear-gradient(135deg, #60a5fa40, #93c5fd30)", border: "1px solid #60a5fa30" }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </Reveal>
 
       </div>
+
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </section>
   );
 }

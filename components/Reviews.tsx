@@ -34,14 +34,13 @@ function Stars({ count, size = 14 }: { count: number; size?: number }) {
 export default function Reviews() {
   const [active, setActive] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
-  const [slideDir, setSlideDir] = useState<"left" | "right" | null>(null);
-  const [animKey, setAnimKey] = useState(0);
+  const [animClass, setAnimClass] = useState("");
   const touchStartX = useRef<number | null>(null);
 
   const goTo = useCallback((index: number, dir: "left" | "right") => {
-    setSlideDir(dir);
-    setAnimKey(k => k + 1);
+    setAnimClass(dir === "left" ? "animate-slide-left" : "animate-slide-right");
     setActive(index);
+    setTimeout(() => setAnimClass(""), 300);
   }, []);
 
   const next = useCallback(() => goTo((active + 1) % reviews.length, "left"), [active, goTo]);
@@ -210,17 +209,8 @@ export default function Reviews() {
             onTouchEnd={handleTouchEnd}
           >
             <div
-              key={animKey}
-              className="relative rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 overflow-hidden"
-              style={{
-                borderLeftColor: CARD_ACCENTS[active % CARD_ACCENTS.length],
-                borderLeftWidth: "3px",
-                animation: slideDir === "left"
-                  ? "slideInLeft 0.28s ease-out"
-                  : slideDir === "right"
-                  ? "slideInRight 0.28s ease-out"
-                  : undefined,
-              }}
+              className={`relative rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 overflow-hidden ${animClass}`}
+              style={{ borderLeftColor: CARD_ACCENTS[active % CARD_ACCENTS.length], borderLeftWidth: "3px" }}
             >
               <div
                 className="absolute top-3 right-4 text-[80px] font-black leading-none select-none pointer-events-none opacity-[0.06]"
@@ -271,14 +261,10 @@ export default function Reviews() {
         </div>
 
         <style>{`
-          @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(40px); }
-            to   { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(-40px); }
-            to   { opacity: 1; transform: translateX(0); }
-          }
+          .animate-slide-left  { animation: slideInLeft  0.28s ease-out; }
+          .animate-slide-right { animation: slideInRight 0.28s ease-out; }
+          @keyframes slideInLeft  { from { opacity:0; transform:translateX(40px);  } to { opacity:1; transform:translateX(0); } }
+          @keyframes slideInRight { from { opacity:0; transform:translateX(-40px); } to { opacity:1; transform:translateX(0); } }
         `}</style>
 
         {/* ── Ссылка ── */}
