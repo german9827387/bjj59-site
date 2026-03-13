@@ -49,22 +49,22 @@ const items = [
   {
     label: "Сланцы",
     desc: "Для душевой комнаты",
-    color: "from-indigo-500/20 to-indigo-600/5",
-    border: "#6366f1",
-    glow: "rgba(99,102,241,0.35)",
+    color: "from-blue-500/20 to-blue-600/5",
+    border: "#3b82f6",
+    glow: "rgba(59,130,246,0.35)",
     icon: (
       <svg viewBox="0 0 80 80" className="w-16 h-16" fill="none">
         {/* sole */}
-        <path d="M14 52 Q14 60 40 60 Q66 60 66 52 L62 46 Q40 50 18 46 Z" stroke="#818cf8" strokeWidth="2.5" strokeLinejoin="round" fill="rgba(99,102,241,0.13)"/>
+        <path d="M14 52 Q14 60 40 60 Q66 60 66 52 L62 46 Q40 50 18 46 Z" stroke="#60a5fa" strokeWidth="2.5" strokeLinejoin="round" fill="rgba(59,130,246,0.13)"/>
         {/* left strap */}
-        <path d="M22 46 Q24 36 34 34 Q38 33 40 36" stroke="#a5b4fc" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+        <path d="M22 46 Q24 36 34 34 Q38 33 40 36" stroke="#93c5fd" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
         {/* right strap */}
-        <path d="M58 46 Q56 36 46 34 Q42 33 40 36" stroke="#a5b4fc" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+        <path d="M58 46 Q56 36 46 34 Q42 33 40 36" stroke="#93c5fd" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
         {/* strap connector */}
-        <circle cx="40" cy="36" r="3" stroke="#818cf8" strokeWidth="2" fill="rgba(99,102,241,0.2)"/>
+        <circle cx="40" cy="36" r="3" stroke="#60a5fa" strokeWidth="2" fill="rgba(59,130,246,0.2)"/>
         {/* sole detail */}
-        <path d="M20 56 L60 56" stroke="#6366f1" strokeWidth="1" strokeDasharray="4 3" opacity="0.5"/>
-        <path d="M18 52 Q40 55 62 52" stroke="#a5b4fc" strokeWidth="1" opacity="0.4"/>
+        <path d="M20 56 L60 56" stroke="#3b82f6" strokeWidth="1" strokeDasharray="4 3" opacity="0.5"/>
+        <path d="M18 52 Q40 55 62 52" stroke="#93c5fd" strokeWidth="1" opacity="0.4"/>
       </svg>
     ),
   },

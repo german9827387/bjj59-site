@@ -17,8 +17,8 @@ interface ScheduleData {
 
 const TYPE_COLORS: Record<string, string> = {
   gi: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-  nogi: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-  kids: 'bg-green-500/20 text-green-300 border-green-500/30',
+  nogi: 'bg-sky-500/20 text-sky-300 border-sky-500/30',
+  kids: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
   other: 'bg-orange-500/20 text-orange-300 border-orange-500/30',
 };
 
@@ -152,11 +152,11 @@ export default async function Schedule() {
             <span className="text-gray-400">Джиу-джитсу ГИ</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-sm bg-purple-500/50 inline-block" />
+            <span className="w-3 h-3 rounded-sm bg-sky-500/50 inline-block" />
             <span className="text-gray-400">Джиу-джитсу НО ГИ</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-sm bg-green-500/50 inline-block" />
+            <span className="w-3 h-3 rounded-sm bg-cyan-500/50 inline-block" />
             <span className="text-gray-400">Детские классы</span>
           </div>
           <div className="flex items-center gap-2">

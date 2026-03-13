@@ -7,9 +7,9 @@ const directions = directionsJson;
 
 const ACCENTS: Record<string, { from: string; to: string }> = {
   bjj:       { from: "#3b82f6", to: "#06b6d4" },
-  mma:       { from: "#06b6d4", to: "#6366f1" },
-  boxing:    { from: "#818cf8", to: "#3b82f6" },
-  grappling: { from: "#6366f1", to: "#818cf8" },
+  mma:       { from: "#06b6d4", to: "#3b82f6" },
+  boxing:    { from: "#60a5fa", to: "#3b82f6" },
+  grappling: { from: "#3b82f6", to: "#38bdf8" },
   muaythai:  { from: "#f59e0b", to: "#ef4444" },
 };
 

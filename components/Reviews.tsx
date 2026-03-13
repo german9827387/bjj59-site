@@ -11,8 +11,8 @@ const reviews = reviewsJson;
 const CARD_ACCENTS = [
   "#3b82f6",
   "#06b6d4",
-  "#818cf8",
-  "#6366f1",
+  "#38bdf8",
+  "#60a5fa",
   "#3b82f6",
   "#06b6d4",
 ];
