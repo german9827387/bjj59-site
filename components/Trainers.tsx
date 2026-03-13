@@ -20,6 +20,8 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
           fill
           className="absolute inset-0 object-cover object-top group-hover:scale-105 transition-transform duration-700"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          loading={i < 2 ? undefined : "lazy"}
+          priority={i < 2}
         />
       ) : (
         <div className={`absolute inset-0 bg-gradient-to-br ${trainer.beltGradient}`}>

@@ -99,6 +99,7 @@ export default function Results() {
               alt="Наши результаты"
               width={1400}
               height={900}
+              quality={90}
               className="w-full h-auto object-contain relative z-0"
               style={{ filter: "saturate(1.15) contrast(1.05) brightness(0.97)" }}
               loading="lazy"

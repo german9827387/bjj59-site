@@ -51,7 +51,6 @@ export default function Navbar() {
               alt="GS Academy"
               width={120}
               height={40}
-              quality={60}
               className="h-10 w-auto object-contain"
               priority
             />

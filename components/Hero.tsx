@@ -38,8 +38,7 @@ export default function Hero() {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    // Загружаем видео после гидратации, чтобы не блокировать первый рендер
-    const id = setTimeout(() => setVideoSrc("/hero-compressed.mp4"), 300);
+    const id = setTimeout(() => setVideoSrc("/hero-compressed1.mp4"), 300);
     return () => clearTimeout(id);
   }, []);
 
