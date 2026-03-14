@@ -38,10 +38,10 @@ const stats = [
 const hallOfFame = [
   { src: "/result1.jpg",   name: "Шестериков Герман",  event: "Чемпионат мира AJP",                        medal: "gold",   rotate: "-2deg",   objPos: "center top", ratio: "1/1"  },
   { src: "/result2.jpg",   name: "Амазарян Тигран",    event: "Чемпионат мира ACB",                        medal: "gold",   rotate: "1.5deg",  objPos: "center 20%", ratio: "9/16" },
-  { src: "/result3.jpg",   name: "Коломыцев Данил",    event: "Чемпионат мира AJP",                        medal: "silver", rotate: "-1deg",   objPos: "center 30%", ratio: "4/3"  },
+  { src: "/result3.jpg",   name: "Коломыцев Данил",    event: "Чемпионат мира AJP",                        medal: "silver", rotate: "-1deg",   objPos: "center 30%", ratio: "3/4"  },
   { src: "/result4.jpg",   name: "Шестериков Герман",  event: "Чемпионат России AJP",                      medal: "gold",   rotate: "2.5deg",  objPos: "center top", ratio: "1/1"  },
   { src: "/result5.jpg",   name: "Gymnasium Cup",      event: "Общее фото",                             medal: null,     rotate: "-1.5deg", objPos: "center top", ratio: "4/3"  },
-  { src: "/result6.jpg",   name: "Шестериков Артём",   event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "1deg",    objPos: "center 30%", ratio: "4/3"  },
+  { src: "/result6.jpg",   name: "Шестериков Артём",   event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "1deg",    objPos: "center 30%", ratio: "3/4"  },
   { src: "/result7.jpg",   name: "Gymnasium Cup",      event: "Общее фото",                             medal: null,     rotate: "-2.5deg", objPos: "center top", ratio: "4/3"  },
   { src: "/results8.jpg",  name: "Прилипко Илья",      event: "Чемпионат России AJP 2019",                 medal: "gold",   rotate: "2deg",    objPos: "center top", ratio: "2/3"  },
   { src: "/results9.jpg",  name: "Прилипко Илья",      event: "Чемпионат России AJP 2026",                 medal: "bronze", rotate: "-1.5deg", objPos: "center top", ratio: "3/2"  },
