@@ -36,20 +36,20 @@ const stats = [
 ];
 
 const hallOfFame = [
-  { src: "/result1.JPG",   name: "Шестериков Герман",  event: "Чемпионат мира AJP",                        medal: "gold",   rotate: "-2deg",   objPos: "center top", ratio: "1/1"  },
-  { src: "/result2.JPG",   name: "Амазарян Тигран",    event: "Чемпионат мира ACB",                        medal: "gold",   rotate: "1.5deg",  objPos: "center 20%", ratio: "9/16" },
-  { src: "/result3.JPG",   name: "Коломыцев Данил",    event: "Чемпионат мира AJP",                        medal: "silver", rotate: "-1deg",   objPos: "center 30%", ratio: "4/3"  },
-  { src: "/result4.JPG",   name: "Шестериков Герман",  event: "Чемпионат России AJP",                      medal: "gold",   rotate: "2.5deg",  objPos: "center top", ratio: "1/1"  },
-  { src: "/result5.JPG",   name: "Gymnasium Cup",      event: "Общее фото",                             medal: null,     rotate: "-1.5deg", objPos: "center top", ratio: "4/3"  },
-  { src: "/result6.JPG",   name: "Шестериков Артём",   event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "1deg",    objPos: "center 30%", ratio: "4/3"  },
-  { src: "/result7.JPG",   name: "Gymnasium Cup",      event: "Общее фото",                             medal: null,     rotate: "-2.5deg", objPos: "center top", ratio: "4/3"  },
-  { src: "/results8.JPG",  name: "Прилипко Илья",      event: "Чемпионат России AJP 2019",                 medal: "gold",   rotate: "2deg",    objPos: "center top", ratio: "2/3"  },
-  { src: "/results9.JPG",  name: "Прилипко Илья",      event: "Чемпионат России AJP 2026",                 medal: "bronze", rotate: "-1.5deg", objPos: "center top", ratio: "3/2"  },
-  { src: "/results10.PNG", name: "Прилипко Илья",      event: "Ural Grapplers Pro 2025",                   medal: "bronze", rotate: "1.5deg",  objPos: "center top", ratio: "3/2"  },
-  { src: "/results11.JPG", name: "Прилипко Илья",      event: "ACBJJ Northwest Russian Championship 2025", medal: null,     rotate: "-2deg",   objPos: "center top", ratio: "9/16" },
-  { src: "/results12.PNG", name: "Прилипко Илья",      event: "Чемпионат России AJP 2021",                 medal: "gold",   rotate: "1.5deg",  objPos: "center top", ratio: "3/2"  },
-  { src: "/results13.jpeg", name: "Шестериков Герман", event: "Всероссийский турнир Blood and Sweat",       medal: "gold",   rotate: "-1.5deg", objPos: "center top", ratio: "3/4"  },
-  { src: "/result14.jpeg",  name: "RCC JJ Open Mat",   event: "Общее фото",                                medal: null,     rotate: "2deg",    objPos: "center top", ratio: "16/10" },
+  { src: "/result1.jpg",   name: "Шестериков Герман",  event: "Чемпионат мира AJP",                        medal: "gold",   rotate: "-2deg",   objPos: "center top", ratio: "1/1"  },
+  { src: "/result2.jpg",   name: "Амазарян Тигран",    event: "Чемпионат мира ACB",                        medal: "gold",   rotate: "1.5deg",  objPos: "center 20%", ratio: "9/16" },
+  { src: "/result3.jpg",   name: "Коломыцев Данил",    event: "Чемпионат мира AJP",                        medal: "silver", rotate: "-1deg",   objPos: "center 30%", ratio: "4/3"  },
+  { src: "/result4.jpg",   name: "Шестериков Герман",  event: "Чемпионат России AJP",                      medal: "gold",   rotate: "2.5deg",  objPos: "center top", ratio: "1/1"  },
+  { src: "/result5.jpg",   name: "Gymnasium Cup",      event: "Общее фото",                             medal: null,     rotate: "-1.5deg", objPos: "center top", ratio: "4/3"  },
+  { src: "/result6.jpg",   name: "Шестериков Артём",   event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "1deg",    objPos: "center 30%", ratio: "4/3"  },
+  { src: "/result7.jpg",   name: "Gymnasium Cup",      event: "Общее фото",                             medal: null,     rotate: "-2.5deg", objPos: "center top", ratio: "4/3"  },
+  { src: "/results8.jpg",  name: "Прилипко Илья",      event: "Чемпионат России AJP 2019",                 medal: "gold",   rotate: "2deg",    objPos: "center top", ratio: "2/3"  },
+  { src: "/results9.jpg",  name: "Прилипко Илья",      event: "Чемпионат России AJP 2026",                 medal: "bronze", rotate: "-1.5deg", objPos: "center top", ratio: "3/2"  },
+  { src: "/results10.jpg", name: "Прилипко Илья",      event: "Ural Grapplers Pro 2025",                   medal: "bronze", rotate: "1.5deg",  objPos: "center top", ratio: "3/2"  },
+  { src: "/results11.jpg", name: "Прилипко Илья",      event: "ACBJJ Northwest Russian Championship 2025", medal: null,     rotate: "-2deg",   objPos: "center top", ratio: "9/16" },
+  { src: "/results12.jpg", name: "Прилипко Илья",      event: "Чемпионат России AJP 2021",                 medal: "gold",   rotate: "1.5deg",  objPos: "center top", ratio: "3/2"  },
+  { src: "/results13.jpg", name: "Шестериков Герман",  event: "Всероссийский турнир Blood and Sweat",       medal: "gold",   rotate: "-1.5deg", objPos: "center top", ratio: "3/4"  },
+  { src: "/result14.jpg",  name: "RCC JJ Open Mat",    event: "Общее фото",                                medal: null,     rotate: "2deg",    objPos: "center top", ratio: "16/10" },
 ];
 
 const MEDAL_STYLES = {
