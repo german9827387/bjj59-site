@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Расписание", href: "/schedule" },
   { label: "Цены", href: "/#pricing" },
   { label: "Контакты", href: "/#contacts" },
-  { label: "Личный кабинет", href: "https://g-sacademy.vercel.app", external: true },
+  { label: "Личный кабинет", href: "https://app.bjj59.ru", external: true },
 ];
 
 export default function Navbar() {
