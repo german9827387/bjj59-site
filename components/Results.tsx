@@ -36,13 +36,20 @@ const stats = [
 ];
 
 const hallOfFame = [
-  { src: "/result1.JPG", name: "Шестериков Герман",  event: "Чемпионат мира AJP",    medal: "gold",   rotate: "-2deg"   },
-  { src: "/result2.JPG", name: "Амазарян Тигран",    event: "Чемпионат мира ACB",    medal: "gold",   rotate: "1.5deg"  },
-  { src: "/result3.JPG", name: "Коломыцев Данил",    event: "Чемпионат мира AJP",    medal: "silver", rotate: "-1deg"   },
-  { src: "/result4.JPG", name: "Шестериков Герман",  event: "Чемпионат России AJP",  medal: "gold",   rotate: "2.5deg"  },
-  { src: "/result5.JPG", name: "Gymnasium Cup",      event: "Разные медали",         medal: null,     rotate: "-1.5deg" },
-  { src: "/result6.JPG", name: "Шестериков Артём",   event: "RCC JJ Open Mat",       medal: "gold",   rotate: "1deg"    },
-  { src: "/result7.JPG", name: "Gymnasium Cup",      event: "Разные медали",         medal: null,     rotate: "-2.5deg" },
+  { src: "/result1.JPG",   name: "Шестериков Герман",  event: "Чемпионат мира AJP",                        medal: "gold",   rotate: "-2deg",   objPos: "center top", ratio: "1/1"  },
+  { src: "/result2.JPG",   name: "Амазарян Тигран",    event: "Чемпионат мира ACB",                        medal: "gold",   rotate: "1.5deg",  objPos: "center 20%", ratio: "9/16" },
+  { src: "/result3.JPG",   name: "Коломыцев Данил",    event: "Чемпионат мира AJP",                        medal: "silver", rotate: "-1deg",   objPos: "center 30%", ratio: "4/3"  },
+  { src: "/result4.JPG",   name: "Шестериков Герман",  event: "Чемпионат России AJP",                      medal: "gold",   rotate: "2.5deg",  objPos: "center top", ratio: "1/1"  },
+  { src: "/result5.JPG",   name: "Gymnasium Cup",      event: "Общее фото",                             medal: null,     rotate: "-1.5deg", objPos: "center top", ratio: "4/3"  },
+  { src: "/result6.JPG",   name: "Шестериков Артём",   event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "1deg",    objPos: "center 30%", ratio: "4/3"  },
+  { src: "/result7.JPG",   name: "Gymnasium Cup",      event: "Общее фото",                             medal: null,     rotate: "-2.5deg", objPos: "center top", ratio: "4/3"  },
+  { src: "/results8.JPG",  name: "Прилипко Илья",      event: "Чемпионат России AJP 2019",                 medal: "gold",   rotate: "2deg",    objPos: "center top", ratio: "2/3"  },
+  { src: "/results9.JPG",  name: "Прилипко Илья",      event: "Чемпионат России AJP 2026",                 medal: "bronze", rotate: "-1.5deg", objPos: "center top", ratio: "3/2"  },
+  { src: "/results10.PNG", name: "Прилипко Илья",      event: "Ural Grapplers Pro 2025",                   medal: "bronze", rotate: "1.5deg",  objPos: "center top", ratio: "3/2"  },
+  { src: "/results11.JPG", name: "Прилипко Илья",      event: "ACBJJ Northwest Russian Championship 2025", medal: null,     rotate: "-2deg",   objPos: "center top", ratio: "9/16" },
+  { src: "/results12.PNG", name: "Прилипко Илья",      event: "Чемпионат России AJP 2021",                 medal: "gold",   rotate: "1.5deg",  objPos: "center top", ratio: "3/2"  },
+  { src: "/results13.jpeg", name: "Шестериков Герман", event: "Всероссийский турнир Blood and Sweat",       medal: "gold",   rotate: "-1.5deg", objPos: "center top", ratio: "3/4"  },
+  { src: "/result14.jpeg",  name: "RCC JJ Open Mat",   event: "Общее фото",                                medal: null,     rotate: "2deg",    objPos: "center top", ratio: "16/10" },
 ];
 
 const MEDAL_STYLES = {
@@ -53,7 +60,6 @@ const MEDAL_STYLES = {
 
 export default function Results() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef<number | null>(null);
 
   const scroll = (dir: "left" | "right") => {
     scrollRef.current?.scrollBy({ left: dir === "right" ? 320 : -320, behavior: "smooth" });
@@ -136,22 +142,15 @@ export default function Results() {
             {/* Скролл-контейнер */}
             <div
               ref={scrollRef}
-              className="flex gap-6 overflow-x-auto pb-8 pt-6 px-4 scrollbar-hide"
+              className="flex gap-6 overflow-x-auto pb-8 pt-6 px-4 scrollbar-hide overscroll-x-contain"
               style={{ scrollSnapType: "x mandatory" }}
-              onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
-              onTouchEnd={(e) => {
-                if (touchStartX.current === null) return;
-                const delta = touchStartX.current - e.changedTouches[0].clientX;
-                if (Math.abs(delta) > 30) scroll(delta > 0 ? "right" : "left");
-                touchStartX.current = null;
-              }}
             >
               {hallOfFame.map((item, i) => {
                 const medal = item.medal ? MEDAL_STYLES[item.medal as keyof typeof MEDAL_STYLES] : null;
                 return (
                   <div
                     key={i}
-                    className="group relative shrink-0 w-52 sm:w-60 cursor-pointer"
+                    className="group relative shrink-0 cursor-pointer"
                     style={{
                       scrollSnapAlign: "start",
                       transform: `rotate(${item.rotate})`,
@@ -164,33 +163,34 @@ export default function Results() {
                     <div
                       className="relative rounded-xl overflow-hidden shadow-2xl"
                       style={{
+                        height: "20rem",
+                        aspectRatio: item.ratio,
                         border: medal ? `2px solid ${medal.border}` : "2px solid rgba(255,255,255,0.08)",
                         boxShadow: medal ? `0 0 24px ${medal.glow}25, 0 8px 32px rgba(0,0,0,0.6)` : "0 8px 32px rgba(0,0,0,0.6)",
                       }}
                     >
                       {/* Фото */}
-                      <div className="relative aspect-[3/4]">
-                        <Image
-                          src={item.src}
-                          alt={item.name}
-                          fill
-                          className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                          sizes="240px"
-                          loading="lazy"
-                        />
-                        {/* Градиент снизу */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                      <Image
+                        src={item.src}
+                        alt={item.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{ objectPosition: item.objPos }}
+                        sizes="(min-width: 1024px) 480px, 320px"
+                        loading="lazy"
+                      />
+                      {/* Градиент снизу */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
 
-                        {/* Медаль-бейджик сверху */}
-                        {medal && (
-                          <div
-                            className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full text-[10px] font-bold text-white backdrop-blur-sm"
-                            style={{ background: `${medal.glow}33`, border: `1px solid ${medal.glow}60` }}
-                          >
-                            {medal.label}
-                          </div>
-                        )}
-                      </div>
+                      {/* Медаль-бейджик сверху */}
+                      {medal && (
+                        <div
+                          className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full text-[10px] font-bold text-white backdrop-blur-sm"
+                          style={{ background: `${medal.glow}33`, border: `1px solid ${medal.glow}60` }}
+                        >
+                          {medal.label}
+                        </div>
+                      )}
 
                       {/* Подпись */}
                       <div className="absolute bottom-0 left-0 right-0 px-3 pb-3 pt-2">
