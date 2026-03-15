@@ -1,5 +1,44 @@
+"use client";
 import { MapPin, Phone, Clock } from "lucide-react";
 import Reveal from "./Reveal";
+import { useRef, useEffect, useState } from "react";
+
+function LazyMap() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setShow(true); observer.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="rounded-2xl overflow-hidden border border-[#1e1e1e]" style={{ minHeight: "320px" }}>
+      {show ? (
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allowFullScreen
+          title="Карта GSAcademy — г. Пермь, ул. Аркадия Гайдара 8б"
+          className="w-full h-full"
+          style={{ minHeight: "320px" }}
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-[#0d0d0d]" style={{ minHeight: "320px" }}>
+          <span className="text-gray-600 text-sm">Загрузка карты...</span>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Contacts() {
   return (
@@ -74,21 +113,7 @@ export default function Contacts() {
           </div>
 
           {/* Map */}
-          <div
-            className="rounded-2xl overflow-hidden border border-[#1e1e1e]"
-            style={{ minHeight: "320px" }}
-          >
-            <iframe
-              src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              allowFullScreen
-              title="Карта GSAcademy — г. Пермь, ул. Аркадия Гайдара 8б"
-              className="w-full h-full"
-              style={{ minHeight: "320px" }}
-            />
-          </div>
+          <LazyMap />
         </div>
       </div>
     </section>

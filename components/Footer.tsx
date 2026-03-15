@@ -106,17 +106,7 @@ export default function Footer() {
           {/* Map */}
           <div>
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Мы на карте</h3>
-            <div className="rounded-xl overflow-hidden border border-[#1e1e1e] aspect-video">
-              <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen
-                title="Карта GSAcademy"
-                className="w-full h-full"
-              />
-            </div>
+            <LazyFooterMap />
           </div>
         </div>
 
