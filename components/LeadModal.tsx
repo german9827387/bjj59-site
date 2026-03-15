@@ -8,12 +8,33 @@ interface LeadModalProps {
   onClose: () => void;
 }
 
+function getUtm() {
+  if (typeof window === "undefined") return {};
+  const p = new URLSearchParams(window.location.search);
+  const utm: Record<string, string> = {};
+  for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
+    const v = p.get(key) || sessionStorage.getItem(key);
+    if (v) utm[key] = v;
+  }
+  return utm;
+}
+
 export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Persist UTM params in sessionStorage on first load
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const p = new URLSearchParams(window.location.search);
+    for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
+      const v = p.get(key);
+      if (v) sessionStorage.setItem(key, v);
+    }
+  }, []);
 
   useEffect(() => {
     if (!isOpen) { setSent(false); setName(""); setPhone(""); setError(""); }
@@ -50,7 +71,7 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), phone }),
+        body: JSON.stringify({ name: name.trim(), phone, utm: getUtm() }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {

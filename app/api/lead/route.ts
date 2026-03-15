@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  let body: { name?: unknown; phone?: unknown };
+  let body: { name?: unknown; phone?: unknown; utm?: unknown };
   try {
     body = await req.json();
   } catch {
@@ -10,6 +10,9 @@ export async function POST(req: NextRequest) {
 
   const name = String(body.name ?? "").trim();
   const phone = String(body.phone ?? "").trim();
+  const utm = (body.utm && typeof body.utm === "object" && !Array.isArray(body.utm))
+    ? body.utm as Record<string, string>
+    : {};
 
   if (!name || name.length > 100) {
     return NextResponse.json({ ok: false, error: "Введите имя" }, { status: 422 });
@@ -36,12 +39,25 @@ export async function POST(req: NextRequest) {
     minute: "2-digit",
   }).format(new Date());
 
+  const UTM_LABELS: Record<string, string> = {
+    utm_source: "Источник",
+    utm_medium: "Тип трафика",
+    utm_campaign: "Кампания",
+    utm_content: "Объявление",
+    utm_term: "Ключевое слово",
+  };
+
+  const utmLines = Object.entries(UTM_LABELS)
+    .filter(([key]) => utm[key])
+    .map(([key, label]) => `📌 ${label}: ${utm[key]}`);
+
   const text = [
     "🥋 *Новая заявка с сайта bjj59.ru*",
     "",
     `👤 Имя: ${name}`,
     `📞 Телефон: ${phone}`,
     `🕐 Время: ${now} (Пермь)`,
+    ...(utmLines.length ? ["", "*Источник трафика:*", ...utmLines] : ["\n📍 Источник: прямой заход"]),
   ].join("\n");
 
   const tgRes = await fetch(
