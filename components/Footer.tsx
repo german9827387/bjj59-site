@@ -1,6 +1,36 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
+
+function LazyFooterMap() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setShow(true); observer.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="rounded-xl overflow-hidden border border-[#1e1e1e] aspect-video">
+      {show ? (
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
+          width="100%" height="100%" frameBorder="0" allowFullScreen
+          title="Карта GSAcademy" className="w-full h-full"
+        />
+      ) : (
+        <div className="w-full h-full bg-[#0d0d0d]" style={{ minHeight: "180px" }} />
+      )}
+    </div>
+  );
+}
 
 const directions = [
   { label: "Бразильское джиу-джитсу", href: "/bjj" },
