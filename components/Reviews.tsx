@@ -70,7 +70,7 @@ export default function Reviews() {
   }, [next, autoPlay]);
 
   return (
-    <section className="relative py-20 lg:py-28 bg-[#080808] overflow-hidden">
+    <section className="relative py-20 lg:py-28 bg-[#0d1525] overflow-hidden">
       {/* Фоновый паттерн */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_100%,rgba(59,130,246,0.06),transparent)] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
@@ -95,7 +95,7 @@ export default function Reviews() {
               <div className="text-6xl sm:text-7xl font-black text-white leading-none">5.0</div>
               <div className="text-gray-500 text-sm mt-1">средний рейтинг</div>
             </div>
-            <div className="w-px h-16 bg-[#1e1e1e]" />
+            <div className="w-px h-16 bg-[#1e2d45]" />
             <div className="text-left">
               <Stars count={5} size={22} />
               <div className="text-gray-400 text-sm mt-1.5">
@@ -250,7 +250,7 @@ export default function Reviews() {
                   key={i}
                   onClick={() => handleDot(i)}
                   aria-label={`Отзыв ${i + 1}`}
-                  className={`rounded-full transition-all duration-300 ${i === active ? "w-5 h-2 bg-blue-500" : "w-2 h-2 bg-[#333]"}`}
+                  className={`rounded-full transition-all duration-300 ${i === active ? "w-5 h-2 bg-blue-500" : "w-2 h-2 bg-[#2a3a55]"}`}
                 />
               ))}
             </div>

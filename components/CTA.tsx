@@ -1,11 +1,17 @@
-import { MessageCircle, Phone } from "lucide-react";
+"use client";
+
+import { MessageCircle } from "lucide-react";
+import { useState } from "react";
 import Reveal from "./Reveal";
+import LeadModal from "./LeadModal";
 
 export default function CTA() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <section className="section-dark py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#3B82F6]/10 via-[#0d0d0d] to-[#0d0d0d] border border-[#3B82F6]/20 p-8 sm:p-12 lg:p-16 text-center">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#3B82F6]/10 via-[#0d1525] to-[#0a1a35] border border-[#3B82F6]/20 p-8 sm:p-12 lg:p-16 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-[#3B82F6]/10 rounded-full blur-3xl" />
           <Reveal className="relative z-10">
             <div className="inline-flex items-center gap-2 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full px-4 py-2 mb-6">
@@ -20,26 +26,26 @@ export default function CTA() {
               И получите экипировку на первый урок в подарок. Попробуйте — вам точно понравится!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-full text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-[#3B82F6]/20"
+              >
+                Записаться бесплатно
+              </button>
               <a
                 href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-full text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-[#3B82F6]/20"
+                className="flex items-center justify-center gap-2 border border-[#3B82F6]/40 text-[#3B82F6] font-bold py-4 px-10 rounded-full text-lg hover:bg-[#3B82F6]/10 transition-all"
               >
                 <MessageCircle size={20} />
                 Написать в Telegram
-              </a>
-              <a
-                href="tel:+79958654244"
-                className="flex items-center justify-center gap-2 border border-[#3B82F6]/40 text-[#3B82F6] font-bold py-4 px-10 rounded-full text-lg hover:bg-[#3B82F6]/10 transition-all"
-              >
-                <Phone size={20} />
-                Позвонить
               </a>
             </div>
           </Reveal>
         </div>
       </div>
+      <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </section>
   );
 }

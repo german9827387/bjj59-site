@@ -18,7 +18,7 @@ function LazyFooterMap() {
     return () => observer.disconnect();
   }, []);
   return (
-    <div ref={ref} className="rounded-xl overflow-hidden border border-[#1e1e1e] aspect-video">
+    <div ref={ref} className="rounded-xl overflow-hidden border border-[#1e2d45] aspect-video">
       {show ? (
         <iframe
           src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
@@ -26,7 +26,7 @@ function LazyFooterMap() {
           title="Карта GSAcademy" className="w-full h-full"
         />
       ) : (
-        <div className="w-full h-full bg-[#0d0d0d]" style={{ minHeight: "180px" }} />
+        <div className="w-full h-full bg-[#0d1525]" style={{ minHeight: "180px" }} />
       )}
     </div>
   );
@@ -47,7 +47,7 @@ const legalLinks = [
 
 export default function Footer() {
   return (
-    <footer id="contacts" className="bg-[#080808] border-t border-[#1e1e1e]">
+    <footer id="contacts" className="bg-[#0a1422] border-t border-[#1e2d45]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
@@ -63,7 +63,7 @@ export default function Footer() {
                 href="https://vk.com/bjjperm59"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-[#1e1e1e] hover:bg-blue-600/20 border border-[#2e2e2e] hover:border-blue-500/50 text-gray-200 hover:text-white rounded-2xl px-4 py-3 font-semibold text-sm transition-all group"
+                className="flex items-center gap-3 bg-[#122035] hover:bg-blue-600/20 border border-[#1e2d45] hover:border-blue-500/50 text-gray-200 hover:text-white rounded-2xl px-4 py-3 font-semibold text-sm transition-all group"
               >
                 <span className="w-8 h-8 rounded-xl bg-blue-600/20 group-hover:bg-blue-600 flex items-center justify-center transition-all shrink-0">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -76,7 +76,7 @@ export default function Footer() {
                 href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта gsacademy.ru')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-[#1e1e1e] hover:bg-blue-600/20 border border-[#2e2e2e] hover:border-blue-500/50 text-gray-200 hover:text-white rounded-2xl px-4 py-3 font-semibold text-sm transition-all group"
+                className="flex items-center gap-3 bg-[#122035] hover:bg-blue-600/20 border border-[#1e2d45] hover:border-blue-500/50 text-gray-200 hover:text-white rounded-2xl px-4 py-3 font-semibold text-sm transition-all group"
               >
                 <span className="w-8 h-8 rounded-xl bg-blue-600/20 group-hover:bg-blue-600 flex items-center justify-center transition-all shrink-0">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -141,7 +141,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-10 pt-6 border-t border-[#1e1e1e] flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-10 pt-6 border-t border-[#1e2d45] flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-xs">
             © {new Date().getFullYear()} GSAcademy. Все права защищены.
           </p>

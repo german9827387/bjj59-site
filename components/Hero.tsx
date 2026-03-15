@@ -1,8 +1,9 @@
 "use client";
 
-import { Play } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
+import LeadModal from "./LeadModal";
 
 const { hero, contacts } = settingsJson;
 
@@ -35,6 +36,7 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 
 export default function Hero() {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -117,21 +119,21 @@ export default function Hero() {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a
-            href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setModalOpen(true)}
             className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-full text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-blue-500/30"
           >
             <span className="relative z-10">{hero.ctaPrimary}</span>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity blur-sm -z-10" />
-          </a>
+          </button>
           <a
-            href="#directions"
+            href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-4 px-10 rounded-full text-lg hover:bg-blue-500/10 transition-all"
           >
-            <Play size={16} className="fill-current" />
-            {hero.ctaSecondary}
+            <MessageCircle size={16} />
+            Написать в Telegram
           </a>
           </div>
         </div>
@@ -156,6 +158,7 @@ export default function Hero() {
       <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
         style={{ background: "linear-gradient(to bottom, transparent 0%, rgba(13,21,37,0.7) 60%, #0d1525 85%, #0d1525 100%)" }}
       />
+      <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </section>
   );
 }

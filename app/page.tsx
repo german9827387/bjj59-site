@@ -13,6 +13,7 @@ const Results = dynamic(() => import("@/components/Results"));
 const Pricing = dynamic(() => import("@/components/Pricing"));
 const FirstTraining = dynamic(() => import("@/components/FirstTraining"));
 const WhyUs = dynamic(() => import("@/components/WhyUs"));
+const FAQ = dynamic(() => import("@/components/FAQ"));
 const CTA = dynamic(() => import("@/components/CTA"));
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
       <Pricing />
       <FirstTraining />
       <WhyUs />
+      <FAQ />
       <CTA />
     </>
   );
