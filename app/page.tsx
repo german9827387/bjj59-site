@@ -1,10 +1,11 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Hero from "@/components/Hero";
-import ForWhom from "@/components/ForWhom";
-import Directions from "@/components/Directions";
-import Trainers from "@/components/Trainers";
-import News from "@/components/News";
+
+const ForWhom = dynamic(() => import("@/components/ForWhom"));
+const Directions = dynamic(() => import("@/components/Directions"));
+const Trainers = dynamic(() => import("@/components/Trainers"));
+const News = dynamic(() => import("@/components/News"));
 
 const Reviews = dynamic(() => import("@/components/Reviews"));
 const Awards = dynamic(() => import("@/components/Awards"));

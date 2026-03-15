@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, User } from "lucide-react";
 
 const navLinks = [
   { label: "Главная", href: "/" },
@@ -25,8 +25,8 @@ export default function Navbar() {
   const isActive = (href: string) => {
     if (!mounted) return false;
     if (href.startsWith("http")) return false;
-    const path = href.split("#")[0] || "/";
-    return pathname === path;
+    if (href.includes("#")) return false;
+    return pathname === href;
   };
 
   useEffect(() => {
@@ -78,11 +78,12 @@ export default function Navbar() {
                 href={link.href}
                 {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className={link.external
-                  ? "bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-blue-400/50 transition-all duration-200 text-sm font-medium tracking-wide uppercase py-1.5 px-3 rounded-full"
+                  ? "flex items-center gap-1.5 border border-blue-500/50 bg-blue-500/8 text-blue-300 hover:bg-blue-500/15 hover:border-blue-400 hover:text-white transition-all duration-200 text-sm font-semibold tracking-wide uppercase py-1.5 px-4 rounded-full"
                   : isActive(link.href)
                     ? "text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"
                     : "text-gray-300 hover:text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"}
               >
+                {link.external && <User size={14} className="shrink-0" />}
                 {link.label}
               </Link>
             ))}
