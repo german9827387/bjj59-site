@@ -38,11 +38,11 @@ const faqs = [
 
 const TAG_COLORS: Record<string, string> = {
   "Новичкам":    "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  "Детям":       "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-  "Безопасность":"bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  "Взрослым":    "bg-violet-500/10 text-violet-400 border-violet-500/20",
-  "Первый раз":  "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  "Семьям":      "bg-pink-500/10 text-pink-400 border-pink-500/20",
+  "Детям":       "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  "Безопасность":"bg-blue-500/10 text-blue-400 border-blue-500/20",
+  "Взрослым":    "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  "Первый раз":  "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  "Семьям":      "bg-blue-500/10 text-blue-400 border-blue-500/20",
 };
 
 export default function FAQ() {
