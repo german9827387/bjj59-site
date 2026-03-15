@@ -21,16 +21,16 @@ export default function Home() {
       <ForWhom />
       <Directions />
       <Trainers />
-      <Reviews />
-      <Awards />
+      <div className="section-offscreen"><Reviews /></div>
+      <div className="section-offscreen"><Awards /></div>
       <Suspense>
-        <News />
+        <div className="section-offscreen"><News /></div>
       </Suspense>
-      <Results />
-      <Pricing />
-      <FirstTraining />
-      <WhyUs />
-      <CTA />
+      <div className="section-offscreen"><Results /></div>
+      <div className="section-offscreen"><Pricing /></div>
+      <div className="section-offscreen"><FirstTraining /></div>
+      <div className="section-offscreen"><WhyUs /></div>
+      <div className="section-offscreen"><CTA /></div>
     </>
   );
 }

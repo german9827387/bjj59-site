@@ -129,3 +129,9 @@ body:not([data-scroll-locked]) {
 .section-card {
   background: #0a0a0a;
 }
+
+/* Оффскрин-секции скипаются рендерером до скролла */
+.section-offscreen {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}

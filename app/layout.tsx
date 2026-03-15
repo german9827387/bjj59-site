@@ -107,6 +107,9 @@ export default function RootLayout({
             <img src={`https://mc.yandex.ru/watch/${YM_ID}`} style={{position:"absolute",left:"-9999px"}} alt="" />
           </div>
         </noscript>
+        <link rel="preload" as="image" href="/hero-poster.jpg" fetchPriority="high" />
+        <link rel="preconnect" href="https://mc.yandex.ru" />
+        <link rel="preconnect" href="https://t.me" />
         <link rel="dns-prefetch" href="https://api.vk.com" />
         <link rel="dns-prefetch" href="https://mc.yandex.ru" />
       </head>
