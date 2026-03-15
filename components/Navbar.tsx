@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Menu, X, Phone } from "lucide-react";
 
 const navLinks = [
@@ -18,6 +19,19 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (!mounted) return false;
+    if (href.startsWith("http")) return false;
+    const path = href.split("#")[0] || "/";
+    return pathname === path;
+  };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -65,7 +79,9 @@ export default function Navbar() {
                 {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className={link.external
                   ? "bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-blue-400/50 transition-all duration-200 text-sm font-medium tracking-wide uppercase py-1.5 px-3 rounded-full"
-                  : "text-gray-300 hover:text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"}
+                  : isActive(link.href)
+                    ? "text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"
+                    : "text-gray-300 hover:text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"}
               >
                 {link.label}
               </Link>
@@ -85,7 +101,7 @@ export default function Navbar() {
               href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-2 px-5 rounded-full text-sm hover:opacity-90 transition-opacity"
+              className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-2 px-5 rounded-full text-sm hover:opacity-90 transition-opacity"
             >
               Записаться
             </a>
@@ -113,7 +129,9 @@ export default function Navbar() {
                 {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className={link.external
                   ? "text-blue-400 hover:text-blue-300 transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"
-                  : "text-gray-300 hover:text-[#3B82F6] transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"}
+                  : isActive(link.href)
+                    ? "text-[#3B82F6] py-2 text-base font-medium border-b border-[#1e1e1e]"
+                    : "text-gray-300 hover:text-[#3B82F6] transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"}
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}

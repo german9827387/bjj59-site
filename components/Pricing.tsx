@@ -52,7 +52,7 @@ export default function Pricing() {
               <div className="p-3 sm:p-6 flex flex-col flex-1">
                 {/* Badge */}
                 <span
-                  className={`self-start text-[10px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full mb-2 sm:mb-4 tracking-wider ${plan.highlight ? "bg-white/20 text-white" : "bg-blue-500/10 text-blue-400 border border-blue-500/20"}`}
+                  className={`self-start text-xs font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full mb-2 sm:mb-4 tracking-wider ${plan.highlight ? "bg-white/20 text-white" : "bg-blue-500/10 text-blue-400 border border-blue-500/20"}`}
                 >
                   {plan.label}
                 </span>
@@ -82,7 +82,7 @@ export default function Pricing() {
                         size={14}
                         className={`shrink-0 mt-0.5 ${plan.highlight ? "text-white" : "text-blue-400"}`}
                       />
-                      <span className={`text-[11px] sm:text-sm leading-snug ${plan.highlight ? "text-white/85" : "text-gray-400"}`}>
+                      <span className={`text-xs sm:text-sm leading-snug ${plan.highlight ? "text-white/85" : "text-gray-400"}`}>
                         {f}
                       </span>
                     </li>
@@ -93,7 +93,7 @@ export default function Pricing() {
                   href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, интересует стоимость занятий')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`mt-auto text-center font-bold py-2 sm:py-3 px-3 sm:px-6 rounded-xl text-[11px] sm:text-sm transition-all duration-200 ${plan.highlight ? "bg-white text-blue-600 hover:bg-blue-50 shadow-md" : "border border-blue-500/40 text-blue-400 hover:bg-blue-500/10 hover:border-blue-400/60"}`}
+                  className={`mt-auto text-center font-bold py-2 sm:py-3 px-3 sm:px-6 rounded-xl text-xs sm:text-sm transition-all duration-200 ${plan.highlight ? "bg-white text-blue-600 hover:bg-blue-50 shadow-md" : "border border-blue-500/40 text-blue-400 hover:bg-blue-500/10 hover:border-blue-400/60"}`}
                 >
                   {plan.cta}
                 </a>
