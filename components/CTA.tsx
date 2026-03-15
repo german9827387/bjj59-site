@@ -11,7 +11,7 @@ export default function CTA() {
   return (
     <section className="section-dark py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#3B82F6]/10 via-[#0d1525] to-[#0a1a35] border border-[#3B82F6]/20 p-8 sm:p-12 lg:p-16 text-center">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#3B82F6]/10 via-[#0d0d0d] to-[#0d0d0d] border border-[#3B82F6]/20 p-8 sm:p-12 lg:p-16 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-[#3B82F6]/10 rounded-full blur-3xl" />
           <Reveal className="relative z-10">
             <div className="inline-flex items-center gap-2 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full px-4 py-2 mb-6">

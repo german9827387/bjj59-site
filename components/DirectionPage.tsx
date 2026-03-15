@@ -50,13 +50,13 @@ export default function DirectionPage({
       {/* Hero */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         {/* Base background */}
-        <div className="absolute inset-0 bg-[#0d1525]" />
+        <div className="absolute inset-0 bg-[#080808]" />
 
         {/* Mobile: full-bg image */}
         {image && (
           <div className="absolute inset-0 lg:hidden">
             <Image src={image} alt={title} fill className="object-cover opacity-40" sizes="100vw" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0d1525]/60 via-[#0d1525]/55 to-[#0d1525]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/60 via-[#080808]/55 to-[#080808]" />
           </div>
         )}
 
@@ -65,9 +65,9 @@ export default function DirectionPage({
           <div className="absolute right-0 top-0 bottom-0 w-[55%] hidden lg:block">
             <Image src={image} alt={title} fill className="object-cover" sizes="55vw" priority />
             {/* Strong left fade */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0d1525] via-[#0d1525]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/70 to-transparent" />
             {/* Bottom fade */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0d1525] via-transparent to-[#0d1525]/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-[#080808]/40" />
           </div>
         )}
 
@@ -183,7 +183,7 @@ export default function DirectionPage({
               <Reveal
                 key={r.title}
                 delay={i * 80}
-                className="relative bg-[#0f1e35] border border-[#1e2d45] rounded-2xl p-6 group hover:border-opacity-50 transition-all duration-300"
+                className="relative bg-[#0d0d0d] border border-[#1a1a1a] rounded-2xl p-6 group hover:border-opacity-50 transition-all duration-300"
               >
                 {/* Top accent line on hover */}
                 <div
@@ -205,7 +205,7 @@ export default function DirectionPage({
       </section>
 
       {/* How training works */}
-      <section className="py-20 bg-[#0d1525]">
+      <section className="py-20 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Text */}
@@ -238,7 +238,7 @@ export default function DirectionPage({
               {advantages.map((adv) => (
                 <div
                   key={adv}
-                  className="flex items-start gap-3 bg-[#0f1e35] border border-[#1e2d45] rounded-xl p-4 group hover:border-opacity-40 transition-all"
+                  className="flex items-start gap-3 bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl p-4 group hover:border-opacity-40 transition-all"
                 >
                   <div
                     className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"

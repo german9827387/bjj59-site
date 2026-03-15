@@ -22,8 +22,8 @@ const awards = [
 
 export default function Awards() {
   return (
-    <section className="relative py-8 lg:py-12 bg-[#0d1525] overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0d1525] to-transparent pointer-events-none" />
+    <section className="relative py-8 lg:py-12 bg-[#0a0a0a] overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080808] to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-[#0d1525] pointer-events-none" />
       {/* Фоновые декоративные элементы */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(59,130,246,0.07),transparent)] pointer-events-none" />

@@ -19,7 +19,7 @@ function LazyMap() {
   }, []);
 
   return (
-    <div ref={ref} className="rounded-2xl overflow-hidden border border-[#1e2d45]" style={{ minHeight: "320px" }}>
+    <div ref={ref} className="rounded-2xl overflow-hidden border border-[#1e1e1e]" style={{ minHeight: "320px" }}>
       {show ? (
         <iframe
           src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
@@ -32,7 +32,7 @@ function LazyMap() {
           style={{ minHeight: "320px" }}
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center bg-[#0d1525]" style={{ minHeight: "320px" }}>
+        <div className="w-full h-full flex items-center justify-center bg-[#0d0d0d]" style={{ minHeight: "320px" }}>
           <span className="text-gray-600 text-sm">Загрузка карты...</span>
         </div>
       )}
@@ -59,7 +59,7 @@ export default function Contacts() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Info */}
           <div className="space-y-6">
-            <div className="bg-[#0d1525] border border-[#1e2d45] rounded-2xl p-6">
+            <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-[#3B82F6]/10 flex items-center justify-center shrink-0">
                   <MapPin size={20} className="text-[#3B82F6]" />
@@ -79,7 +79,7 @@ export default function Contacts() {
               </div>
             </div>
 
-            <div className="bg-[#0d1525] border border-[#1e2d45] rounded-2xl p-6">
+            <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-[#3B82F6]/10 flex items-center justify-center shrink-0">
                   <Clock size={20} className="text-[#3B82F6]" />
@@ -93,7 +93,7 @@ export default function Contacts() {
               </div>
             </div>
 
-            <div className="bg-[#0d1525] border border-[#1e2d45] rounded-2xl p-6">
+            <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-[#3B82F6]/10 flex items-center justify-center shrink-0">
                   <Phone size={20} className="text-[#3B82F6]" />

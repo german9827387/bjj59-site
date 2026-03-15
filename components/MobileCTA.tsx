@@ -21,7 +21,7 @@ export default function MobileCTA() {
         visible && !dismissed ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
       }`}
     >
-          <div className="bg-[#0d1525]/95 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-3 flex items-center gap-3 shadow-2xl shadow-blue-500/10">
+          <div className="bg-[#0d0d0d]/95 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-3 flex items-center gap-3 shadow-2xl shadow-blue-500/10">
             <a
               href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`}
               target="_blank"
