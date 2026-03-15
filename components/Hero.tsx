@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Play } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
@@ -48,21 +47,13 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[#0d1525]">
-        {/* Static poster as Next.js Image — proper LCP preloading */}
-        <Image
-          src="/hero-poster.jpg"
-          alt=""
-          fill
-          priority
-          className="object-cover opacity-50"
-          sizes="100vw"
-        />
         <video
           autoPlay
           muted
           loop
           playsInline
           preload="none"
+          poster="/hero-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover opacity-50"
         >
           {videoSrc && <source src={videoSrc} type="video/mp4" />}
