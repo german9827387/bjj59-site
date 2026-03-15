@@ -74,16 +74,16 @@ export default function FAQ() {
         </Reveal>
 
         {/* Two-column grid on desktop */}
-        <div className="grid sm:grid-cols-2 gap-3">
+        <div className="border-t border-white/[0.07] sm:border-0 grid sm:grid-cols-2 sm:gap-3">
           {faqs.map((faq, i) => {
             const isOpen = open === i;
             return (
               <Reveal key={i} delay={i * 40}>
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
-                  className={`w-full text-left rounded-2xl border transition-all duration-200 ${
+                  className={`w-full text-left rounded-none sm:rounded-2xl border-b sm:border transition-all duration-200 ${
                     isOpen
-                      ? "border-blue-500/40 bg-gradient-to-br from-blue-500/10 to-blue-500/[0.03]"
+                      ? "sm:border-blue-500/40 border-white/[0.07] bg-gradient-to-br from-blue-500/10 to-blue-500/[0.03]"
                       : "border-white/[0.07] bg-white/[0.02] hover:border-blue-500/25 hover:bg-white/[0.04]"
                   }`}
                 >
