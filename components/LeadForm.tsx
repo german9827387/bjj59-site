@@ -1,8 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Phone, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import Reveal from "./Reveal";
+
+function getUtm() {
+  if (typeof window === "undefined") return {};
+  const p = new URLSearchParams(window.location.search);
+  const utm: Record<string, string> = {};
+  for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
+    const v = p.get(key) || sessionStorage.getItem(key);
+    if (v) utm[key] = v;
+  }
+  return utm;
+}
 
 export default function LeadForm() {
   const [name, setName] = useState("");
@@ -10,6 +21,16 @@ export default function LeadForm() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Сохраняем UTM при монтировании (дублирует TgLinkHandler для надёжности)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const p = new URLSearchParams(window.location.search);
+    for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
+      const v = p.get(key);
+      if (v) sessionStorage.setItem(key, v);
+    }
+  }, []);
 
   const formatPhone = (val: string) => {
     const digits = val.replace(/\D/g, "").slice(0, 11);
@@ -33,25 +54,32 @@ export default function LeadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const digits = phone.replace(/\D/g, "");
-    if (digits.length < 11) {
-      setError("Введите номер полностью");
-      return;
-    }
-    if (!name.trim()) {
-      setError("Введите ваше имя");
-      return;
-    }
+    if (digits.length < 11) { setError("Введите номер полностью"); return; }
+    if (!name.trim()) { setError("Введите ваше имя"); return; }
     setLoading(true);
-
-    // Отправляем через Telegram (открываем с предзаполненным текстом)
-    const text = `Здравствуйте! Меня зовут ${name.trim()}, мой номер: ${phone}. Хочу записаться на пробное занятие.`;
-    const tgUrl = `https://t.me/GSAcademy59?text=${encodeURIComponent(text)}`;
-
-    setTimeout(() => {
-      setLoading(false);
+    setError("");
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), phone, utm: getUtm(), source: "Инлайн-форма" }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setError(data.error ?? "Ошибка отправки. Напишите нам в Telegram.");
+        setLoading(false);
+        return;
+      }
       setSent(true);
-      window.open(tgUrl, "_blank");
-    }, 600);
+      // Цель Яндекс.Метрики
+      if (typeof window !== "undefined" && (window as any).ym) {
+        (window as any).ym((window as any).__YM_COUNTER_ID__, "reachGoal", "lead_submit");
+      }
+    } catch {
+      setError("Нет соединения. Попробуйте написать в Telegram.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -103,9 +131,9 @@ export default function LeadForm() {
                   <div className="w-16 h-16 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center mx-auto mb-5">
                     <CheckCircle2 size={32} className="text-blue-400" />
                   </div>
-                  <h3 className="text-white font-black text-2xl mb-2">Отлично!</h3>
+                  <h3 className="text-white font-black text-2xl mb-2">Заявка принята!</h3>
                   <p className="text-gray-400">
-                    Сообщение открыто в Telegram — отправьте его, и мы ответим в течение 30 минут.
+                    Мы получили ваш номер и перезвоним в течение 30 минут.
                   </p>
                 </div>
               ) : (

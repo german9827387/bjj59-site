@@ -71,7 +71,7 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), phone, utm: getUtm() }),
+        body: JSON.stringify({ name: name.trim(), phone, utm: getUtm(), source: "Модальное окно" }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
@@ -80,6 +80,10 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
         return;
       }
       setSent(true);
+      // Цель Яндекс.Метрики
+      if (typeof window !== "undefined" && (window as any).ym) {
+        (window as any).ym((window as any).__YM_COUNTER_ID__, "reachGoal", "lead_submit");
+      }
     } catch {
       setError("Нет соединения. Попробуйте написать в Telegram.");
     } finally {
