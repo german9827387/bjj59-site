@@ -1,11 +1,16 @@
+"use client";
+import { useState } from "react";
 import { Check } from "lucide-react";
 import pricingJson from "@/data/pricing.json";
 import Reveal from "./Reveal";
+import LeadModal from "./LeadModal";
 
 const plans = pricingJson;
 
 export default function Pricing() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
+    <>
     <section id="pricing" className="relative py-20 lg:py-28 bg-[#0d1525] overflow-hidden">
       {/* Фоновые эффекты */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-[#0d1525] pointer-events-none" />
@@ -89,19 +94,19 @@ export default function Pricing() {
                   ))}
                 </ul>
 
-                <a
-                  href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, интересует стоимость занятий')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setModalOpen(true)}
                   className={`mt-auto text-center font-bold py-2 sm:py-3 px-3 sm:px-6 rounded-xl text-xs sm:text-sm transition-all duration-200 ${plan.highlight ? "bg-white text-blue-600 hover:bg-blue-50 shadow-md" : "border border-blue-500/40 text-blue-400 hover:bg-blue-500/10 hover:border-blue-400/60"}`}
                 >
                   {plan.cta}
-                </a>
+                </button>
               </div>
             </Reveal>
           ))}
         </div>
       </div>
     </section>
+    <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+    </>
   );
 }

@@ -1,4 +1,7 @@
+"use client";
+import { useState } from "react";
 import Reveal from "./Reveal";
+import LeadModal from "./LeadModal";
 
 const items = [
   {
@@ -89,7 +92,9 @@ const items = [
 ];
 
 export default function FirstTraining() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
+    <>
     <section className="relative bg-[#0d1525] py-20 lg:py-28 overflow-hidden">
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-b from-transparent to-[#0a0a0a] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_70%_50%,rgba(59,130,246,0.09),transparent)] pointer-events-none" />
@@ -126,10 +131,8 @@ export default function FirstTraining() {
               </p>
             </div>
 
-            <a
-              href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу прийти на первое бесплатное занятие и получить экипировку')}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setModalOpen(true)}
               className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-8 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 hover:scale-105 hover:from-blue-500 hover:to-cyan-400 active:scale-95 text-base"
             >
               <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -138,7 +141,7 @@ export default function FirstTraining() {
                 <path d="M16 10 Q16 14 12 14 Q8 14 8 10"/>
               </svg>
               Получить экипировку
-            </a>
+            </button>
           </Reveal>
 
           {/* Cards */}
@@ -179,5 +182,7 @@ export default function FirstTraining() {
         </div>
       </div>
     </section>
+      <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+    </>
   );
 }
