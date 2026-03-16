@@ -44,6 +44,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "**.okcdn.ru",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.mds.yandex.net",
+      },
     ],
   },
 };
