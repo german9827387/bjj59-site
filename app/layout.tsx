@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MobileCTA from "@/components/MobileCTA";
 import TgLinkHandler from "@/components/TgLinkHandler";
+import ExitPopup from "@/components/ExitPopup";
 
 // ← Замени на свой ID счётчика Яндекс.Метрики
 const YM_ID = 44430424;
@@ -119,6 +120,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <MobileCTA />
+          <ExitPopup />
       </body>
     </html>
   );

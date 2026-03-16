@@ -116,6 +116,9 @@ export default function Footer() {
                 <MapPin size={16} className="text-[#3B82F6] shrink-0 mt-0.5" />
                 <span>г. Пермь, ул. Аркадия Гайдара 8б</span>
               </li>
+              <li className="flex items-start gap-2 text-gray-400 text-sm pl-6">
+                <span>🚶 3 мин от ТЦ КИТ · 🚗 Парковка бесплатно</span>
+              </li>
               <li>
                 <a
                   href="tel:+79958654244"
