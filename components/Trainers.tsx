@@ -1,12 +1,15 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import trainersJson from "@/data/trainers.json";
 import Reveal from "./Reveal";
+import LeadModal from "./LeadModal";
 
 const trainers = trainersJson;
 
 type Trainer = (typeof trainersJson)[0];
 
-function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
+function TrainerCard({ trainer, i, onRecord }: { trainer: Trainer; i: number; onRecord: () => void }) {
   const initials = trainer.name.split(" ").map((n) => n[0]).join("");
   const hasImage = !!trainer.image;
 
@@ -47,14 +50,12 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
       <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-10 group-hover:opacity-0 transition-opacity duration-300">
         <h3 className="text-white font-black text-sm sm:text-base leading-tight">{trainer.name}</h3>
         <p className="text-gray-400 text-[10px] sm:text-xs mt-0.5 leading-snug">{trainer.role}</p>
-        <a
-          href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на тренировку')}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2 block text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-[10px] font-bold py-1.5 rounded-lg hover:bg-blue-500/30 transition-all"
+        <button
+          onClick={onRecord}
+          className="mt-2 block w-full text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-[10px] font-bold py-1.5 rounded-lg hover:bg-blue-500/30 transition-all"
         >
           Записаться
-        </a>
+        </button>
       </div>
 
       {/* Hover overlay with achievements */}
@@ -69,14 +70,12 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
             </li>
           ))}
         </ul>
-        <a
-          href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на тренировку')}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-xs font-bold py-2 rounded-xl hover:bg-blue-500/30 transition-all"
+        <button
+          onClick={onRecord}
+          className="block w-full text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-xs font-bold py-2 rounded-xl hover:bg-blue-500/30 transition-all"
         >
           Записаться
-        </a>
+        </button>
       </div>
       </div>
     </Reveal>
@@ -84,6 +83,7 @@ function TrainerCard({ trainer, i }: { trainer: Trainer; i: number }) {
 }
 
 export default function Trainers() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <section id="trainers" className="relative py-20 lg:py-28 bg-[#0d1525] overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_20%_50%,rgba(59,130,246,0.07),transparent)] pointer-events-none" />
@@ -110,11 +110,12 @@ export default function Trainers() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {trainers.map((trainer, i) => (
-            <TrainerCard key={trainer.name} trainer={trainer} i={i} />
+            <TrainerCard key={trainer.name} trainer={trainer} i={i} onRecord={() => setModalOpen(true)} />
           ))}
         </div>
       </div>
     </section>
+    <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
   );
 }
 

@@ -1,9 +1,12 @@
+"use client";
+import { useState } from "react";
 import { Check, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import CTA from "./CTA";
 import Pricing from "./Pricing";
 import Link from "next/link";
 import Reveal from "./Reveal";
+import LeadModal from "./LeadModal";
 
 interface Reason {
   title: string;
@@ -45,6 +48,7 @@ export default function DirectionPage({
   image,
   accent = "#3B82F6",
 }: DirectionPageProps) {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
       {/* Hero */}
@@ -125,10 +129,8 @@ export default function DirectionPage({
             </p>
 
             {/* CTA button */}
-            <a
-              href={`https://t.me/GSAcademy59?text=${encodeURIComponent(`Здравствуйте! Пишу с сайта, интересует ${title}`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setModalOpen(true)}
               className="hero-fade inline-block font-black py-4 px-10 rounded-full text-base hover:opacity-90 transition-all hover:scale-[1.03] text-white shadow-lg"
               style={{
                 background: `linear-gradient(135deg, ${accent}, ${accent}bb)`,
@@ -137,7 +139,7 @@ export default function DirectionPage({
               }}
             >
               Записаться на бесплатное занятие →
-            </a>
+            </button>
 
             {/* Stats */}
             <div
@@ -256,6 +258,7 @@ export default function DirectionPage({
 
       <Pricing />
       <CTA />
+      <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }

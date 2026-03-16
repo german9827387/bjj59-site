@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
+import LeadModal from "./LeadModal";
 
 function LazyFooterMap() {
   const ref = useRef<HTMLDivElement>(null);
@@ -46,6 +47,7 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <footer id="contacts" className="bg-[#080808] border-t border-[#1e1e1e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -123,14 +125,12 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <a
-              href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться')}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setModalOpen(true)}
               className="inline-block mt-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-2 px-5 rounded-full text-sm hover:opacity-90 transition-opacity"
             >
               Записаться
-            </a>
+            </button>
           </div>
 
           {/* Map */}
@@ -159,5 +159,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
   );
 }

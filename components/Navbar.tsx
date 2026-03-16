@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone, User } from "lucide-react";
+import LeadModal from "./LeadModal";
 
 const navLinks = [
   { label: "Главная", href: "/" },
@@ -20,6 +21,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const pathname = usePathname();
 
   const isActive = (href: string) => {
@@ -98,14 +100,12 @@ export default function Navbar() {
               <Phone size={16} />
               <span>8 (995) 865-42-44</span>
             </a>
-            <a
-              href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться')}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setModalOpen(true)}
               className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-2 px-5 rounded-full text-sm hover:opacity-90 transition-opacity"
             >
               Записаться
-            </a>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -146,18 +146,17 @@ export default function Navbar() {
                 <Phone size={16} />
                 <span>8 (995) 865-42-44</span>
               </a>
-              <a
-                href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться')}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => { setModalOpen(true); setIsOpen(false); }}
                 className="bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-3 px-6 rounded-full text-center"
               >
                 Записаться бесплатно
-              </a>
+              </button>
             </div>
           </div>
         </div>
       )}
     </nav>
+    <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
   );
 }
