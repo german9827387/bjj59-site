@@ -72,8 +72,8 @@ export default function Awards() {
                     <div className={`absolute top-0 left-0 right-0 bg-gradient-to-b from-[#111827] to-transparent z-20 pointer-events-none ${award.id === "alliance" ? "h-16" : "h-8"}`} />
                     <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#111827] to-transparent z-20 pointer-events-none ${award.id === "alliance" ? "h-16" : "h-8"}`} />
                   </div>
-                  <div className="relative z-10 text-center px-5 py-4 flex-1 flex flex-col justify-center">
-                    <div className="text-white font-black text-base leading-tight">{award.title}</div>
+                  <div className="relative z-10 text-center px-3 py-4 flex-1 flex flex-col justify-center">
+                    <div className="text-white font-black text-sm leading-tight">{award.title}</div>
                     <div className="text-blue-400 text-xs mt-1 font-semibold tracking-wide">{award.source}</div>
                     <div className="text-gray-400 text-xs mt-2 leading-snug">{award.description}</div>
                   </div>
