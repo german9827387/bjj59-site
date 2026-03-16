@@ -64,7 +64,7 @@ export default function Awards() {
             <Reveal key={award.id} delay={i * 120} className="flex flex-col w-36 sm:w-44 self-stretch">
               <div className="group relative flex flex-col w-full self-stretch h-full">
               <div className="relative w-full flex-1 rounded-[2rem] p-[1px] bg-gradient-to-b from-blue-500/40 via-white/10 to-transparent shadow-xl shadow-blue-950/30">
-                <div className="relative flex flex-col bg-gradient-to-b from-[#111827] to-[#0d1117] rounded-[2rem] overflow-hidden h-full">
+                <div className="relative flex flex-col bg-gradient-to-b from-[#111827] to-[#0d1117] rounded-[2rem] overflow-hidden [clip-path:inset(0_round_2rem)] h-full">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(59,130,246,0.12),transparent)] pointer-events-none z-10" />
                   <div className="relative overflow-hidden rounded-t-[2rem] h-52 sm:h-80 group-hover:scale-[1.03] transition-transform duration-500 origin-top bg-[#111827]">
                     <Image src={award.image} alt={award.title} fill className={award.id === "alliance" ? "object-cover scale-[1.45]" : "object-cover object-top"} sizes="176px" loading="lazy" />
