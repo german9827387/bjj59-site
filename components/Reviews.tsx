@@ -107,20 +107,6 @@ export default function Reviews() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/10 to-transparent" />
 
-      {/* GS Icon — фоновый водяной знак */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
-        <div className="relative w-[780px] h-[780px] opacity-[0.07]">
-          <Image
-            src="/gs-icon.png"
-            alt=""
-            fill
-            className="object-contain"
-            loading="lazy"
-            sizes="780px"
-          />
-        </div>
-      </div>
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ── Заголовок ── */}
