@@ -85,6 +85,7 @@ function TrainerCard({ trainer, i, onRecord }: { trainer: Trainer; i: number; on
 export default function Trainers() {
   const [modalOpen, setModalOpen] = useState(false);
   return (
+    <>
     <section id="trainers" className="relative py-20 lg:py-28 bg-[#0d1525] overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_20%_50%,rgba(59,130,246,0.07),transparent)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_50%,rgba(6,182,212,0.05),transparent)] pointer-events-none" />
@@ -116,6 +117,7 @@ export default function Trainers() {
       </div>
     </section>
     <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+    </>
   );
 }
 
