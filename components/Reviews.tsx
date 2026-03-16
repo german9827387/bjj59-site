@@ -17,6 +17,8 @@ const CARD_ACCENTS = [
   "#06b6d4",
 ];
 
+const INITIAL_SHOWN = 6;
+
 function Stars({ count, size = 14 }: { count: number; size?: number }) {
   return (
     <div className="flex gap-0.5">
@@ -31,11 +33,39 @@ function Stars({ count, size = 14 }: { count: number; size?: number }) {
   );
 }
 
+function ReviewAvatar({ review, accent, size = 8 }: { review: (typeof reviews)[0]; accent: string; size?: number }) {
+  if (review.avatar) {
+    return (
+      <div className={`w-${size} h-${size} rounded-full overflow-hidden shrink-0 border border-white/10`}>
+        <Image
+          src={review.avatar}
+          alt={review.name}
+          width={size * 4}
+          height={size * 4}
+          loading="lazy"
+          className="object-cover w-full h-full"
+        />
+      </div>
+    );
+  }
+  return (
+    <div
+      className={`w-${size} h-${size} rounded-full flex items-center justify-center shrink-0 text-white font-bold text-sm`}
+      style={{ background: `linear-gradient(135deg, ${accent}, #0ea5e9)` }}
+    >
+      {review.name[0]}
+    </div>
+  );
+}
+
 export default function Reviews() {
   const [active, setActive] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
   const [animClass, setAnimClass] = useState("");
+  const [showAll, setShowAll] = useState(false);
   const touchStartX = useRef<number | null>(null);
+
+  const visibleReviews = showAll ? reviews : reviews.slice(0, INITIAL_SHOWN);
 
   const goTo = useCallback((index: number, dir: "left" | "right") => {
     setAnimClass(dir === "left" ? "animate-slide-left" : "animate-slide-right");
@@ -153,9 +183,9 @@ export default function Reviews() {
         </Reveal>
 
         {/* ── Desktop grid ── */}
-        <div className="hidden md:grid grid-cols-3 gap-4 mb-10">
-          {reviews.map((review, i) => (
-            <Reveal key={review.name} delay={i * 70}>
+        <div className="hidden md:grid grid-cols-3 gap-4 mb-6">
+          {visibleReviews.map((review, i) => (
+            <Reveal key={review.id} delay={Math.min(i % 3, 2) * 70}>
               <div
                 className="relative flex flex-col h-full rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.14] p-6 transition-all duration-300 hover:-translate-y-1 overflow-hidden group"
                 style={{ borderLeftColor: CARD_ACCENTS[i % CARD_ACCENTS.length], borderLeftWidth: "3px" }}
@@ -165,7 +195,7 @@ export default function Reviews() {
                   className="absolute top-3 right-4 text-[80px] font-black leading-none select-none pointer-events-none opacity-[0.06]"
                   style={{ color: CARD_ACCENTS[i % CARD_ACCENTS.length] }}
                 >
-                  "
+                  &ldquo;
                 </div>
 
                 <Stars count={review.rating} size={13} />
@@ -176,23 +206,40 @@ export default function Reviews() {
 
                 <div className="flex items-center justify-between mt-5 pt-4 border-t border-white/[0.06]">
                   <div className="flex items-center gap-2.5">
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-white font-bold text-sm"
-                      style={{ background: `linear-gradient(135deg, ${CARD_ACCENTS[i % CARD_ACCENTS.length]}, #0ea5e9)` }}
-                    >
-                      {review.name[0]}
-                    </div>
+                    <ReviewAvatar review={review} accent={CARD_ACCENTS[i % CARD_ACCENTS.length]} size={8} />
                     <div>
                       <div className="text-white text-sm font-semibold leading-tight">{review.name}</div>
                       <div className="text-gray-600 text-[11px]">{review.date}</div>
                     </div>
                   </div>
-                  <Image src="/yandex.jpg" alt="Яндекс" width={20} height={20} className="rounded opacity-60" />
+                  <Image src="/yandex.jpg" alt="Яндекс" width={20} height={20} className="rounded opacity-60" loading="lazy" />
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
+
+        {/* Show more / less button */}
+        {!showAll && reviews.length > INITIAL_SHOWN && (
+          <div className="hidden md:flex justify-center mb-10">
+            <button
+              onClick={() => setShowAll(true)}
+              className="flex items-center gap-2 border border-blue-500/30 text-blue-400 font-medium py-2.5 px-6 rounded-full hover:bg-blue-500/10 transition-all text-sm"
+            >
+              Показать ещё {reviews.length - INITIAL_SHOWN} отзыва
+            </button>
+          </div>
+        )}
+        {showAll && (
+          <div className="hidden md:flex justify-center mb-10">
+            <button
+              onClick={() => setShowAll(false)}
+              className="flex items-center gap-2 border border-white/10 text-gray-500 font-medium py-2.5 px-6 rounded-full hover:bg-white/5 transition-all text-sm"
+            >
+              Свернуть
+            </button>
+          </div>
+        )}
 
         {/* ── Mobile carousel ── */}
         <div className="md:hidden mb-8">
@@ -224,18 +271,13 @@ export default function Reviews() {
               </p>
               <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
                 <div className="flex items-center gap-2.5">
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-white font-bold text-sm"
-                    style={{ background: `linear-gradient(135deg, ${CARD_ACCENTS[active % CARD_ACCENTS.length]}, #0ea5e9)` }}
-                  >
-                    {reviews[active].name[0]}
-                  </div>
+                  <ReviewAvatar review={reviews[active]} accent={CARD_ACCENTS[active % CARD_ACCENTS.length]} size={8} />
                   <div>
                     <div className="text-white text-sm font-semibold">{reviews[active].name}</div>
                     <div className="text-gray-600 text-[11px]">{reviews[active].date}</div>
                   </div>
                 </div>
-                <Image src="/yandex.jpg" alt="Яндекс" width={20} height={20} className="rounded opacity-60" />
+                <Image src="/yandex.jpg" alt="Яндекс" width={20} height={20} className="rounded opacity-60" loading="lazy" />
               </div>
             </div>
           </div>

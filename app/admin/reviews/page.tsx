@@ -8,6 +8,7 @@ type Review = {
   name: string;
   date: string;
   rating: number;
+  avatar: string;
   text: string;
 };
 
@@ -64,6 +65,7 @@ export default function AdminReviews() {
       name: "Новый отзыв",
       date: new Date().toLocaleDateString("ru-RU", { year: "numeric", month: "long" }),
       rating: 5,
+      avatar: "",
       text: "",
     };
     setReviews((prev) => [...prev, newReview]);
@@ -105,6 +107,10 @@ export default function AdminReviews() {
                   </div>
                 </div>
                 <div>
+                  <label className="block text-gray-400 text-xs font-medium mb-1.5">Фото (URL с Яндекс Карт)</label>
+                  <input value={r.avatar} onChange={(e) => update(r.id, { avatar: e.target.value })} className="admin-input" placeholder="https://avatars.mds.yandex.net/..." />
+                </div>
+                <div>
                   <label className="block text-gray-400 text-xs font-medium mb-1.5">Рейтинг</label>
                   <StarRating value={r.rating} onChange={(v) => update(r.id, { rating: v })} />
                 </div>
@@ -126,7 +132,12 @@ export default function AdminReviews() {
               </div>
               <p className="text-gray-300 text-xs leading-relaxed line-clamp-2">&ldquo;{r.text || "..."}&rdquo;</p>
               <div className="flex items-center gap-2 mt-3">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">{r.name[0]}</div>
+                {r.avatar ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={r.avatar} alt={r.name} className="w-6 h-6 rounded-full object-cover border border-white/10" />
+                ) : (
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white text-xs font-bold">{r.name[0]}</div>
+                )}
                 <div>
                   <span className="text-white text-xs font-semibold">{r.name}</span>
                   <span className="text-gray-600 text-xs ml-1.5">{r.date}</span>
