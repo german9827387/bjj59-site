@@ -80,12 +80,30 @@ export default function TgLinkHandler() {
       }
     }
 
+    // Отслеживаем клики по ВКонтакте
+    function handleVkClick(e: MouseEvent) {
+      const anchor = (e.target as Element).closest("a");
+      if (!anchor) return;
+      const href = anchor.getAttribute("href") || "";
+      if (!href.includes("vk.com")) return;
+
+      if (typeof window !== "undefined" && (window as any).ym) {
+        (window as any).ym(
+          (window as any).__YM_COUNTER_ID__,
+          "reachGoal",
+          "vk_click"
+        );
+      }
+    }
+
     document.addEventListener("click", handleClick);
     document.addEventListener("click", handlePhoneClick);
+    document.addEventListener("click", handleVkClick);
 
     return () => {
       document.removeEventListener("click", handleClick);
       document.removeEventListener("click", handlePhoneClick);
+      document.removeEventListener("click", handleVkClick);
     };
   }, []);
 
