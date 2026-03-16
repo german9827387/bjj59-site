@@ -81,5 +81,37 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "Ошибка отправки" }, { status: 502 });
   }
 
+  // Email уведомление через Resend (опционально — работает если задан RESEND_API_KEY)
+  const resendKey = process.env.RESEND_API_KEY;
+  const notifyEmail = process.env.NOTIFY_EMAIL;
+  if (resendKey && notifyEmail) {
+    const utmHtml = utmLines.length
+      ? `<br><b>Источник трафика:</b><br>${utmLines.map(l => l.replace("📌 ", "")).join("<br>")}`
+      : "<br>Источник: прямой заход";
+    const emailHtml = `
+      <h2 style="color:#1d4ed8">🥋 Новая заявка — bjj59.ru</h2>
+      <table style="font-size:15px;line-height:1.7">
+        <tr><td><b>Имя:</b></td><td>${name}</td></tr>
+        <tr><td><b>Телефон:</b></td><td><a href="tel:${phone}">${phone}</a></td></tr>
+        <tr><td><b>Время:</b></td><td>${now} (Пермь)</td></tr>
+        ${source ? `<tr><td><b>Форма:</b></td><td>${source}</td></tr>` : ""}
+      </table>
+      ${utmHtml}
+    `;
+    fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${resendKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "GSAcademy <leads@bjj59.ru>",
+        to: [notifyEmail],
+        subject: `Новая заявка: ${name} ${phone}`,
+        html: emailHtml,
+      }),
+    }).catch(e => console.error("Resend error:", e));
+  }
+
   return NextResponse.json({ ok: true });
 }
