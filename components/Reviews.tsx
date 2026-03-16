@@ -101,9 +101,25 @@ export default function Reviews() {
 
   return (
     <section className="relative py-20 lg:py-28 bg-[#080808] overflow-hidden">
-      {/* Фоновый паттерн */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_100%,rgba(59,130,246,0.06),transparent)] pointer-events-none" />
+      {/* Фоновые градиенты */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(59,130,246,0.05),transparent)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_10%_80%,rgba(6,182,212,0.04),transparent)] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/10 to-transparent" />
+
+      {/* GS Icon — фоновый водяной знак */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
+        <div className="relative w-[520px] h-[520px] opacity-[0.032]" style={{ filter: "blur(1px)" }}>
+          <Image
+            src="/gs-icon.png"
+            alt=""
+            fill
+            className="object-contain"
+            loading="lazy"
+            sizes="520px"
+          />
+        </div>
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -119,8 +135,13 @@ export default function Reviews() {
             </span>
           </h2>
 
-          {/* Большой рейтинг */}
+          {/* Рейтинг + значок */}
           <div className="flex items-center justify-center gap-6 mt-8">
+            {/* Иконка слева */}
+            <div className="hidden sm:flex w-14 h-14 rounded-2xl overflow-hidden border border-white/10 bg-white/5 items-center justify-center shrink-0">
+              <Image src="/gs-icon.png" alt="GS Academy" width={40} height={40} className="object-contain" loading="lazy" />
+            </div>
+            <div className="w-px h-16 bg-[#1e1e1e] hidden sm:block" />
             <div className="text-right">
               <div className="text-6xl sm:text-7xl font-black text-white leading-none">5.0</div>
               <div className="text-gray-500 text-sm mt-1">средний рейтинг</div>
@@ -187,12 +208,22 @@ export default function Reviews() {
           {visibleReviews.map((review, i) => (
             <Reveal key={review.id} delay={Math.min(i % 3, 2) * 70}>
               <div
-                className="relative flex flex-col h-full rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.14] p-6 transition-all duration-300 hover:-translate-y-1 overflow-hidden group"
-                style={{ borderLeftColor: CARD_ACCENTS[i % CARD_ACCENTS.length], borderLeftWidth: "3px" }}
+                className="relative flex flex-col h-full rounded-2xl bg-white/[0.025] border border-white/[0.07] hover:border-blue-500/30 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl overflow-hidden group"
+                style={{
+                  borderLeftColor: CARD_ACCENTS[i % CARD_ACCENTS.length],
+                  borderLeftWidth: "3px",
+                  boxShadow: "0 1px 0 0 rgba(255,255,255,0.03) inset",
+                }}
               >
+                {/* Hover glow */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+                  style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.09), transparent)" }}
+                />
+
                 {/* Декоративная кавычка */}
                 <div
-                  className="absolute top-3 right-4 text-[80px] font-black leading-none select-none pointer-events-none opacity-[0.06]"
+                  className="absolute top-3 right-4 text-[80px] font-black leading-none select-none pointer-events-none opacity-[0.07] group-hover:opacity-[0.12] transition-opacity duration-300"
                   style={{ color: CARD_ACCENTS[i % CARD_ACCENTS.length] }}
                 >
                   &ldquo;
@@ -200,7 +231,7 @@ export default function Reviews() {
 
                 <Stars count={review.rating} size={13} />
 
-                <p className="text-gray-300 text-sm leading-relaxed mt-4 flex-grow">
+                <p className="text-gray-400 group-hover:text-gray-300 text-sm leading-relaxed mt-4 flex-grow transition-colors duration-300">
                   {review.text}
                 </p>
 
@@ -224,9 +255,10 @@ export default function Reviews() {
           <div className="hidden md:flex justify-center mb-10">
             <button
               onClick={() => setShowAll(true)}
-              className="flex items-center gap-2 border border-blue-500/30 text-blue-400 font-medium py-2.5 px-6 rounded-full hover:bg-blue-500/10 transition-all text-sm"
+              className="group flex items-center gap-2 bg-white/[0.03] border border-blue-500/25 hover:border-blue-500/50 hover:bg-blue-500/[0.08] text-blue-400 font-semibold py-3 px-8 rounded-full transition-all duration-300 text-sm"
             >
-              Показать ещё {reviews.length - INITIAL_SHOWN} отзыва
+              <span>Показать ещё {reviews.length - INITIAL_SHOWN} отзыва</span>
+              <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
         )}
@@ -234,7 +266,7 @@ export default function Reviews() {
           <div className="hidden md:flex justify-center mb-10">
             <button
               onClick={() => setShowAll(false)}
-              className="flex items-center gap-2 border border-white/10 text-gray-500 font-medium py-2.5 px-6 rounded-full hover:bg-white/5 transition-all text-sm"
+              className="flex items-center gap-2 border border-white/[0.08] text-gray-500 font-medium py-3 px-8 rounded-full hover:bg-white/5 hover:text-gray-400 transition-all text-sm"
             >
               Свернуть
             </button>
@@ -256,14 +288,14 @@ export default function Reviews() {
             onTouchEnd={handleTouchEnd}
           >
             <div
-              className={`relative rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 overflow-hidden ${animClass}`}
+              className={`relative rounded-2xl bg-white/[0.025] border border-white/[0.07] p-6 overflow-hidden ${animClass}`}
               style={{ borderLeftColor: CARD_ACCENTS[active % CARD_ACCENTS.length], borderLeftWidth: "3px" }}
             >
               <div
-                className="absolute top-3 right-4 text-[80px] font-black leading-none select-none pointer-events-none opacity-[0.06]"
+                className="absolute top-3 right-4 text-[80px] font-black leading-none select-none pointer-events-none opacity-[0.07]"
                 style={{ color: CARD_ACCENTS[active % CARD_ACCENTS.length] }}
               >
-                "
+                &ldquo;
               </div>
               <Stars count={reviews[active].rating} size={13} />
               <p className="text-gray-300 text-sm leading-relaxed mt-4 mb-5">
@@ -310,15 +342,16 @@ export default function Reviews() {
         `}</style>
 
         {/* ── Ссылка ── */}
-        <div className="text-center">
+        <div className="text-center mt-2">
           <a
             href="https://yandex.ru/maps/org/gsacademy/13932890682/reviews/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border border-blue-500/30 text-blue-400 font-medium py-2.5 px-6 rounded-full hover:bg-blue-500/10 transition-all text-sm"
+            className="group inline-flex items-center gap-3 bg-white/[0.03] border border-white/[0.08] hover:border-blue-500/30 hover:bg-blue-500/[0.06] rounded-2xl px-6 py-3.5 transition-all duration-300"
           >
-            Все отзывы на Яндекс Картах
-            <ExternalLink size={14} />
+            <Image src="/yandex.jpg" alt="Яндекс" width={22} height={22} className="rounded opacity-80" loading="lazy" />
+            <span className="text-gray-300 group-hover:text-white text-sm font-semibold transition-colors">Все отзывы на Яндекс Картах</span>
+            <ExternalLink size={14} className="text-gray-500 group-hover:text-blue-400 transition-colors" />
           </a>
         </div>
       </div>
