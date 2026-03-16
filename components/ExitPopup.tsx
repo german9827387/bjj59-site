@@ -130,8 +130,8 @@ export default function ExitPopup() {
   const [visible, setVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Quiz state
-  const [step, setStep] = useState(0); // 0,1,2 = quiz; 3 = form
+  // Quiz state: -1 = intro, 0/1/2 = quiz steps, 3 = form
+  const [step, setStep] = useState(-1);
   const [who, setWho] = useState("");
   const [whoLabel, setWhoLabel] = useState("");
   const [goalLabel, setGoalLabel] = useState("");
@@ -199,9 +199,9 @@ export default function ExitPopup() {
 
   const content = (
     <>
-      {/* Progress bar — only on quiz steps */}
-      {step < 3 && (
-        <div className="flex items-center gap-3 mb-5">
+      {/* Progress bar — quiz steps only */}
+      {step >= 0 && step < 3 && (
+        <div className="flex items-center gap-3 mb-5 pr-10">
           {step > 0 && (
             <button
               onClick={() => setStep((s) => s - 1)}
@@ -218,7 +218,6 @@ export default function ExitPopup() {
               />
             ))}
           </div>
-          <span className="text-gray-500 text-xs tabular-nums flex-shrink-0">Шаг {step + 1} / 3</span>
         </div>
       )}
 
@@ -229,6 +228,30 @@ export default function ExitPopup() {
           </div>
           <h3 className="text-white font-black text-xl mb-2">Заявка принята!</h3>
           <p className="text-gray-400 text-sm">Перезвоним в течение 30 минут.</p>
+        </div>
+      ) : step === -1 ? (
+        /* Intro screen */
+        <div className="text-center">
+          <div className="text-4xl mb-4">🎯</div>
+          <h2 className="text-white font-black text-2xl leading-tight mb-3">
+            Подберём программу<br />за 1 минуту
+          </h2>
+          <p className="text-gray-400 text-sm mb-6 max-w-xs mx-auto">
+            3 быстрых вопроса — и вы узнаете, какая группа подойдёт именно вам
+          </p>
+          <button
+            onClick={() => setStep(0)}
+            className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3.5 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all"
+          >
+            <span>Подобрать программу</span>
+            <ArrowRight size={16} />
+          </button>
+          <button
+            onClick={hide}
+            className="mt-3 text-gray-600 hover:text-gray-400 text-xs transition-colors w-full py-1"
+          >
+            Нет, спасибо
+          </button>
         </div>
       ) : step === 0 ? (
         <QuizStep
