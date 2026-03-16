@@ -109,14 +109,14 @@ export default function Reviews() {
 
       {/* GS Icon — фоновый водяной знак */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
-        <div className="relative w-[520px] h-[520px] opacity-[0.032]" style={{ filter: "blur(1px)" }}>
+        <div className="relative w-[780px] h-[780px] opacity-[0.07]">
           <Image
             src="/gs-icon.png"
             alt=""
             fill
             className="object-contain"
             loading="lazy"
-            sizes="520px"
+            sizes="780px"
           />
         </div>
       </div>
