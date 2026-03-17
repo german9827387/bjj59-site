@@ -46,10 +46,15 @@ function TrainerCard({ trainer, i, onRecord }: { trainer: Trainer; i: number; on
         {trainer.belt}
       </span>
 
-      {/* Always visible: name + role + CTA */}
+      {/* Always visible: name + role + first achievement + CTA */}
       <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-10 group-hover:opacity-0 transition-opacity duration-300">
         <h3 className="text-white font-black text-sm sm:text-base leading-tight">{trainer.name}</h3>
         <p className="text-gray-400 text-[10px] sm:text-xs mt-0.5 leading-snug">{trainer.role}</p>
+        {trainer.achievements[0] && (
+          <p className="text-blue-300 text-[10px] mt-1 leading-snug line-clamp-1">
+            <span className="text-blue-400 mr-1">▸</span>{trainer.achievements[0]}
+          </p>
+        )}
         <button
           onClick={onRecord}
           className="mt-2 block w-full text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-[10px] font-bold py-1.5 rounded-lg hover:bg-blue-500/30 transition-all"

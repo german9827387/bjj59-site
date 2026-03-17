@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Star } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
 import LeadModal from "./LeadModal";
@@ -135,6 +135,18 @@ export default function Hero() {
             <MessageCircle size={16} />
             Написать в Telegram
           </a>
+          </div>
+
+          {/* Social proof */}
+          <div className="flex items-center justify-center gap-2 mt-2">
+            <div className="flex items-center gap-1">
+              {[1,2,3,4,5].map((s) => (
+                <Star key={s} size={13} className="text-blue-400 fill-blue-400" />
+              ))}
+            </div>
+            <span className="text-white font-bold text-sm">5.0</span>
+            <span className="text-gray-500 text-sm">·</span>
+            <span className="text-gray-400 text-sm"><span className="text-white font-semibold">88 отзывов</span> на Google, Яндексе и 2ГИС</span>
           </div>
         </div>
 

@@ -109,14 +109,23 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            className="xl:hidden text-white p-2"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Меню"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile: phone icon + menu button */}
+          <div className="xl:hidden flex items-center gap-2">
+            <a
+              href="tel:+79958654244"
+              className="p-2 text-gray-400 hover:text-blue-400 transition-colors"
+              aria-label="Позвонить"
+            >
+              <Phone size={20} />
+            </a>
+            <button
+              className="text-white p-2"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Меню"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
