@@ -5,7 +5,7 @@ import { Shield, Zap, Heart } from "lucide-react";
 import Reveal from "./Reveal";
 
 type TabItem = { num: string; title: string; desc: string };
-type Tab = { id: string; label: string; icon: React.ReactNode; items: TabItem[]; faq?: { q: string; a: string }[] };
+type Tab = { id: string; label: string; sublabel?: string; icon: React.ReactNode; items: TabItem[]; faq?: { q: string; a: string }[] };
 
 const tabs: Tab[] = [
   {
@@ -33,22 +33,23 @@ const tabs: Tab[] = [
   {
     id: "children",
     label: "Для детей",
+    sublabel: "с 3 лет",
     icon: <Zap size={18} />,
     items: [
       {
         num: "01",
-        title: "Берём с 3 лет",
-        desc: "Отдельные группы по возрасту: 3–5, 6–12 и 13+. Первые 3 месяца — только техника и игровые упражнения, никакого жёсткого спарринга.",
+        title: "Меньше гаджетов — больше развития",
+        desc: "Дети меньше сидят за планшетом, больше двигаются и развивают внимание, координацию и ловкость через игры и единоборства.",
       },
       {
         num: "02",
-        title: "Дисциплина без наказаний",
-        desc: "Гиперактивный дома? За полгода тренировок 8 из 10 родителей замечают: ребёнок стал спокойнее, сосредоточеннее и увереннее в себе.",
+        title: "Родители спокойны, дети в безопасности",
+        desc: "Мягкое покрытие, защита на тренировках и тренер рядом на каждом занятии. Ни одной серьёзной травмы за всё время работы.",
       },
       {
         num: "03",
-        title: "Безопасность — наш приоритет",
-        desc: "Мягкое покрытие, защита на тренировках, тренер рядом на каждом занятии. За всё время работы — ни одной серьёзной травмы у детей.",
+        title: "Сильное тело — здоровый ребёнок",
+        desc: "Через игровые упражнения и единоборства ребёнок укрепляет мышцы, осанку и выносливость, становится активным и уверенным.",
       },
     ],
     faq: [
@@ -126,7 +127,12 @@ export default function ForWhom() {
               }`}
             >
               {tab.icon}
-              {tab.label}
+              <span className="flex flex-col items-start leading-none">
+                <span>{tab.label}</span>
+                {tab.sublabel && (
+                  <span className="text-[10px] font-normal opacity-70 mt-0.5">{tab.sublabel}</span>
+                )}
+              </span>
             </button>
           ))}
         </div>
