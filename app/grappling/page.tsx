@@ -5,6 +5,33 @@ export const metadata: Metadata = {
   title: "Грэпплинг в Перми | GSAcademy",
   description:
     "Секция грэпплинга в Перми — GSAcademy. Борьба без ударов для детей и взрослых. Первое занятие бесплатно!",
+  keywords: [
+    "грэпплинг Пермь",
+    "grappling Пермь",
+    "секция грэпплинга Пермь",
+    "борьба без ударов Пермь",
+    "грэпплинг для детей Пермь",
+    "грэпплинг для взрослых Пермь",
+    "GSAcademy грэпплинг",
+  ],
+  alternates: { canonical: "https://bjj59.ru/grappling" },
+  openGraph: {
+    title: "Грэпплинг в Перми | GSAcademy",
+    description:
+      "Секция грэпплинга в Перми. Борьба без ударов — техника и стратегия. Первое занятие бесплатно!",
+    url: "https://bjj59.ru/grappling",
+    siteName: "GSAcademy",
+    locale: "ru_RU",
+    type: "website",
+    images: [
+      {
+        url: "/grappling.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Грэпплинг в Перми — GSAcademy",
+      },
+    ],
+  },
 };
 
 export default function GrapplingPage() {

@@ -5,6 +5,32 @@ export const metadata: Metadata = {
   title: "Бокс в Перми | GSAcademy",
   description:
     "Секция бокса в Перми — GSAcademy. Профессиональные тренеры, тренировки для детей и взрослых. Первое занятие бесплатно!",
+  keywords: [
+    "бокс Пермь",
+    "секция бокса Пермь",
+    "бокс для детей Пермь",
+    "бокс для взрослых Пермь",
+    "боксёрская секция Пермь",
+    "GSAcademy бокс",
+  ],
+  alternates: { canonical: "https://bjj59.ru/boxing" },
+  openGraph: {
+    title: "Бокс в Перми | GSAcademy",
+    description:
+      "Секция бокса в Перми. Профессиональные тренеры, тренировки для детей и взрослых. Первое занятие бесплатно!",
+    url: "https://bjj59.ru/boxing",
+    siteName: "GSAcademy",
+    locale: "ru_RU",
+    type: "website",
+    images: [
+      {
+        url: "/boxing.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Бокс в Перми — GSAcademy",
+      },
+    ],
+  },
 };
 
 export default function BoxingPage() {

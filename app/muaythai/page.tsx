@@ -5,6 +5,33 @@ export const metadata: Metadata = {
   title: "Тайский бокс в Перми | GSAcademy — Муай-тай",
   description:
     "Муай-тай (тайский бокс) в Перми — GSAcademy. Тренировки для детей и взрослых. Первое занятие бесплатно!",
+  keywords: [
+    "тайский бокс Пермь",
+    "муай-тай Пермь",
+    "muay thai Пермь",
+    "секция тайского бокса Пермь",
+    "тайский бокс для детей Пермь",
+    "тайский бокс для взрослых Пермь",
+    "GSAcademy муай-тай",
+  ],
+  alternates: { canonical: "https://bjj59.ru/muaythai" },
+  openGraph: {
+    title: "Тайский бокс (Муай-тай) в Перми | GSAcademy",
+    description:
+      "Муай-тай в Перми — искусство восьми конечностей. Тренировки для детей и взрослых. Первое занятие бесплатно!",
+    url: "https://bjj59.ru/muaythai",
+    siteName: "GSAcademy",
+    locale: "ru_RU",
+    type: "website",
+    images: [
+      {
+        url: "/highkis.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Тайский бокс в Перми — GSAcademy",
+      },
+    ],
+  },
 };
 
 export default function MuaythaiPage() {

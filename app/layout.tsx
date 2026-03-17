@@ -59,10 +59,14 @@ const inter = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bjj59.ru"),
   title: "GSAcademy — Академия единоборств в Перми | БЖЖ, ММА, Бокс",
   description:
     "GSAcademy — лучшая академия единоборств в Перми. Бразильское джиу-джитсу, ММА, бокс, тайский бокс, грэпплинг для детей и взрослых. Запишитесь на бесплатное первое занятие.",
   keywords: ["академия единоборств Пермь", "BJJ Пермь", "ММА Пермь", "бокс Пермь", "тайский бокс Пермь", "грэпплинг Пермь", "GSAcademy", "джиу-джитсу Пермь"],
+  alternates: {
+    canonical: "https://bjj59.ru",
+  },
   icons: {
     icon: [
       { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
@@ -77,6 +81,14 @@ export const metadata: Metadata = {
     siteName: "GSAcademy",
     locale: "ru_RU",
     type: "website",
+    images: [
+      {
+        url: "/hero-poster.jpg",
+        width: 1280,
+        height: 720,
+        alt: "GSAcademy — Академия единоборств в Перми",
+      },
+    ],
   },
 };
 

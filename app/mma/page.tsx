@@ -5,6 +5,33 @@ export const metadata: Metadata = {
   title: "ММА в Перми | GSAcademy — Смешанные единоборства",
   description:
     "Смешанные единоборства ММА в Перми — GSAcademy. Бокс, борьба, BJJ, муай-тай в одном. Первое занятие бесплатно!",
+  keywords: [
+    "ММА Пермь",
+    "смешанные единоборства Пермь",
+    "MMA Пермь",
+    "секция ММА Пермь",
+    "ММА для взрослых Пермь",
+    "ММА для детей Пермь",
+    "GSAcademy ММА",
+  ],
+  alternates: { canonical: "https://bjj59.ru/mma" },
+  openGraph: {
+    title: "ММА в Перми | GSAcademy — Смешанные единоборства",
+    description:
+      "Смешанные единоборства ММА в Перми. Бокс, борьба, BJJ, муай-тай в одном зале. Первое занятие бесплатно!",
+    url: "https://bjj59.ru/mma",
+    siteName: "GSAcademy",
+    locale: "ru_RU",
+    type: "website",
+    images: [
+      {
+        url: "/мма.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ММА в Перми — GSAcademy",
+      },
+    ],
+  },
 };
 
 export default function MMAPage() {

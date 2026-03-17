@@ -4,7 +4,34 @@ import DirectionPage from "@/components/DirectionPage";
 export const metadata: Metadata = {
   title: "Бразильское джиу-джитсу в Перми | GSAcademy",
   description:
-    "Бразильское джиу-джитсу в Перми — GSAcademy. Тренировки для детей и взрослых, 6 чёрных поясов. Первое занятие бесплатно!",
+    "Бразильское джиу-джитсу в Перми — GSAcademy. Тренировки для детей и взрослых, 6 чёрных поясов Alliance. Первое занятие бесплатно!",
+  keywords: [
+    "бразильское джиу-джитсу Пермь",
+    "BJJ Пермь",
+    "джиу-джитсу Пермь",
+    "BJJ для детей Пермь",
+    "BJJ для взрослых Пермь",
+    "секция джиу-джитсу Пермь",
+    "GSAcademy BJJ",
+  ],
+  alternates: { canonical: "https://bjj59.ru/bjj" },
+  openGraph: {
+    title: "Бразильское джиу-джитсу в Перми | GSAcademy",
+    description:
+      "Тренировки BJJ для детей и взрослых в Перми. 6 чёрных поясов, члены команды Alliance. Первое занятие бесплатно!",
+    url: "https://bjj59.ru/bjj",
+    siteName: "GSAcademy",
+    locale: "ru_RU",
+    type: "website",
+    images: [
+      {
+        url: "/bjj.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Бразильское джиу-джитсу в Перми — GSAcademy",
+      },
+    ],
+  },
 };
 
 export default function BJJPage() {
