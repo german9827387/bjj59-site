@@ -112,46 +112,83 @@ function Modal({ post, onClose }: { post: VkPost; onClose: () => void }) {
   );
 }
 
+function OverlayCard({ post, featured = false, onClick }: { post: VkPost; featured?: boolean; onClick: () => void }) {
+  const cover = post.photos[0] ?? null;
+  const hasMultiplePhotos = post.photos.length > 1;
+
+  return (
+    <button
+      onClick={onClick}
+      className={`group relative overflow-hidden rounded-2xl text-left cursor-pointer w-full ${
+        featured ? "aspect-[4/3] sm:aspect-auto sm:h-full min-h-[280px]" : "aspect-video sm:aspect-auto sm:flex-1"
+      }`}
+    >
+      {/* Photo */}
+      {cover ? (
+        <Image
+          src={cover}
+          alt=""
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          sizes={featured ? "(max-width: 640px) 100vw, 66vw" : "(max-width: 640px) 100vw, 33vw"}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-[#111827]" />
+      )}
+
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-300 group-hover:from-black/80" />
+
+      {/* Photo count badge */}
+      {hasMultiplePhotos && (
+        <div className="absolute top-3 right-3 flex items-center gap-1 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1 text-white/80 text-xs font-medium">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          {post.photos.length}
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 right-0 p-5">
+        <span className="text-blue-400 text-xs font-medium block mb-2">{formatDate(post.date)}</span>
+        <p className={`text-white font-medium leading-snug ${
+          featured ? "text-base sm:text-lg line-clamp-3" : "text-sm line-clamp-2"
+        }`}>
+          {post.text}
+        </p>
+        <span className="mt-3 inline-block text-blue-300 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          Читать далее →
+        </span>
+      </div>
+    </button>
+  );
+}
+
 export default function NewsGrid({ posts }: { posts: VkPost[] }) {
   const [active, setActive] = useState<VkPost | null>(null);
+  const [first, ...rest] = posts;
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        {posts.map((post) => {
-          const cover = post.photos[0] ?? null;
+      <div className="flex flex-col sm:flex-row gap-4 sm:h-[480px]">
+        {/* Featured card — left 2/3 */}
+        {first && (
+          <div className="sm:w-2/3">
+            <OverlayCard post={first} featured onClick={() => setActive(first)} />
+          </div>
+        )}
 
-          return (
-            <button
-              key={post.id}
-              onClick={() => setActive(post)}
-              className="group flex flex-col text-left rounded-2xl overflow-hidden border border-white/[0.06] bg-[#111827] hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-950/30 transition-all duration-300 cursor-pointer"
-            >
-              {cover && (
-                <div className="relative w-full aspect-video overflow-hidden">
-                  <Image
-                    src={cover}
-                    alt=""
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, 33vw"
-                  />
-                </div>
-              )}
-              <div className="flex flex-col flex-1 p-5">
-                <span className="text-blue-500 text-xs font-medium mb-2">
-                  {formatDate(post.date)}
-                </span>
-                <p className="text-gray-300 text-sm leading-relaxed line-clamp-4 flex-1">
-                  {post.text}
-                </p>
-                <span className="mt-4 text-blue-400 text-xs font-semibold group-hover:text-blue-300 transition-colors">
-                  Читать далее →
-                </span>
-              </div>
-            </button>
-          );
-        })}
+        {/* Side cards — right 1/3 stacked */}
+        {rest.length > 0 && (
+          <div className="sm:w-1/3 flex flex-col gap-4">
+            {rest.map((post) => (
+              <OverlayCard key={post.id} post={post} onClick={() => setActive(post)} />
+            ))}
+          </div>
+        )}
       </div>
 
       {active && <Modal post={active} onClose={() => setActive(null)} />}
