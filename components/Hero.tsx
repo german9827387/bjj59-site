@@ -118,9 +118,9 @@ export default function Hero() {
         {/* CTA Buttons */}
         <div className="hero-fade flex flex-col items-center gap-4" style={{ animationDelay: "0.5s" }}>
           {/* UTP */}
-          <div className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full px-5 py-2.5">
+          <div className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-xl px-5 py-3 max-w-sm text-center">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-            <span className="text-gray-300 text-sm">Бесплатное первое занятие + <span className="text-white font-semibold">экипировка</span></span>
+            <span className="text-gray-300 text-sm leading-snug">Оставьте заявку сегодня — мы подготовим <span className="text-white font-semibold">бесплатную экипировку</span> специально для вас на первое занятие</span>
           </div>
 
           {/* Buttons */}
