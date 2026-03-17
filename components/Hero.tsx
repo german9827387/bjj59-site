@@ -80,31 +80,37 @@ export default function Hero() {
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" style={{ left: "90%" }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20 lg:pt-24">
-        {/* Badge */}
-        <div className="hero-fade inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-2 mb-8">
-          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-          <span className="text-blue-400 text-xs font-medium uppercase tracking-widest">
+        {/* Badge — urgency */}
+        <div className="hero-fade inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-2 mb-8">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="text-cyan-300 text-xs font-semibold uppercase tracking-widest">
             {hero.badge}
           </span>
         </div>
 
         {/* Main heading */}
         <h1
-          className="hero-slide text-4xl sm:text-7xl lg:text-[96px] font-black text-white leading-[0.9] tracking-tight mb-6"
+          className="hero-slide text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight mb-3"
         >
           {hero.title1}
           <br />
           <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-300 text-transparent bg-clip-text">
             {hero.title2}
           </span>
-          <br />
-          {hero.title3}
         </h1>
+
+        {/* Hook line */}
+        <p
+          className="hero-fade text-2xl sm:text-3xl lg:text-4xl font-black text-white/60 mb-6 tracking-tight"
+          style={{ animationDelay: "0.2s" }}
+        >
+          {hero.title3}
+        </p>
 
         {/* Subtitle */}
         <p
-          className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mt-4 mb-10 leading-relaxed"
-          style={{ animationDelay: "0.3s" }}
+          className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+          style={{ animationDelay: "0.35s" }}
         >
           {hero.subtitle}
         </p>
@@ -114,7 +120,7 @@ export default function Hero() {
           {/* UTP */}
           <div className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-full px-5 py-2.5">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-            <span className="text-gray-300 text-sm">Экипировка на первое занятие <span className="text-white font-semibold">бесплатно</span></span>
+            <span className="text-gray-300 text-sm">Бесплатное первое занятие + <span className="text-white font-semibold">экипировка</span></span>
           </div>
 
           {/* Buttons */}
@@ -138,14 +144,15 @@ export default function Hero() {
           </div>
 
           {/* Social proof */}
-          <div className="flex items-center justify-center gap-2 mt-2">
-            <div className="flex items-center gap-1">
-              {[1,2,3,4,5].map((s) => (
-                <Star key={s} size={13} className="text-blue-400 fill-blue-400" />
-              ))}
+          <div className="flex flex-col items-center gap-1 mt-2">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-0.5">
+                {[1,2,3,4,5].map((s) => (
+                  <Star key={s} size={14} className="text-blue-400 fill-blue-400" />
+                ))}
+              </div>
+              <span className="text-white font-black text-base">5.0</span>
             </div>
-            <span className="text-white font-bold text-sm">5.0</span>
-            <span className="text-gray-500 text-sm">·</span>
             <span className="text-gray-400 text-sm"><span className="text-white font-semibold">88 отзывов</span> на Google, Яндексе и 2ГИС</span>
           </div>
         </div>
