@@ -7,7 +7,7 @@ async function getPosts(): Promise<VkPost[]> {
 
   try {
     const res = await fetch(
-      `https://api.vk.com/method/wall.get?owner_id=${groupId}&count=10&filter=owner&v=5.131&access_token=${token}`,
+      `https://api.vk.com/method/wall.get?owner_id=${groupId}&count=6&filter=owner&v=5.131&access_token=${token}`,
       { next: { revalidate: 3600 } }
     );
     const data = await res.json();

@@ -67,12 +67,14 @@ export default function Awards() {
                 <div className="relative flex flex-col bg-gradient-to-b from-[#111827] to-[#0d1117] rounded-[2rem] overflow-hidden [clip-path:inset(0_round_2rem)] h-full">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(59,130,246,0.12),transparent)] pointer-events-none z-10" />
                   <div className="relative overflow-hidden rounded-t-[2rem] h-52 sm:h-80 group-hover:scale-[1.03] transition-transform duration-500 origin-top bg-[#111827]">
-                    {award.id === "alliance" ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={award.image} alt={award.title} style={{position:'absolute',top:'0',left:'0',width:'100%',height:'100%',objectFit:'cover',objectPosition:'center'}} loading="lazy" />
-                    ) : (
-                      <Image src={award.image} alt={award.title} fill className="object-cover object-top" sizes="176px" loading="lazy" />
-                    )}
+                    <Image
+                      src={award.image}
+                      alt={award.title}
+                      fill
+                      className="object-cover object-center"
+                      sizes="176px"
+                      loading="lazy"
+                    />
                     {award.id === "alliance" && <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />}
                     <div className={`absolute top-0 left-0 right-0 bg-gradient-to-b from-[#111827] to-transparent z-20 pointer-events-none ${award.id === "alliance" ? "h-16" : "h-8"}`} />
                     <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#111827] to-transparent z-20 pointer-events-none ${award.id === "alliance" ? "h-16" : "h-8"}`} />

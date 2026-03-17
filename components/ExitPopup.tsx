@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { X, Phone, User, ArrowRight, CheckCircle2, Loader2, ChevronLeft } from "lucide-react";
+import { getUtm, formatPhone } from "@/lib/lead-utils";
 
 const SESSION_KEY = "exit_popup_shown";
 
@@ -71,30 +72,6 @@ function getOffer(who: string, goalLabel: string): { headline: string; sub: stri
 function buildSource(isMobile: boolean, whoLabel: string, goalLabel: string, whenLabel: string): string {
   const base = isMobile ? "Мобильный квиз" : "Exit Intent квиз";
   return `${base} · ${whoLabel} · ${goalLabel} · ${whenLabel}`;
-}
-
-function getUtm() {
-  if (typeof window === "undefined") return {};
-  const p = new URLSearchParams(window.location.search);
-  const utm: Record<string, string> = {};
-  for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
-    const v = p.get(key) || sessionStorage.getItem(key);
-    if (v) utm[key] = v;
-  }
-  return utm;
-}
-
-function formatPhone(val: string) {
-  const digits = val.replace(/\D/g, "").slice(0, 11);
-  if (!digits) return "";
-  const d = digits.startsWith("7") ? digits : "7" + digits;
-  const p = d.slice(1);
-  let out = "+7";
-  if (p.length > 0) out += " (" + p.slice(0, 3);
-  if (p.length >= 3) out += ") " + p.slice(3, 6);
-  if (p.length >= 6) out += "-" + p.slice(6, 8);
-  if (p.length >= 8) out += "-" + p.slice(8, 10);
-  return out;
 }
 
 function QuizStep({

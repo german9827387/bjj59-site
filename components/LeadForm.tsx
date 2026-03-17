@@ -3,17 +3,7 @@
 import { useState, useEffect } from "react";
 import { Phone, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import Reveal from "./Reveal";
-
-function getUtm() {
-  if (typeof window === "undefined") return {};
-  const p = new URLSearchParams(window.location.search);
-  const utm: Record<string, string> = {};
-  for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
-    const v = p.get(key) || sessionStorage.getItem(key);
-    if (v) utm[key] = v;
-  }
-  return utm;
-}
+import { getUtm, persistUtm, formatPhone } from "@/lib/lead-utils";
 
 export default function LeadForm() {
   const [name, setName] = useState("");
@@ -23,28 +13,7 @@ export default function LeadForm() {
   const [error, setError] = useState("");
 
   // Сохраняем UTM при монтировании (дублирует TgLinkHandler для надёжности)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const p = new URLSearchParams(window.location.search);
-    for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
-      const v = p.get(key);
-      if (v) sessionStorage.setItem(key, v);
-    }
-  }, []);
-
-  const formatPhone = (val: string) => {
-    const digits = val.replace(/\D/g, "").slice(0, 11);
-    if (!digits) return "";
-    if (digits.length <= 1) return "+7";
-    const d = digits.startsWith("7") ? digits : "7" + digits;
-    const p = d.slice(1);
-    let out = "+7";
-    if (p.length > 0) out += " (" + p.slice(0, 3);
-    if (p.length >= 3) out += ") " + p.slice(3, 6);
-    if (p.length >= 6) out += "-" + p.slice(6, 8);
-    if (p.length >= 8) out += "-" + p.slice(8, 10);
-    return out;
-  };
+  useEffect(() => { persistUtm(); }, []);
 
   const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(formatPhone(e.target.value));
