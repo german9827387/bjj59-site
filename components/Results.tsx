@@ -50,6 +50,20 @@ const hallOfFame = [
   { src: "/results12.jpg", name: "Прилипко Илья",      event: "Чемпионат России AJP 2021",                 medal: "gold",   rotate: "1.5deg",  objPos: "center top", ratio: "3/2"  },
   { src: "/results13.jpg", name: "Шестериков Герман",  event: "Всероссийский турнир Blood and Sweat",       medal: "gold",   rotate: "-1.5deg", objPos: "center top", ratio: "3/4"  },
   { src: "/result14.jpg",  name: "RCC JJ Open Mat",    event: "Общее фото",                                medal: null,     rotate: "2deg",    objPos: "center top", ratio: "16/10" },
+  { src: "/results16.jpg", name: "Хайкис Александр",   event: "Чемпионат мира ACBJJ",                      medal: "gold",   rotate: "-1deg",   objPos: "center top", ratio: "1/1"  },
+  { src: "/results17.jpg", name: "Корляков Илья",      event: "AJP Tour Northwest Russia",                 medal: "gold",   rotate: "1.5deg",  objPos: "center top", ratio: "1/1"  },
+  { src: "/results18.jpg", name: "Баранов Максим",     event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "-2deg",   objPos: "center top", ratio: "1/1"  },
+  { src: "/results19.jpg", name: "Баранов Максим",     event: "Профессиональный турнир по ММА",             medal: "gold",   rotate: "2.5deg",  objPos: "center top", ratio: "1/1"  },
+  { src: "/results20.jpg", name: "Баранов Максим",     event: "Турнир по боксу",                           medal: "gold",   rotate: "-1.5deg", objPos: "center top", ratio: "1/1"  },
+  { src: "/results21.jpg", name: "Куликов Юрий",       event: "Чемпионат мира ACB",                        medal: "silver", rotate: "1deg",    objPos: "center bottom", ratio: "1/1"  },
+  { src: "/results22.jpg", name: "Куликов Юрий",       event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "-2.5deg", objPos: "center top", ratio: "1/1"  },
+  { src: "/results23.jpg", name: "Чибисов Богдан",     event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "2deg",    objPos: "center top", ratio: "1/1"  },
+  { src: "/results24.jpg", name: "Самсонов Никита",    event: "RCC Open Mat",                              medal: "gold",   rotate: "-1deg",   objPos: "center bottom", ratio: "1/1"  },
+  { src: "/results25.jpg", name: "Измайлов Никита",    event: "RCC JJ Open Mat",                           medal: "gold",   rotate: "1.5deg",  objPos: "center top", ratio: "1/1"  },
+  { src: "/results26.jpg", name: "Щербаков Дмитрий",   event: "Чемпионат России AJP",                      medal: "bronze", rotate: "-2deg",   objPos: "center top", ratio: "1/1"  },
+  { src: "/results27.jpg", name: "Щербаков Дмитрий",   event: "Чемпионат России AJP",                      medal: "bronze", rotate: "2.5deg",  objPos: "center top", ratio: "1/1"  },
+  { src: "/results28.jpg", name: "Хайкис Александр",   event: "Чемпионат ПФО по грэпплингу",               medal: "gold",   rotate: "-1.5deg", objPos: "center top", ratio: "1/1"  },
+  { src: "/results15.jpg", name: "Хайкис Александр",   event: "Чемпионат России ACB",                      medal: "gold",   rotate: "1deg",    objPos: "center top", ratio: "1/1"  },
 ];
 
 const MEDAL_STYLES = {
