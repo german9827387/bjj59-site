@@ -12,10 +12,17 @@ type Trainer = (typeof trainersJson)[0];
 function TrainerCard({ trainer, i, onRecord }: { trainer: Trainer; i: number; onRecord: () => void }) {
   const initials = trainer.name.split(" ").map((n) => n[0]).join("");
   const hasImage = !!trainer.image;
+  const [tapped, setTapped] = useState(false);
+
+  const handleTap = () => setTapped((v) => !v);
 
   return (
     <Reveal delay={i * 60}>
-      <div className="relative rounded-2xl overflow-hidden group cursor-pointer shadow-xl shadow-black/40" style={{ aspectRatio: "3/4" }}>
+      <div
+        className="relative rounded-2xl overflow-hidden group cursor-pointer shadow-xl shadow-black/40"
+        style={{ aspectRatio: "3/4" }}
+        onClick={handleTap}
+      >
       {hasImage ? (
         <Image
           src={trainer.image}
@@ -46,8 +53,8 @@ function TrainerCard({ trainer, i, onRecord }: { trainer: Trainer; i: number; on
         {trainer.belt}
       </span>
 
-      {/* Always visible: name + role + first achievement + CTA */}
-      <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-10 group-hover:opacity-0 transition-opacity duration-300">
+      {/* Static bottom info — скрыто при hover (десктоп) и при tap (мобилка) */}
+      <div className={`absolute bottom-0 left-0 right-0 p-3 sm:p-4 z-10 transition-opacity duration-300 ${tapped ? "opacity-0" : "opacity-100"} group-hover:opacity-0`}>
         <h3 className="text-white font-black text-sm sm:text-base leading-tight">{trainer.name}</h3>
         <p className="text-gray-400 text-[10px] sm:text-xs mt-0.5 leading-snug">{trainer.role}</p>
         {trainer.achievements[0] && (
@@ -55,16 +62,10 @@ function TrainerCard({ trainer, i, onRecord }: { trainer: Trainer; i: number; on
             <span className="text-blue-400 mr-1">▸</span>{trainer.achievements[0]}
           </p>
         )}
-        <button
-          onClick={onRecord}
-          className="mt-2 block w-full text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-[10px] font-bold py-1.5 rounded-lg hover:bg-blue-500/30 transition-all"
-        >
-          Записаться
-        </button>
       </div>
 
-      {/* Hover overlay with achievements */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/95 via-black/80 to-black/30">
+      {/* Achievements overlay — показывается при hover (десктоп) и при tap (мобилка) */}
+      <div className={`absolute inset-0 z-20 flex flex-col justify-end p-4 transition-opacity duration-300 bg-gradient-to-t from-black/95 via-black/80 to-black/30 ${tapped ? "opacity-100" : "opacity-0"} group-hover:opacity-100`}>
         <h3 className="text-white font-black text-base leading-tight mb-0.5">{trainer.name}</h3>
         <p className="text-blue-400 text-[11px] mb-3 leading-snug">{trainer.role}</p>
         <ul className="space-y-1.5 mb-4">
@@ -76,8 +77,8 @@ function TrainerCard({ trainer, i, onRecord }: { trainer: Trainer; i: number; on
           ))}
         </ul>
         <button
-          onClick={onRecord}
-          className="block w-full text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-xs font-bold py-2 rounded-xl hover:bg-blue-500/30 transition-all"
+          onClick={(e) => { e.stopPropagation(); onRecord(); }}
+          className="block w-full text-center bg-blue-500/20 border border-blue-500/40 text-blue-300 text-xs font-bold py-2 rounded-xl hover:bg-blue-500/30 transition-all active:scale-95"
         >
           Записаться
         </button>
