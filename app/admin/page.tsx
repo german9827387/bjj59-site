@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Users, Layers, Star, Tag, Settings, ArrowRight } from "lucide-react";
+import RevalidateScheduleButton from "./RevalidateScheduleButton";
 
 const SECTIONS = [
   { href: "/admin/trainers", label: "Тренеры", icon: Users, desc: "Редактировать профили тренеров, расписание, достижения" },
@@ -13,7 +14,10 @@ export default function AdminDashboard() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-white text-2xl sm:text-3xl font-black mb-1">Добро пожаловать 👋</h1>
+        <div className="flex items-center justify-between flex-wrap gap-3 mb-1">
+          <h1 className="text-white text-2xl sm:text-3xl font-black">Добро пожаловать 👋</h1>
+          <RevalidateScheduleButton />
+        </div>
         <p className="text-gray-500 text-sm">Управляйте контентом сайта bjj59.ru из одного места.</p>
       </div>
 

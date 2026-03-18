@@ -9,10 +9,10 @@
     "ctaSecondary": "Наши направления",
     "stats": [
       {
-        "target": 93,
+        "target": 90,
         "suffix": "",
         "label": "Парковочных мест",
-        "value": 93
+        "value": 90
       },
       {
         "target": 13,

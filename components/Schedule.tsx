@@ -27,7 +27,7 @@ const RUSSIAN_DAYS = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 async function getSchedule(): Promise<ScheduleData | null> {
   try {
     const res = await fetch('https://g-sacademy.vercel.app/api/schedule', {
-      next: { revalidate: 86400 },
+      next: { revalidate: 3600, tags: ['schedule'] },
     });
     if (!res.ok) return null;
     return res.json();
