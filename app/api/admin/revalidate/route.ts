@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/admin-data";
 
 export async function POST() {
   if (!(await requireAdmin())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  revalidateTag("schedule");
+  revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }
