@@ -25,12 +25,18 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/мма.jpg",
+        url: "/mma-photo.jpg",
         width: 1200,
         height: 630,
         alt: "ММА в Перми — GSAcademy",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ММА в Перми | GSAcademy — Смешанные единоборства",
+    description: "Смешанные единоборства ММА в Перми. Первое занятие бесплатно!",
+    images: ["/mma-photo.jpg"],
   },
 };
 

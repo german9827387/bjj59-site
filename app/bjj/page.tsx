@@ -32,6 +32,12 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Бразильское джиу-джитсу в Перми | GSAcademy",
+    description: "Тренировки BJJ для детей и взрослых в Перми. Первое занятие бесплатно!",
+    images: ["/bjj.jpg"],
+  },
 };
 
 export default function BJJPage() {

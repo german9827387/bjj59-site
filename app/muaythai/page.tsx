@@ -32,6 +32,12 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Тайский бокс (Муай-тай) в Перми | GSAcademy",
+    description: "Муай-тай в Перми — искусство восьми конечностей. Первое занятие бесплатно!",
+    images: ["/highkis.jpg"],
+  },
 };
 
 export default function MuaythaiPage() {

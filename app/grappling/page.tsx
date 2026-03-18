@@ -32,6 +32,12 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Грэпплинг в Перми | GSAcademy",
+    description: "Секция грэпплинга в Перми. Первое занятие бесплатно!",
+    images: ["/grappling.jpg"],
+  },
 };
 
 export default function GrapplingPage() {

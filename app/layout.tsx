@@ -17,15 +17,25 @@ export const viewport = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SportsActivityLocation",
+  "@type": ["LocalBusiness", "SportsActivityLocation"],
   "name": "GSAcademy",
   "url": "https://bjj59.ru",
   "telephone": "+79958654244",
+  "priceRange": "₽₽",
+  "image": "https://bjj59.ru/hero-poster.jpg",
+  "description": "Академия единоборств в Перми — BJJ, ММА, бокс, тайский бокс, грэпплинг для детей и взрослых.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "ул. Аркадия Гайдара 8б",
     "addressLocality": "Пермь",
+    "addressRegion": "Пермский край",
+    "postalCode": "614000",
     "addressCountry": "RU"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 58.0105,
+    "longitude": 56.2502
   },
   "openingHours": "Mo-Su 08:00-22:00",
   "aggregateRating": {
@@ -88,6 +98,12 @@ export const metadata: Metadata = {
         alt: "GSAcademy — Академия единоборств в Перми",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GSAcademy — Академия единоборств в Перми",
+    description: "Бразильское джиу-джитсу, ММА, бокс, тайский бокс, грэпплинг для детей и взрослых в Перми.",
+    images: ["/hero-poster.jpg"],
   },
 };
 
