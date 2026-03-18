@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import MobileCTA from "@/components/MobileCTA";
 import TgLinkHandler from "@/components/TgLinkHandler";
-import ExitPopup from "@/components/ExitPopup";
+
+// Не нужны при SSR — грузим только на клиенте, убирая их из гидратации
+const MobileCTA = dynamic(() => import("@/components/MobileCTA"), { ssr: false });
+const ExitPopup = dynamic(() => import("@/components/ExitPopup"), { ssr: false });
 
 // ← Замени на свой ID счётчика Яндекс.Метрики
 const YM_ID = 44430424;
