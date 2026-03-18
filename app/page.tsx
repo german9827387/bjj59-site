@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 const ForWhom = dynamic(() => import("@/components/ForWhom"));
 const Directions = dynamic(() => import("@/components/Directions"));
 const Trainers = dynamic(() => import("@/components/Trainers"));
+const GymGallery = dynamic(() => import("@/components/GymGallery"));
 const News = dynamic(() => import("@/components/News"));
 
 const Reviews = dynamic(() => import("@/components/Reviews"));
@@ -23,6 +24,7 @@ export default function Home() {
       <ForWhom />
       <Directions />
       <Trainers />
+      <GymGallery />
       <Reviews />
       <Awards />
       <Suspense>

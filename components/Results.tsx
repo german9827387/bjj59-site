@@ -7,8 +7,9 @@ import Reveal from "./Reveal";
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState("0");
+  const [display, setDisplay] = useState(String(target));
   useEffect(() => {
+    setDisplay("0");
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(([entry]) => {
@@ -27,7 +28,7 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
     observer.observe(el);
     return () => observer.disconnect();
   }, [target]);
-  return <span ref={ref}>{display}{suffix}</span>;
+  return <span ref={ref} suppressHydrationWarning>{display}{suffix}</span>;
 }
 
 const stats = [
