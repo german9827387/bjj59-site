@@ -130,13 +130,6 @@ body:not([data-scroll-locked]) {
   background: #0a0a0a;
 }
 
-/* content-visibility: пропускаем раскладку/рендер off-screen секций */
-/* Браузер пропускает layout/paint для содержимого вне экрана → меньше TBT и LCP */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 600px;
-}
-
 /* Scrollbar hide utility */
 .scrollbar-none {
   scrollbar-width: none;

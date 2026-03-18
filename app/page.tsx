@@ -20,23 +20,21 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="cv-auto"><ForWhom /></div>
-      <div className="cv-auto"><Directions /></div>
-      <div className="cv-auto"><Trainers /></div>
-      <div className="cv-auto"><GymGallery /></div>
-      <div className="cv-auto"><Reviews /></div>
-      <div className="cv-auto"><Awards /></div>
-      <div className="cv-auto">
-        <Suspense>
-          <News />
-        </Suspense>
-      </div>
-      <div className="cv-auto"><Results /></div>
-      <div className="cv-auto"><Pricing /></div>
-      <div className="cv-auto"><FirstTraining /></div>
-      <div className="cv-auto"><WhyUs /></div>
-      <div className="cv-auto"><FAQ /></div>
-      <div className="cv-auto"><CTA /></div>
+      <ForWhom />
+      <Directions />
+      <Trainers />
+      <GymGallery />
+      <Reviews />
+      <Awards />
+      <Suspense>
+        <News />
+      </Suspense>
+      <Results />
+      <Pricing />
+      <FirstTraining />
+      <WhyUs />
+      <FAQ />
+      <CTA />
     </>
   );
 }
