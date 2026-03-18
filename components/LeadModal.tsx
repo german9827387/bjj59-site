@@ -64,16 +64,21 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
-      {/* Modal */}
-      <div className="relative w-full max-w-md bg-[#0d1525] border border-white/10 rounded-3xl overflow-hidden shadow-2xl shadow-black/50">
+      {/* Modal — bottom sheet on mobile, centered dialog on desktop */}
+      <div className="relative w-full sm:max-w-md bg-[#0d1525] border border-white/10 rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-black/50">
         {/* Top accent line */}
         <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
+
+        {/* Drag handle — visible only on mobile */}
+        <div className="flex justify-center pt-3 pb-1 sm:hidden">
+          <div className="w-10 h-1 rounded-full bg-white/20" />
+        </div>
 
         {/* Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />

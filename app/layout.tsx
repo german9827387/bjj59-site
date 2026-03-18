@@ -144,7 +144,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`}>
           <TgLinkHandler />
           <Navbar />
-          <main>{children}</main>
+          <main className="pb-20 md:pb-0">{children}</main>
           <Footer />
           <ClientShells />
       </body>
