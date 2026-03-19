@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TgLinkHandler from "@/components/TgLinkHandler";
 import { ClientShells } from "@/components/ClientShells";
+import ChatWidget from "@/components/ChatWidget";
 
 // ← Замени на свой ID счётчика Яндекс.Метрики
 const YM_ID = 44430424;
@@ -147,6 +148,7 @@ export default function RootLayout({
           <main className="pb-20 md:pb-0">{children}</main>
           <Footer />
           <ClientShells />
+          <ChatWidget />
       </body>
     </html>
   );

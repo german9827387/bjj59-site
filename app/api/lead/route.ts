@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  let body: { name?: unknown; phone?: unknown; utm?: unknown; source?: unknown };
+  let body: { name?: unknown; phone?: unknown; utm?: unknown; source?: unknown; direction?: unknown; dayTime?: unknown };
   try {
     body = await req.json();
   } catch {
@@ -11,6 +11,8 @@ export async function POST(req: NextRequest) {
   const name = String(body.name ?? "").trim();
   const phone = String(body.phone ?? "").trim();
   const source = String(body.source ?? "").trim();
+  const direction = String(body.direction ?? "").trim();
+  const dayTime = String(body.dayTime ?? "").trim();
   const utm = (body.utm && typeof body.utm === "object" && !Array.isArray(body.utm))
     ? body.utm as Record<string, string>
     : {};
@@ -57,6 +59,8 @@ export async function POST(req: NextRequest) {
     "",
     `👤 Имя: ${name}`,
     `📞 Телефон: ${phone}`,
+    ...(direction ? [`🥊 Направление: ${direction}`] : []),
+    ...(dayTime ? [`📅 День и время: ${dayTime}`] : []),
     `🕐 Время: ${now} (Пермь)`,
     ...(source ? [`📋 Форма: ${source}`] : []),
     ...(utmLines.length ? ["", "*Источник трафика:*", ...utmLines] : ["\n📍 Источник: прямой заход"]),
