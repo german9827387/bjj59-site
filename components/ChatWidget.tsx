@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot } from "lucide-react";
+import { X, Send, Bot } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";
@@ -130,30 +130,10 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Кнопка чата — мобайл: левый нижний угол, десктоп: правый нижний угол */}
-      <div className="fixed bottom-6 left-6 md:left-auto md:right-6 z-[60] flex flex-row items-center gap-2 md:gap-3">
-        {!open && (
-          <div className="order-2 md:order-1 flex items-center gap-2 bg-[#111] border border-[#2a2a2a] rounded-full px-3 py-1.5 shadow-lg">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
-            </span>
-            <span className="text-white text-xs font-medium whitespace-nowrap">Алина онлайн</span>
-          </div>
-        )}
-        <button
-          onClick={() => setOpen((o) => !o)}
-          className="order-1 md:order-2 w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 shadow-2xl shadow-blue-500/40 flex items-center justify-center text-white hover:scale-110 transition-transform"
-          aria-label="Открыть чат-консультант"
-        >
-          {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-        </button>
-      </div>
-
       {/* Окно чата */}
       {open && (
         <div
-          className="fixed bottom-24 right-4 md:right-6 z-50 w-[calc(100vw-2rem)] max-w-sm bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+          className="fixed bottom-24 right-4 md:right-6 z-[60] w-[calc(100vw-2rem)] max-w-sm bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           style={{ height: "480px" }}
         >
           {/* Шапка */}
@@ -161,10 +141,17 @@ export default function ChatWidget() {
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shrink-0">
               <Bot className="w-4 h-4 text-white" />
             </div>
-            <div>
+            <div className="flex-1">
               <p className="text-white text-sm font-semibold leading-none">GSAcademy</p>
               <p className="text-gray-500 text-xs mt-0.5">Онлайн-ассистент</p>
             </div>
+            <button
+              onClick={() => setOpen(false)}
+              className="w-7 h-7 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-300 hover:bg-[#2a2a2a] transition-colors"
+              aria-label="Закрыть чат"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Сообщения */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, X, Calendar, Send } from "lucide-react";
+import { Headphones, X, Calendar, Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import LeadModal from "./LeadModal";
 
@@ -9,6 +9,11 @@ const TG_URL = "https://t.me/+79958636285";
 export default function MobileCTA() {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+
+  function openChat() {
+    setOpen(false);
+    window.dispatchEvent(new Event("open-chat"));
+  }
 
   const items = [
     {
@@ -23,11 +28,18 @@ export default function MobileCTA() {
       color: "bg-blue-600",
       onClick: () => { setOpen(false); setModalOpen(true); },
     },
+    {
+      label: "Алина онлайн",
+      icon: <MessageCircle className="w-5 h-5 text-white" />,
+      color: "bg-gradient-to-br from-blue-600 to-cyan-500",
+      onClick: openChat,
+      badge: true,
+    },
   ];
 
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-50 md:hidden flex flex-col items-end gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
         {items.map((item, i) => (
           <div
             key={i}
@@ -39,7 +51,13 @@ export default function MobileCTA() {
               transitionDelay: open ? `${i * 60}ms` : "0ms",
             }}
           >
-            <span className="bg-[#111]/90 backdrop-blur text-white text-xs px-3 py-1.5 rounded-full border border-[#2a2a2a] whitespace-nowrap shadow">
+            <span className="bg-[#111]/90 backdrop-blur text-white text-xs px-3 py-1.5 rounded-full border border-[#2a2a2a] whitespace-nowrap shadow flex items-center gap-2">
+              {item.badge && (
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+                </span>
+              )}
               {item.label}
             </span>
             <button
@@ -57,8 +75,8 @@ export default function MobileCTA() {
           className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 shadow-2xl shadow-blue-500/40 flex items-center justify-center text-white hover:scale-110 transition-transform"
           aria-label="Меню"
         >
-          <div className={`transition-transform duration-300 ${open ? "rotate-45" : "rotate-0"}`}>
-            {open ? <X className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
+          <div className={`transition-transform duration-300 ${open ? "rotate-90" : "rotate-0"}`}>
+            {open ? <X className="w-6 h-6" /> : <Headphones className="w-6 h-6" />}
           </div>
         </button>
       </div>
