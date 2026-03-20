@@ -45,6 +45,11 @@ function MessageContent({ text }: { text: string }) {
 
 const QUICK_QUESTIONS = [
   "Как добраться?",
+  "Расписание занятий",
+  "Сколько стоит?",
+  "Что взять на тренировку?",
+  "Пробное занятие бесплатно?",
+  "Какие направления есть?",
 ];
 
 export default function ChatWidget() {
@@ -53,7 +58,7 @@ export default function ChatWidget() {
     {
       role: "assistant",
       content:
-        "Здравствуйте! Меня зовут Алина 😊 Как могу к вам обращаться?",
+        "Здравствуйте! Меня зовут Алина, я онлайн-ассистент академии GSAcademy 😊 Как могу к вам обращаться?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -141,7 +146,7 @@ export default function ChatWidget() {
             </div>
             <div>
               <p className="text-white text-sm font-semibold leading-none">GSAcademy</p>
-              <p className="text-gray-500 text-xs mt-0.5">Онлайн-консультант</p>
+              <p className="text-gray-500 text-xs mt-0.5">Онлайн-ассистент</p>
             </div>
           </div>
 
