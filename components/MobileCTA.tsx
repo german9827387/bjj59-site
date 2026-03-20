@@ -1,10 +1,11 @@
 "use client";
 
-import { Headphones, X, Calendar, Send, MessageCircle } from "lucide-react";
+import { MessageCircle, X, Calendar, Send, Phone } from "lucide-react";
 import { useState } from "react";
 import LeadModal from "./LeadModal";
 
 const TG_URL = "https://t.me/+79958636285";
+const PHONE_URL = "tel:+79958654244";
 
 export default function MobileCTA() {
   const [open, setOpen] = useState(false);
@@ -16,6 +17,12 @@ export default function MobileCTA() {
   }
 
   const items = [
+    {
+      label: "Позвонить нам",
+      icon: <Phone className="w-5 h-5 text-white" />,
+      color: "bg-emerald-600",
+      onClick: () => { setOpen(false); window.location.href = PHONE_URL; },
+    },
     {
       label: "Написать в Telegram",
       icon: <Send className="w-5 h-5 text-white" />,
@@ -76,7 +83,7 @@ export default function MobileCTA() {
           aria-label="Меню"
         >
           <div className={`transition-transform duration-300 ${open ? "rotate-90" : "rotate-0"}`}>
-            {open ? <X className="w-6 h-6" /> : <Headphones className="w-6 h-6" />}
+            {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
           </div>
         </button>
       </div>
