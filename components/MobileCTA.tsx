@@ -20,7 +20,7 @@ export default function MobileCTA() {
   return (
     <>
     <div
-      className={`fixed bottom-4 left-4 right-4 z-50 md:hidden transition-all duration-300 ${
+      className={`fixed bottom-4 left-4 right-20 z-50 md:hidden transition-all duration-300 ${
         visible && !dismissed ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
       }`}
     >

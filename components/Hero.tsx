@@ -38,6 +38,7 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 export default function Hero() {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -46,21 +47,27 @@ export default function Hero() {
     return () => clearTimeout(id);
   }, []);
 
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el || !videoSrc) return;
+    el.src = videoSrc;
+    el.load();
+    el.play().catch(() => {});
+  }, [videoSrc]);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[#0d1525]">
         <video
-          autoPlay
+          ref={videoRef}
           muted
           loop
           playsInline
           preload="none"
           poster="/hero-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover opacity-50"
-        >
-          {videoSrc && <source src={videoSrc} type="video/mp4" />}
-        </video>
+        />
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
         {/* Mesh gradient */}

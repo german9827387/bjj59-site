@@ -125,13 +125,24 @@ export default function ChatWidget() {
   return (
     <>
       {/* Кнопка открытия */}
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 shadow-2xl shadow-blue-500/40 flex items-center justify-center text-white hover:scale-110 transition-transform"
-        aria-label="Открыть чат-консультант"
-      >
-        {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-      </button>
+      <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-2">
+        {!open && (
+          <div className="flex items-center gap-2 bg-[#111] border border-[#2a2a2a] rounded-full px-3 py-1.5 shadow-lg">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+            </span>
+            <span className="text-white text-xs font-medium whitespace-nowrap">Алина онлайн</span>
+          </div>
+        )}
+        <button
+          onClick={() => setOpen((o) => !o)}
+          className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 shadow-2xl shadow-blue-500/40 flex items-center justify-center text-white hover:scale-110 transition-transform"
+          aria-label="Открыть чат-консультант"
+        >
+          {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        </button>
+      </div>
 
       {/* Окно чата */}
       {open && (
