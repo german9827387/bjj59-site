@@ -127,7 +127,7 @@ export default function ChatWidget() {
       {/* Кнопка открытия */}
       <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-2">
         {!open && (
-          <div className="flex items-center gap-2 bg-[#111] border border-[#2a2a2a] rounded-full px-3 py-1.5 shadow-lg">
+          <div className="hidden md:flex items-center gap-2 bg-[#111] border border-[#2a2a2a] rounded-full px-3 py-1.5 shadow-lg">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
