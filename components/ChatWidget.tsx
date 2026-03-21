@@ -133,8 +133,8 @@ export default function ChatWidget() {
       {/* Окно чата */}
       {open && (
         <div
-          className="fixed bottom-24 right-4 md:right-6 z-[60] w-[calc(100vw-2rem)] max-w-sm bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
-          style={{ height: "480px" }}
+          className="fixed bottom-20 md:bottom-24 right-4 md:right-6 z-[60] w-[calc(100vw-2rem)] max-w-sm bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+          style={{ height: "min(480px, calc(100dvh - 6rem))" }}
         >
           {/* Шапка */}
           <div className="flex items-center gap-3 px-4 py-3 bg-[#111] border-b border-[#1e1e1e] shrink-0">
@@ -215,7 +215,8 @@ export default function ChatWidget() {
               }
               placeholder="Напишите вопрос..."
               disabled={loading}
-              className="flex-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-3 py-2 text-sm text-white placeholder-gray-600 outline-none focus:border-blue-500/50 transition-colors disabled:opacity-50"
+              className="flex-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-3 py-2 text-white placeholder-gray-600 outline-none focus:border-blue-500/50 transition-colors disabled:opacity-50"
+              style={{ fontSize: '16px' }}
             />
             <button
               onClick={() => send(input)}
