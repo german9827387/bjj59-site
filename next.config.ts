@@ -5,7 +5,31 @@ const nextConfig: NextConfig = {
   compress: true,
   experimental: {},
   async headers() {
+    const securityHeaders = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "X-Frame-Options", value: "DENY" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+      {
+        key: "Content-Security-Policy",
+        value: [
+          "default-src 'self'",
+          "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+          "style-src 'self' 'unsafe-inline'",
+          "img-src 'self' data: blob: https://**.userapi.com https://**.vk-cdn.net https://**.okcdn.ru https://avatars.mds.yandex.net",
+          "media-src 'self' blob:",
+          "font-src 'self'",
+          "connect-src 'self' https://api.vk.com",
+          "frame-ancestors 'none'",
+        ].join("; "),
+      },
+    ];
+
     return [
+      {
+        source: "/(.*)",
+        headers: securityHeaders,
+      },
       {
         source: "/_next/static/(.*)",
         headers: [

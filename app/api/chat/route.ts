@@ -288,7 +288,29 @@ GSAcademy, Пермь, 13 лет, 513+ учеников, 88+ отзывов 5★
 Опыт/физподготовка нужны? Нет. Не рано 3–5 лет? Нет. Травмы? Начинающим — только техника. Взрослому не поздно? 18–50+ лет — норма.`;
 
 
+// In-memory rate limiter: max 20 requests per IP per minute
+const chatRateLimit = new Map<string, { count: number; resetAt: number }>();
+const CHAT_MAX_RPM = 20;
+const CHAT_WINDOW_MS = 60 * 1000;
+
+function checkChatRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const rec = chatRateLimit.get(ip);
+  if (!rec || now > rec.resetAt) {
+    chatRateLimit.set(ip, { count: 1, resetAt: now + CHAT_WINDOW_MS });
+    return true;
+  }
+  if (rec.count >= CHAT_MAX_RPM) return false;
+  rec.count++;
+  return true;
+}
+
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (!checkChatRateLimit(ip)) {
+    return NextResponse.json({ error: "Слишком много запросов. Подождите немного." }, { status: 429 });
+  }
+
   try {
     const body = await req.json();
     const messages = body.messages;

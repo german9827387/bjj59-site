@@ -92,13 +92,15 @@ export async function POST(req: NextRequest) {
     const utmHtml = utmLines.length
       ? `<br><b>Источник трафика:</b><br>${utmLines.map(l => l.replace("📌 ", "")).join("<br>")}`
       : "<br>Источник: прямой заход";
+    const esc = (s: string) =>
+      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     const emailHtml = `
       <h2 style="color:#1d4ed8">🥋 Новая заявка — bjj59.ru</h2>
       <table style="font-size:15px;line-height:1.7">
-        <tr><td><b>Имя:</b></td><td>${name}</td></tr>
-        <tr><td><b>Телефон:</b></td><td><a href="tel:${phone}">${phone}</a></td></tr>
-        <tr><td><b>Время:</b></td><td>${now} (Пермь)</td></tr>
-        ${source ? `<tr><td><b>Форма:</b></td><td>${source}</td></tr>` : ""}
+        <tr><td><b>Имя:</b></td><td>${esc(name)}</td></tr>
+        <tr><td><b>Телефон:</b></td><td><a href="tel:${esc(phone)}">${esc(phone)}</a></td></tr>
+        <tr><td><b>Время:</b></td><td>${esc(now)} (Пермь)</td></tr>
+        ${source ? `<tr><td><b>Форма:</b></td><td>${esc(source)}</td></tr>` : ""}
       </table>
       ${utmHtml}
     `;

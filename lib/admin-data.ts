@@ -1,12 +1,13 @@
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { cookies } from "next/headers";
+import { verifySessionToken } from "@/lib/session";
 
 const SESSION_COOKIE = "admin_session";
 
 export async function requireAdmin(): Promise<boolean> {
   const cookieStore = await cookies();
-  return cookieStore.get(SESSION_COOKIE)?.value === "1";
+  return verifySessionToken(cookieStore.get(SESSION_COOKIE)?.value);
 }
 
 export function readData<T>(file: string): T {
