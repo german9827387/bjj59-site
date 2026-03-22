@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
           "media-src 'self' blob:",
           "font-src 'self'",
           "connect-src 'self' https://api.vk.com",
+          "frame-src https://yandex.ru",
           "frame-ancestors 'none'",
         ].join("; "),
       },
