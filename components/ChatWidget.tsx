@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { X, Send, Bot } from "lucide-react";
+import { getUtm } from "@/lib/lead-utils";
 
 interface Message {
   role: "user" | "assistant";
@@ -104,6 +105,7 @@ export default function ChatWidget() {
             source: "Чат-консультант",
             direction: data.leadDirection,
             dayTime: data.leadDayTime,
+            utm: getUtm(),
           }),
         }).catch(() => {});
       }

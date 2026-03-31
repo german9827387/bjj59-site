@@ -16,30 +16,36 @@ export default function MobileCTA() {
     window.dispatchEvent(new Event("open-chat"));
   }
 
+  function ymGoal(goal: string) {
+    const ym = (window as any).ym;
+    const id = (window as any).__YM_COUNTER_ID__;
+    if (ym && id) ym(id, "reachGoal", goal);
+  }
+
   const items = [
     {
       label: "Позвонить нам",
       icon: <Phone className="w-5 h-5 text-white" />,
       color: "bg-emerald-600",
-      onClick: () => { setOpen(false); window.location.href = PHONE_URL; },
+      onClick: () => { setOpen(false); ymGoal("phone_click"); window.location.href = PHONE_URL; },
     },
     {
       label: "Написать в Telegram",
       icon: <Send className="w-5 h-5 text-white" />,
       color: "bg-[#229ED9]",
-      onClick: () => { setOpen(false); window.open(TG_URL, "_blank"); },
+      onClick: () => { setOpen(false); ymGoal("tg_click"); window.open(TG_URL, "_blank"); },
     },
     {
       label: "Записаться бесплатно",
       icon: <Calendar className="w-5 h-5 text-white" />,
       color: "bg-blue-600",
-      onClick: () => { setOpen(false); setModalOpen(true); },
+      onClick: () => { setOpen(false); ymGoal("lead_form_open"); setModalOpen(true); },
     },
     {
       label: "Алина онлайн",
       icon: <MessageCircle className="w-5 h-5 text-white" />,
       color: "bg-gradient-to-br from-blue-600 to-cyan-500",
-      onClick: openChat,
+      onClick: () => { ymGoal("chat_open"); openChat(); },
       badge: true,
     },
   ];
