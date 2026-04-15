@@ -51,7 +51,7 @@ export default function WhyUs() {
               </span>
             </h2>
             <p className="text-blue-200/40 mt-4 max-w-xl mx-auto text-base">
-              Мы — первая академия в Перми, где спорт помогает развивать не только тело, но и личность
+              Академия, где спорт помогает развивать не только тело, но и личность
             </p>
           </Reveal>
         </div>

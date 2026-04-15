@@ -133,7 +133,7 @@ export default function ExitPopup() {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
     if (mobile) {
-      const t = setTimeout(show, 20_000);
+      const t = setTimeout(show, 12_000);
       return () => clearTimeout(t);
     } else {
       const handleMouseLeave = (e: MouseEvent) => {

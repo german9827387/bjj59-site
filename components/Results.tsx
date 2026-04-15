@@ -81,7 +81,7 @@ export default function Results() {
   };
 
   return (
-    <section className="relative py-16 lg:py-24 bg-[#0d1525] overflow-hidden">
+    <section className="relative py-16 lg:py-24 bg-[#0d1525] overflow-x-clip overflow-y-visible">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(59,130,246,0.10),transparent)] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
@@ -157,8 +157,8 @@ export default function Results() {
             {/* Скролл-контейнер */}
             <div
               ref={scrollRef}
-              className="flex gap-6 overflow-x-auto pb-8 pt-6 px-4 scrollbar-hide overscroll-x-contain"
-              style={{ scrollSnapType: "x mandatory" }}
+              className="flex gap-6 overflow-x-auto pb-8 pt-6 px-4 scrollbar-none touch-pan-x"
+              style={{ scrollSnapType: "x proximity" }}
             >
               {hallOfFame.map((item, i) => {
                 const medal = item.medal ? MEDAL_STYLES[item.medal as keyof typeof MEDAL_STYLES] : null;

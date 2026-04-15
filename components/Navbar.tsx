@@ -8,13 +8,12 @@ import { Menu, X, Phone, User } from "lucide-react";
 import LeadModal from "./LeadModal";
 
 const navLinks = [
-  { label: "Главная", href: "/" },
   { label: "Направления", href: "/#directions" },
   { label: "Тренеры", href: "/#trainers" },
+  { label: "Отзывы", href: "/#reviews" },
   { label: "Расписание", href: "/schedule" },
   { label: "Цены", href: "/#pricing" },
   { label: "Контакты", href: "/#contacts" },
-  { label: "Личный кабинет", href: "https://app.bjj59.ru", external: true },
 ];
 
 export default function Navbar() {
@@ -79,17 +78,24 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className={link.external
-                  ? "flex items-center gap-1.5 border border-blue-500/50 bg-blue-500/8 text-blue-300 hover:bg-blue-500/15 hover:border-blue-400 hover:text-white transition-all duration-200 text-sm font-semibold tracking-wide uppercase py-1.5 px-4 rounded-full"
-                  : isActive(link.href)
+                className={isActive(link.href)
                     ? "text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"
                     : "text-gray-300 hover:text-[#3B82F6] transition-colors duration-200 text-sm font-medium tracking-wide uppercase"}
               >
-                {link.external && <User size={14} className="shrink-0" />}
                 {link.label}
               </Link>
             ))}
+            {/* Divider */}
+            <div className="w-px h-5 bg-white/10" />
+            <Link
+              href="https://app.bjj59.ru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 border border-blue-500/50 bg-blue-500/8 text-blue-300 hover:bg-blue-500/15 hover:border-blue-400 hover:text-white transition-all duration-200 text-sm font-semibold tracking-wide uppercase py-1.5 px-4 rounded-full"
+            >
+              <User size={14} className="shrink-0" />
+              Личный кабинет
+            </Link>
           </div>
 
           {/* CTA + Phone */}
@@ -137,10 +143,7 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 href={link.href}
-                {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className={link.external
-                  ? "text-blue-400 hover:text-blue-300 transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"
-                  : isActive(link.href)
+                className={isActive(link.href)
                     ? "text-[#3B82F6] py-2 text-base font-medium border-b border-[#1e1e1e]"
                     : "text-gray-300 hover:text-[#3B82F6] transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"}
                 onClick={() => setIsOpen(false)}
@@ -148,6 +151,15 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              href="https://app.bjj59.ru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:text-blue-300 transition-colors py-2 text-base font-medium border-b border-[#1e1e1e]"
+              onClick={() => setIsOpen(false)}
+            >
+              Личный кабинет
+            </Link>
             <div className="pt-4 flex flex-col gap-3">
               <a
                 href="tel:+79958654244"

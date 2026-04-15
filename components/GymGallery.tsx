@@ -1,4 +1,8 @@
+"use client";
+
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "./Reveal";
 
 const photos = [
@@ -35,8 +39,17 @@ function GymPhoto({ photo, className = "", delay = 0 }: { photo: { src: string; 
 }
 
 export default function GymGallery() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
+
+  function scrollBy(dir: 1 | -1) {
+    scrollRef.current?.scrollBy({ left: dir * 288, behavior: "smooth" });
+  }
+
   return (
-    <section className="relative py-12 lg:py-16 bg-[#0a0a0a] overflow-hidden">
+    <section className="relative py-12 lg:py-16 bg-[#0a0a0a] overflow-x-clip overflow-y-visible">
       {/* Фоновые градиенты — в стиле остальных секций */}
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0d1525] to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#0a0a0a] pointer-events-none" />
@@ -63,13 +76,39 @@ export default function GymGallery() {
 
         {/* Мобилка — горизонтальный snap-скролл */}
         <div className="md:hidden -mx-4 px-4">
-          <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none">
+          <div ref={scrollRef} className="flex gap-3 overflow-x-auto snap-x pb-4 scrollbar-none touch-pan-x">
             {photos.map((photo, i) => (
               <div key={i} className="flex-none w-72 h-52 snap-center">
                 <GymPhoto photo={photo} delay={i * 60} />
               </div>
             ))}
           </div>
+          {/* Hint + стрелки */}
+          {mounted && (
+          <div className="flex items-center justify-between px-1 mt-2">
+            <div className="flex items-center gap-1.5 text-blue-400 text-xs font-medium">
+              <ChevronLeft size={14} />
+              <span>листай</span>
+              <ChevronRight size={14} />
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => scrollBy(-1)}
+                className="w-8 h-8 rounded-full border border-[#2a2a2a] bg-[#111] flex items-center justify-center text-gray-400 active:text-white active:border-blue-500 transition-colors"
+                aria-label="Назад"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={() => scrollBy(1)}
+                className="w-8 h-8 rounded-full border border-[#2a2a2a] bg-[#111] flex items-center justify-center text-gray-400 active:text-white active:border-blue-500 transition-colors"
+                aria-label="Вперёд"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          </div>
+          )}
         </div>
 
         {/* Десктоп — асимметричная сетка */}

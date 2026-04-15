@@ -70,9 +70,9 @@ const inter = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bjj59.ru"),
-  title: "GSAcademy — Академия единоборств в Перми | БЖЖ, ММА, Бокс",
+  title: "GSAcademy — Единоборства в Перми | BJJ, ММА, Бокс",
   description:
-    "GSAcademy — лучшая академия единоборств в Перми. Бразильское джиу-джитсу, ММА, бокс, тайский бокс, грэпплинг для детей и взрослых. Запишитесь на бесплатное первое занятие.",
+    "Академия единоборств в Перми. BJJ, ММА, бокс для детей с 3 лет и взрослых. 14 лет, 513 учеников. Первое занятие бесплатно.",
   keywords: ["академия единоборств Пермь", "BJJ Пермь", "ММА Пермь", "бокс Пермь", "тайский бокс Пермь", "грэпплинг Пермь", "GSAcademy", "джиу-джитсу Пермь"],
   alternates: {
     canonical: "https://bjj59.ru",
@@ -114,7 +114,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className="dark">
+    <html lang="ru" className="dark" suppressHydrationWarning>
       <head>
         {/* JSON-LD структурированные данные */}
         <script
@@ -141,7 +141,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://t.me" />
         <link rel="dns-prefetch" href="https://api.vk.com" />
       </head>
-      <body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`}>
+      <body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`} suppressHydrationWarning>
           <TgLinkHandler />
           <Navbar />
           <main className="pb-20 md:pb-0">{children}</main>

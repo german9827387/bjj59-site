@@ -5,6 +5,9 @@ import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
 import LeadModal from "./LeadModal";
 
+const TG_URL = `https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
+const MAX_URL = "https://max.ru/GSAcademy59";
+
 const { hero, contacts } = settingsJson;
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -125,30 +128,39 @@ export default function Hero() {
 
         {/* CTA Buttons */}
         <div className="hero-fade flex flex-col items-center gap-4" style={{ animationDelay: "0.5s" }}>
-          {/* UTP */}
-          <div className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-xl px-5 py-3 max-w-sm text-center">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-            <span className="text-gray-300 text-sm leading-snug">Оставьте заявку сегодня — мы подготовим <span className="text-white font-semibold">бесплатную экипировку</span> специально для вас на первое занятие</span>
-          </div>
-
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <button
             onClick={() => setModalOpen(true)}
-            className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-full text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-blue-500/30"
+            className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3 px-7 sm:py-4 sm:px-10 rounded-full text-base sm:text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-blue-500/30"
           >
             <span className="relative z-10">{hero.ctaPrimary}</span>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity blur-sm -z-10" />
           </button>
-          <a
-            href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-4 px-10 rounded-full text-lg hover:bg-blue-500/10 transition-all"
-          >
-            <MessageCircle size={16} />
-            Написать в Telegram
-          </a>
+          <div className="flex gap-2">
+            <a
+              href={TG_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-5 rounded-full text-sm hover:bg-blue-500/10 transition-all"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-[#229ED9] shrink-0">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+              Telegram
+            </a>
+            <a
+              href={MAX_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-5 rounded-full text-sm hover:bg-blue-500/10 transition-all"
+            >
+              <span className="w-[18px] h-[18px] rounded-full bg-[#168ACD] flex items-center justify-center shrink-0">
+                <span className="text-white text-[9px] font-bold leading-none">M</span>
+              </span>
+              MAX
+            </a>
+          </div>
           </div>
 
           {/* Social proof */}
@@ -167,10 +179,10 @@ export default function Hero() {
 
         {/* Stats */}
         <div className="hero-fade grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 max-w-3xl mx-auto" style={{ animationDelay: "0.7s" }}>
-          {hero.stats.map((stat) => (
+          {hero.stats.map((stat, i) => (
             <div
               key={stat.label}
-              className="text-center p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm"
+              className={`text-center p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm ${i >= 2 ? "hidden sm:block" : ""}`}
             >
               <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
                 <AnimatedCounter target={stat.target} suffix={stat.suffix} />

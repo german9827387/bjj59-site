@@ -5,6 +5,7 @@ import { useState } from "react";
 import LeadModal from "./LeadModal";
 
 const TG_URL = "https://t.me/+79958636285";
+const MAX_URL = "https://max.ru/GSAcademy59";
 const PHONE_URL = "tel:+79958654244";
 
 export default function MobileCTA() {
@@ -36,6 +37,12 @@ export default function MobileCTA() {
       onClick: () => { setOpen(false); ymGoal("tg_click"); window.open(TG_URL, "_blank"); },
     },
     {
+      label: "Написать в MAX",
+      icon: <Send className="w-5 h-5 text-white" />,
+      color: "bg-[#168ACD]",
+      onClick: () => { setOpen(false); ymGoal("tg_click"); window.open(MAX_URL, "_blank"); },
+    },
+    {
       label: "Записаться бесплатно",
       icon: <Calendar className="w-5 h-5 text-white" />,
       color: "bg-blue-600",
@@ -52,7 +59,7 @@ export default function MobileCTA() {
 
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-none">
         {items.map((item, i) => (
           <div
             key={i}
@@ -85,7 +92,7 @@ export default function MobileCTA() {
         {/* Главная кнопка */}
         <button
           onClick={() => setOpen((o) => !o)}
-          className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 shadow-2xl shadow-blue-500/40 flex items-center justify-center text-white hover:scale-110 transition-transform"
+          className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 shadow-2xl shadow-blue-500/40 flex items-center justify-center text-white hover:scale-110 transition-transform pointer-events-auto"
           aria-label="Меню"
         >
           <div className={`transition-transform duration-300 ${open ? "rotate-90" : "rotate-0"}`}>

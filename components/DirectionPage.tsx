@@ -34,8 +34,8 @@ const advantages = [
 ];
 
 const stats = [
-  { num: "14", label: "лет опыта" },
-  { num: "500+", label: "учеников" },
+  { num: "14", label: "лет в Перми" },
+  { num: "513+", label: "учеников" },
 ];
 
 export default function DirectionPage({

@@ -89,6 +89,17 @@ export default function Footer() {
                 Telegram
               </a>
               <a
+                href="https://max.ru/GSAcademy59"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-[#1e1e1e] hover:bg-blue-600/20 border border-[#2e2e2e] hover:border-blue-500/50 text-gray-200 hover:text-white rounded-2xl px-4 py-3 font-semibold text-sm transition-all group"
+              >
+                <span className="w-8 h-8 rounded-xl bg-[#168ACD]/20 group-hover:bg-[#168ACD] flex items-center justify-center transition-all shrink-0">
+                  <span className="text-white font-bold text-xs">M</span>
+                </span>
+                MAX
+              </a>
+              <a
                 href="https://t.me/GSacademyperm"
                 target="_blank"
                 rel="noopener noreferrer"
