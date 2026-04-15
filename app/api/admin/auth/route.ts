@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import crypto from "crypto";
 import { createSessionToken, verifySessionToken } from "@/lib/session";
 
 const SESSION_COOKIE = "admin_session";
@@ -42,7 +43,9 @@ export async function POST(req: NextRequest) {
   }
 
   const password = String(body.password ?? "");
-  if (password !== adminPassword) {
+  const pwBuf = Buffer.from(password);
+  const adminBuf = Buffer.from(adminPassword);
+  if (pwBuf.length !== adminBuf.length || !crypto.timingSafeEqual(pwBuf, adminBuf)) {
     return NextResponse.json({ error: "Неверный пароль" }, { status: 401 });
   }
 

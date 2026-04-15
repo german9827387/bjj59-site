@@ -140,7 +140,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://mc.yandex.ru" />
         <link rel="preconnect" href="https://t.me" />
         <link rel="dns-prefetch" href="https://api.vk.com" />
-        <link rel="dns-prefetch" href="https://mc.yandex.ru" />
       </head>
       <body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`}>
           <TgLinkHandler />
