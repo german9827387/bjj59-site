@@ -1,8 +1,7 @@
 "use client";
 
-import { MessageCircle, X, Calendar, Send, Phone } from "lucide-react";
+import { MessageCircle, X, Send, Phone } from "lucide-react";
 import { useState } from "react";
-import LeadModal from "./LeadModal";
 
 const TG_URL = "https://t.me/+79958636285";
 const MAX_URL = "https://max.ru/GSAcademy59";
@@ -10,7 +9,6 @@ const PHONE_URL = "tel:+79958654244";
 
 export default function MobileCTA() {
   const [open, setOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
 
   function openChat() {
     setOpen(false);
@@ -38,15 +36,9 @@ export default function MobileCTA() {
     },
     {
       label: "Написать в MAX",
-      icon: <Send className="w-5 h-5 text-white" />,
+      icon: <span className="text-white font-black text-lg leading-none">M</span>,
       color: "bg-[#168ACD]",
       onClick: () => { setOpen(false); ymGoal("tg_click"); window.open(MAX_URL, "_blank"); },
-    },
-    {
-      label: "Записаться бесплатно",
-      icon: <Calendar className="w-5 h-5 text-white" />,
-      color: "bg-blue-600",
-      onClick: () => { setOpen(false); ymGoal("lead_form_open"); setModalOpen(true); },
     },
     {
       label: "Алина онлайн",
@@ -100,8 +92,6 @@ export default function MobileCTA() {
           </div>
         </button>
       </div>
-
-      <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }
