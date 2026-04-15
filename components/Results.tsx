@@ -75,10 +75,28 @@ const MEDAL_STYLES = {
 
 export default function Results() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragState = useRef({ startX: 0, scrollLeft: 0 });
 
   const scroll = (dir: "left" | "right") => {
-    scrollRef.current?.scrollBy({ left: dir === "right" ? 320 : -320, behavior: "smooth" });
+    scrollRef.current?.scrollBy({ left: dir === "right" ? 400 : -400, behavior: "smooth" });
   };
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setIsDragging(true);
+    dragState.current = { startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft };
+  };
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const el = scrollRef.current;
+    if (!el) return;
+    const x = e.pageX - el.offsetLeft;
+    el.scrollLeft = dragState.current.scrollLeft - (x - dragState.current.startX);
+  };
+  const onMouseUp = () => setIsDragging(false);
 
   return (
     <section className="relative py-16 lg:py-24 bg-[#0d1525] overflow-x-clip overflow-y-visible">
@@ -157,8 +175,12 @@ export default function Results() {
             {/* Скролл-контейнер */}
             <div
               ref={scrollRef}
-              className="flex gap-6 overflow-x-auto pb-8 pt-6 px-4 scrollbar-none touch-pan-x"
+              className={`flex gap-6 overflow-x-auto pb-8 pt-6 px-4 scrollbar-none touch-pan-x ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
               style={{ scrollSnapType: "x proximity" }}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+              onMouseLeave={onMouseUp}
             >
               {hallOfFame.map((item, i) => {
                 const medal = item.medal ? MEDAL_STYLES[item.medal as keyof typeof MEDAL_STYLES] : null;
@@ -191,7 +213,7 @@ export default function Results() {
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         style={{ objectPosition: item.objPos }}
-                        sizes="(min-width: 1024px) 480px, 320px"
+                        sizes="(min-width: 1024px) 640px, 480px"
                         loading="lazy"
                       />
                       {/* Градиент снизу */}

@@ -2,8 +2,36 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Clock } from "lucide-react";
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import LeadModal from "./LeadModal";
+
+function LazyFooterMap() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setShow(true); observer.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="rounded-xl overflow-hidden border border-[#1e1e1e] aspect-video">
+      {show ? (
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?ll=56.29609%2C58.001796&z=17&pt=56.29609,58.001796,pm2rdm&l=map"
+          width="100%" height="100%" frameBorder="0" allowFullScreen
+          title="Карта GSAcademy" className="w-full h-full"
+        />
+      ) : (
+        <div className="w-full h-full bg-[#0d0d0d]" style={{ minHeight: "180px" }} />
+      )}
+    </div>
+  );
+}
 
 const socials = [
   {
@@ -43,7 +71,7 @@ export default function Footer() {
     <>
     <footer id="contacts" className="bg-[#080808] border-t border-[#1e1e1e]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
           {/* Контакты — на мобилке первые */}
           <div className="order-1 md:order-2">
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Контакты</h3>
@@ -111,6 +139,12 @@ export default function Footer() {
               </span>
               GS Life — жизнь академии
             </a>
+          </div>
+
+          {/* Карта */}
+          <div className="order-3">
+            <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Мы на карте</h3>
+            <LazyFooterMap />
           </div>
         </div>
 
