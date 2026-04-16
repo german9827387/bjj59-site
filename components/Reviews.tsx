@@ -100,7 +100,7 @@ export default function Reviews() {
   }, [next, autoPlay]);
 
   return (
-    <section className="relative py-20 lg:py-28 bg-[#080808] overflow-hidden">
+    <section id="reviews" className="relative py-20 lg:py-28 bg-[#080808] overflow-hidden">
       {/* Фоновые градиенты */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(59,130,246,0.05),transparent)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_10%_80%,rgba(6,182,212,0.04),transparent)] pointer-events-none" />
