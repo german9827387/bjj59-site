@@ -6,7 +6,7 @@ import settingsJson from "@/data/settings.json";
 import LeadModal from "./LeadModal";
 
 const TG_URL = `https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
-const MAX_URL = "https://max.ru/GSAcademy59";
+const MAX_URL = `https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY?startMessage=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
 
 const { hero, contacts } = settingsJson;
 

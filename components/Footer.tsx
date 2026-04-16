@@ -54,7 +54,7 @@ const socials = [
   },
   {
     label: "MAX",
-    href: "https://max.ru/GSAcademy59",
+    href: `https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY?startMessage=${encodeURIComponent('Здравствуйте! Пишу с сайта')}`,
     icon: <span className="text-white font-bold text-[11px] leading-none">M</span>,
   },
 ];
