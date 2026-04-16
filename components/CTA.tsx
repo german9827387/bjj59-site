@@ -73,6 +73,7 @@ export default function CTA() {
                       href={MAX_URL}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => { const ym = (window as any).ym; const id = (window as any).__YM_COUNTER_ID__; if (ym && id) ym(id, "reachGoal", "max_click"); }}
                       className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-500/10 transition-colors text-gray-200 hover:text-white text-sm font-medium"
                     >
                       <span className="w-5 h-5 rounded-full bg-[#168ACD] flex items-center justify-center shrink-0">

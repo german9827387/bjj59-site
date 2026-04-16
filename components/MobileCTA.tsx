@@ -38,7 +38,7 @@ export default function MobileCTA() {
       label: "Написать в MAX",
       icon: <span className="text-white font-black text-lg leading-none">M</span>,
       color: "bg-[#168ACD]",
-      onClick: () => { setOpen(false); ymGoal("tg_click"); window.open(MAX_URL, "_blank"); },
+      onClick: () => { setOpen(false); ymGoal("max_click"); window.open(MAX_URL, "_blank"); },
     },
     {
       label: "Алина онлайн",
