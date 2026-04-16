@@ -4,7 +4,7 @@ import { MessageCircle, X, Send, Phone } from "lucide-react";
 import { useState } from "react";
 
 const TG_URL = "https://t.me/+79958636285";
-const MAX_URL = `https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY?startMessage=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
+const MAX_URL = "https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY";
 const PHONE_URL = "tel:+79958654244";
 
 export default function MobileCTA() {
