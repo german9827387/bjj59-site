@@ -24,7 +24,7 @@ export default function Home() {
       <ForWhom />
       <Directions />
       <GymGallery />
-      <Trainers />
+      {/* <Trainers /> */}
       <WhyUs />
       <Reviews />
       <LeadForm />
