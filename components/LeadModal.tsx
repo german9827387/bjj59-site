@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Phone, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
-import { getUtm, persistUtm, formatPhone } from "@/lib/lead-utils";
+import { persistUtm, formatPhone, isValidPhone, postLead, reachGoal } from "@/lib/lead-utils";
 
 interface LeadModalProps {
   isOpen: boolean;
@@ -32,32 +32,16 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     if (!name.trim()) { setError("Введите ваше имя"); return; }
-    if (phone.replace(/\D/g, "").length < 11) { setError("Введите номер полностью"); return; }
+    if (!isValidPhone(phone)) { setError("Введите номер полностью"); return; }
     setLoading(true);
     setError("");
-    try {
-      const res = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), phone, utm: getUtm(), source: "Модальное окно" }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.ok) {
-        setError(data.error ?? "Ошибка отправки. Напишите нам в Telegram.");
-        setLoading(false);
-        return;
-      }
-      setSent(true);
-      // Цель Яндекс.Метрики
-      if (typeof window !== "undefined" && (window as any).ym) {
-        (window as any).ym((window as any).__YM_COUNTER_ID__, "reachGoal", "lead_submit");
-      }
-    } catch {
-      setError("Нет соединения. Попробуйте написать в Telegram.");
-    } finally {
-      setLoading(false);
-    }
+    const res = await postLead({ name, phone, source: "Модальное окно" });
+    setLoading(false);
+    if (!res.ok) { setError(res.error); return; }
+    setSent(true);
+    reachGoal("lead_submit");
   };
 
   if (!isOpen) return null;

@@ -282,7 +282,7 @@ ${pricingText}
 Первое занятие БЕСПЛАТНО. Взять с собой: футболка + шорты (или рашгард), сланцы для душевой, вода 0.5–1 л. Экипировку на первый раз выдадим на месте — приходить можно прямо сейчас.
 
 == ПРО АКАДЕМИЮ ==
-GSAcademy, Пермь, 13 лет, 513+ учеников, 88+ отзывов 5★, награды Яндекс и 2ГИС (2024), часть Alliance — 15-кратные чемпионы мира (2025). Педагогическое образование у всех тренеров. Малышам 3–5 — игровая форма, никакого контакта. Взрослым 18–50+ — с нуля, без давления. Семейный абонемент: 5900₽ + 5000₽ за второго ребёнка.
+GSAcademy, Пермь, 13 лет, 513+ учеников, 88+ отзывов 5★, награды Яндекс и 2ГИС (2024), часть Alliance — 16-кратные чемпионы мира (2026). Педагогическое образование у всех тренеров. Малышам 3–5 — игровая форма, никакого контакта. Взрослым 18–50+ — с нуля, без давления. Семейный абонемент: 5900₽ + 5000₽ за второго ребёнка.
 
 == FAQ ==
 Опыт/физподготовка нужны? Нет. Не рано 3–5 лет? Нет. Травмы? Начинающим — только техника. Взрослому не поздно? 18–50+ лет — норма.`;
@@ -338,10 +338,12 @@ export async function POST(req: NextRequest) {
       Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
     };
 
+    // Бюджет времени: 3 попытки x 12с + паузы 1.5с и 3с ≈ 40с < maxDuration (55с).
+    // Раньше 4 x 40с могли выйти за лимит, и функция падала по таймауту.
     let response!: Response;
-    for (let attempt = 1; attempt <= 4; attempt++) {
+    for (let attempt = 1; attempt <= 3; attempt++) {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 40000);
+      const timeout = setTimeout(() => controller.abort(), 12000);
       try {
         response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
           method: "POST",
@@ -353,8 +355,9 @@ export async function POST(req: NextRequest) {
         clearTimeout(timeout);
       }
       if (response.status !== 429) break;
+      if (attempt === 3) break;
       const retryAfter = response.headers.get("retry-after");
-      const waitMs = retryAfter ? Math.min(parseFloat(retryAfter) * 1000, 8000) : attempt * 2500;
+      const waitMs = retryAfter ? Math.min(parseFloat(retryAfter) * 1000, 3000) : attempt * 1500;
       await new Promise((r) => setTimeout(r, waitMs));
     }
 

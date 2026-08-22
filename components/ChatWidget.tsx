@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { X, Send, Bot } from "lucide-react";
-import { getUtm } from "@/lib/lead-utils";
+import { postLead } from "@/lib/lead-utils";
 
 interface Message {
   role: "user" | "assistant";
@@ -65,6 +65,8 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  // Модель может повторить маркер [ЛИДА|…] в следующем сообщении — шлём заявку только раз
+  const leadSentRef = useRef(false);
 
   useEffect(() => {
     if (open) {
@@ -89,25 +91,24 @@ export default function ChatWidget() {
       const body = JSON.stringify({ messages: newMessages });
       const headers = { "Content-Type": "application/json" };
       let res!: Response;
-      for (let attempt = 1; attempt <= 3; attempt++) {
+      for (let attempt = 1; attempt <= 2; attempt++) {
         res = await fetch("/api/chat", { method: "POST", headers, body });
         if (res.ok) break;
-        if (attempt < 3) await new Promise((r) => setTimeout(r, attempt * 3000));
+        if (attempt < 2) await new Promise((r) => setTimeout(r, 2000));
       }
       const data = await res.json();
-      if (data.sendLead && data.leadName && data.leadPhone) {
-        fetch("/api/lead", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: data.leadName,
-            phone: data.leadPhone,
-            source: "Чат-консультант",
-            direction: data.leadDirection,
-            dayTime: data.leadDayTime,
-            utm: getUtm(),
-          }),
-        }).catch(() => {});
+      if (data.sendLead && data.leadName && data.leadPhone && !leadSentRef.current) {
+        leadSentRef.current = true;
+        postLead({
+          name: data.leadName,
+          phone: data.leadPhone,
+          source: "Чат-консультант",
+          direction: data.leadDirection,
+          dayTime: data.leadDayTime,
+        }).then((r) => {
+          // Не смогли отправить — снимаем блокировку, чтобы следующий маркер сработал
+          if (!r.ok) leadSentRef.current = false;
+        });
       }
       setMessages((prev) => [
         ...prev,

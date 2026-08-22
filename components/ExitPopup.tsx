@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { X, Phone, User, ArrowRight, CheckCircle2, Loader2, ChevronLeft } from "lucide-react";
-import { getUtm, formatPhone } from "@/lib/lead-utils";
+import { formatPhone, isValidPhone, postLead, reachGoal } from "@/lib/lead-utils";
 
 const SESSION_KEY = "exit_popup_shown";
 
@@ -146,28 +146,17 @@ export default function ExitPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     if (!name.trim()) { setError("Введите имя"); return; }
-    if (phone.replace(/\D/g, "").length < 11) { setError("Введите номер полностью"); return; }
+    if (!isValidPhone(phone)) { setError("Введите номер полностью"); return; }
     setLoading(true);
     setError("");
     const source = buildSource(isMobile, whoLabel, goalLabel, whenLabel);
-    try {
-      const res = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), phone, utm: getUtm(), source }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.ok) { setError(data.error ?? "Ошибка"); setLoading(false); return; }
-      setSent(true);
-      if (typeof window !== "undefined" && (window as any).ym) {
-        (window as any).ym((window as any).__YM_COUNTER_ID__, "reachGoal", "lead_submit");
-      }
-    } catch {
-      setError("Нет соединения.");
-    } finally {
-      setLoading(false);
-    }
+    const res = await postLead({ name, phone, source });
+    setLoading(false);
+    if (!res.ok) { setError(res.error); return; }
+    setSent(true);
+    reachGoal("lead_submit");
   };
 
   if (!visible) return null;
