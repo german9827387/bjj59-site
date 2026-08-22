@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, Phone, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { persistUtm, formatPhone, isValidPhone, postLead, reachGoal } from "@/lib/lead-utils";
+import ConsentCheckbox from "./ConsentCheckbox";
 
 interface LeadModalProps {
   isOpen: boolean;
@@ -15,11 +16,12 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [agreed, setAgreed] = useState(false);
 
   useEffect(() => { persistUtm(); }, []);
 
   useEffect(() => {
-    if (!isOpen) { setSent(false); setName(""); setPhone(""); setError(""); }
+    if (!isOpen) { setSent(false); setName(""); setPhone(""); setError(""); setAgreed(false); }
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     if (isOpen) document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -35,6 +37,7 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
     if (loading) return;
     if (!name.trim()) { setError("Введите ваше имя"); return; }
     if (!isValidPhone(phone)) { setError("Введите номер полностью"); return; }
+    if (!agreed) { setError("Подтвердите согласие на обработку персональных данных"); return; }
     setLoading(true);
     setError("");
     const res = await postLead({ name, phone, source: "Модальное окно" });
@@ -134,6 +137,8 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
                   />
                 </div>
 
+                <ConsentCheckbox id="consent-modal" checked={agreed} onChange={(v) => { setAgreed(v); setError(""); }} />
+
                 {error && <p className="text-red-400 text-xs pl-1">{error}</p>}
 
                 <button
@@ -146,12 +151,6 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
                   )}
                 </button>
 
-                <p className="text-gray-600 text-xs text-center pt-1">
-                  Нажимая кнопку, вы соглашаетесь с{" "}
-                  <a href="/privacy" className="text-gray-500 hover:text-gray-400 underline underline-offset-2">
-                    политикой конфиденциальности
-                  </a>
-                </p>
               </form>
             </>
           )}

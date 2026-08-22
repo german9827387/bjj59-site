@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { X, Phone, User, ArrowRight, CheckCircle2, Loader2, ChevronLeft } from "lucide-react";
 import { formatPhone, isValidPhone, postLead, reachGoal } from "@/lib/lead-utils";
+import ConsentCheckbox from "./ConsentCheckbox";
 
 const SESSION_KEY = "exit_popup_shown";
 
@@ -120,6 +121,7 @@ export default function ExitPopup() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [agreed, setAgreed] = useState(false);
 
   const show = useCallback(() => {
     if (sessionStorage.getItem(SESSION_KEY)) return;
@@ -168,6 +170,7 @@ export default function ExitPopup() {
     if (loading) return;
     if (!name.trim()) { setError("Введите имя"); return; }
     if (!isValidPhone(phone)) { setError("Введите номер полностью"); return; }
+    if (!agreed) { setError("Подтвердите согласие на обработку персональных данных"); return; }
     setLoading(true);
     setError("");
     const source = buildSource(isMobile, whoLabel, goalLabel, whenLabel);
@@ -292,6 +295,7 @@ export default function ExitPopup() {
                 className="w-full bg-white/[0.04] border border-white/10 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none text-sm"
               />
             </div>
+            <ConsentCheckbox id="consent-exit" checked={agreed} onChange={(v) => { setAgreed(v); setError(""); }} />
             {error && <p className="text-red-400 text-xs">{error}</p>}
             <button
               type="submit"
@@ -304,10 +308,6 @@ export default function ExitPopup() {
                 <><span>Записаться</span><ArrowRight size={16} /></>
               )}
             </button>
-            <p className="text-gray-600 text-xs text-center">
-              Нажимая кнопку, вы соглашаетесь с{" "}
-              <a href="/privacy" className="underline hover:text-gray-400">политикой конфиденциальности</a>
-            </p>
           </form>
         </div>
       )}

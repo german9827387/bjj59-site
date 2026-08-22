@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Phone, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import Reveal from "./Reveal";
 import { persistUtm, formatPhone, isValidPhone, postLead, reachGoal } from "@/lib/lead-utils";
+import ConsentCheckbox from "./ConsentCheckbox";
 
 export default function LeadForm() {
   const [name, setName] = useState("");
@@ -11,6 +12,7 @@ export default function LeadForm() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [agreed, setAgreed] = useState(false);
 
   // Сохраняем UTM при монтировании (дублирует TgLinkHandler для надёжности)
   useEffect(() => { persistUtm(); }, []);
@@ -25,6 +27,7 @@ export default function LeadForm() {
     if (loading) return;
     if (!name.trim()) { setError("Введите ваше имя"); return; }
     if (!isValidPhone(phone)) { setError("Введите номер полностью"); return; }
+    if (!agreed) { setError("Подтвердите согласие на обработку персональных данных"); return; }
     setLoading(true);
     setError("");
     const res = await postLead({ name, phone, source: "Инлайн-форма" });
@@ -118,6 +121,8 @@ export default function LeadForm() {
                     </div>
                   </div>
 
+                  <ConsentCheckbox id="consent-inline" checked={agreed} onChange={(v) => { setAgreed(v); setError(""); }} />
+
                   {error && (
                     <p className="text-red-400 text-xs">{error}</p>
                   )}
@@ -137,12 +142,6 @@ export default function LeadForm() {
                     )}
                   </button>
 
-                  <p className="text-gray-600 text-xs text-center">
-                    Нажимая кнопку, вы соглашаетесь с{" "}
-                    <a href="/privacy" className="text-gray-500 hover:text-gray-400 underline underline-offset-2">
-                      политикой конфиденциальности
-                    </a>
-                  </p>
                 </form>
               )}
             </div>
