@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     "тайский бокс для взрослых Пермь",
     "GSAcademy муай-тай",
   ],
+  // Направление сейчас не проводится: страница остаётся доступной по прямой
+  // ссылке, но из поиска убрана, чтобы не приводить людей за услугой, которой
+  // нет. Вернуть — снять robots ниже и строку в app/sitemap.ts.
+  robots: { index: false, follow: true },
   alternates: { canonical: "https://www.bjj59.ru/muaythai" },
   openGraph: {
     title: "Тайский бокс (Муай-тай) в Перми | GSAcademy",

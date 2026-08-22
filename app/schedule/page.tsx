@@ -100,12 +100,12 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Расписание тренировок | GSAcademy Пермь",
-  description: "Расписание тренировок по BJJ, ММА, боксу, тайскому боксу и грэпплингу в GSAcademy. Пермь, ул. Аркадия Гайдара 8б.",
+  description: "Расписание тренировок по BJJ, ММА, боксу и грэпплингу в GSAcademy. Пермь, ул. Аркадия Гайдара 8б.",
   keywords: ["расписание тренировок Пермь", "BJJ расписание", "ММА расписание", "бокс расписание Пермь", "GSAcademy расписание"],
   alternates: { canonical: "https://www.bjj59.ru/schedule" },
   openGraph: {
     title: "Расписание тренировок | GSAcademy Пермь",
-    description: "Расписание занятий по единоборствам в Перми. BJJ, ММА, бокс, тайский бокс, грэпплинг.",
+    description: "Расписание занятий по единоборствам в Перми. BJJ, ММА, бокс, грэпплинг.",
     url: "https://www.bjj59.ru/schedule",
     siteName: "GSAcademy",
     locale: "ru_RU",
