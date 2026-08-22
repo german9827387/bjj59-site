@@ -22,9 +22,9 @@ const awards = [
     id: "alliance",
     title: "Alliance",
     source: "Команда-чемпион",
-    description: "15-кратные чемпионы мира по BJJ — мы часть этой команды",
+    description: "16-кратные чемпионы мира по BJJ — мы часть этой команды",
     image: "/alliance.jpeg",
-    year: "2025",
+    year: "2026",
   },
 ];
 
