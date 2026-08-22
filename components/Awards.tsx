@@ -1,7 +1,18 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
 
-const awards = [
+interface Award {
+  id: string;
+  title: string;
+  source: string;
+  description: string;
+  image: string;
+  year: string;
+  /** Логотип/бейдж, а не фото: показываем целиком, без кадрирования. */
+  contain?: boolean;
+}
+
+const awards: Award[] = [
   {
     id: "2gis",
     title: "Здесь хорошо!",
@@ -23,8 +34,9 @@ const awards = [
     title: "Alliance",
     source: "Команда-чемпион",
     description: "16-кратные чемпионы мира по BJJ — мы часть этой команды",
-    image: "/alliance.jpeg",
+    image: "/alliance-16x.jpg",
     year: "2026",
+    contain: true,
   },
 ];
 
@@ -71,13 +83,17 @@ export default function Awards() {
                       src={award.image}
                       alt={award.title}
                       fill
-                      className="object-cover object-center"
+                      className={award.contain ? "object-contain object-center p-3" : "object-cover object-center"}
                       sizes="176px"
                       loading="lazy"
                     />
-                    {award.id === "alliance" && <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />}
-                    <div className={`absolute top-0 left-0 right-0 bg-gradient-to-b from-[#111827] to-transparent z-20 pointer-events-none ${award.id === "alliance" ? "h-16" : "h-8"}`} />
-                    <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#111827] to-transparent z-20 pointer-events-none ${award.id === "alliance" ? "h-16" : "h-8"}`} />
+                    {/* Затемнение и широкие градиенты — только для фотографий; логотип они бы приглушили */}
+                    {!award.contain && (
+                      <>
+                        <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-[#111827] to-transparent z-20 pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#111827] to-transparent z-20 pointer-events-none" />
+                      </>
+                    )}
                   </div>
                   <div className="relative z-10 text-center px-3 py-4 flex-1 flex flex-col justify-center">
                     <div className="text-white font-black text-sm leading-tight">{award.title}</div>
