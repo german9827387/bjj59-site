@@ -1,9 +1,11 @@
 "use client";
 
 import { Star, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { plural } from "@/lib/lead-utils";
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import reviewsJson from "@/data/reviews.json";
+import settingsJson from "@/data/settings.json";
 import Reveal from "./Reveal";
 
 const reviews = reviewsJson;
@@ -16,6 +18,11 @@ const CARD_ACCENTS = [
   "#3b82f6",
   "#06b6d4",
 ];
+
+// Непроверяемая оценка работает вполовину: где знаем адрес площадки —
+// плашка ведёт на настоящие отзывы. Адреса в data/settings.json.
+const REVIEW_LINKS: Record<string, string> =
+  (settingsJson.contacts as { reviewLinks?: Record<string, string> }).reviewLinks ?? {};
 
 const INITIAL_SHOWN = 6;
 
@@ -173,19 +180,36 @@ export default function Reviews() {
                   </div>
                 ),
               },
-            ].map((p) => (
-              <div
-                key={p.name}
-                className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.07] rounded-full px-4 py-1.5 hover:border-white/20 transition-colors"
-              >
-                {p.icon}
-                <span className="text-gray-300 text-xs font-semibold">{p.name}</span>
-                <div className="flex gap-px">
-                  {[1,2,3,4,5].map(s => <Star key={s} size={10} className="text-blue-400 fill-blue-400" />)}
-                </div>
-                <span className="text-white text-xs font-black">5.0</span>
-              </div>
-            ))}
+            ].map((p) => {
+              // Непроверяемая оценка работает вполовину: где знаем адрес —
+              // плашка ведёт на настоящие отзывы. Адреса в data/settings.json.
+              const url = REVIEW_LINKS[p.name];
+              const inner = (
+                <>
+                  {p.icon}
+                  <span className="text-gray-300 text-xs font-semibold">{p.name}</span>
+                  <div className="flex gap-px">
+                    {[1,2,3,4,5].map(s => <Star key={s} size={10} className="text-blue-400 fill-blue-400" />)}
+                  </div>
+                  <span className="text-white text-xs font-black">5.0</span>
+                  {url && <ExternalLink size={11} className="text-gray-500 shrink-0" />}
+                </>
+              );
+              const cls = "flex items-center gap-2 bg-white/[0.03] border border-white/[0.07] rounded-full px-4 py-1.5 transition-colors";
+              return url ? (
+                <a
+                  key={p.name}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${cls} hover:border-blue-400/50 hover:bg-blue-500/[0.06]`}
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div key={p.name} className={`${cls} hover:border-white/20`}>{inner}</div>
+              );
+            })}
           </div>
         </Reveal>
 
@@ -243,7 +267,7 @@ export default function Reviews() {
               onClick={() => setShowAll(true)}
               className="group flex items-center gap-2 bg-white/[0.03] border border-blue-500/25 hover:border-blue-500/50 hover:bg-blue-500/[0.08] text-blue-400 font-semibold py-3 px-8 rounded-full transition-all duration-300 text-sm"
             >
-              <span>Показать ещё {reviews.length - INITIAL_SHOWN} отзыва</span>
+              <span>Показать ещё {reviews.length - INITIAL_SHOWN} {plural(reviews.length - INITIAL_SHOWN, "отзыв", "отзыва", "отзывов")}</span>
               <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>

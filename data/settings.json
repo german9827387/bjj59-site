@@ -42,6 +42,12 @@
     "vk": "https://vk.com/bjjperm59",
     "yandexMaps": "https://yandex.ru/maps/org/gsacademy/13932890682/",
     "yandexReviews": "https://yandex.ru/maps/org/gsacademy/13932890682/reviews/",
-    "reviewsCount": "88"
+    "reviewsCount": "88",
+    "reviewLinks": {
+      "Google": "",
+      "2ГИС": "",
+      "Яндекс": "https://yandex.ru/maps/org/gsacademy/13932890682/reviews/",
+      "ВКонтакте": "https://vk.com/bjjperm59"
+    }
   }
 }
