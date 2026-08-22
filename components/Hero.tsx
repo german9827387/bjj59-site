@@ -99,7 +99,7 @@ export default function Hero() {
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" style={{ left: "10%" }} />
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" style={{ left: "90%" }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20 lg:pt-24">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20 lg:pt-24 pb-28 sm:pb-0">
         {/* Badge — urgency */}
         <div className="hero-fade inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-2 mb-8">
           <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
@@ -211,7 +211,7 @@ export default function Hero() {
         </div>
 
         {/* Stats */}
-        <div className={`hero-fade grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2 sm:grid-cols-4"} gap-3 sm:gap-4 mt-16 max-w-3xl mx-auto`} style={{ animationDelay: "0.7s" }}>
+        <div className={`hero-fade grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2 sm:grid-cols-4"} gap-3 sm:gap-4 mt-10 sm:mt-16 max-w-3xl mx-auto`} style={{ animationDelay: "0.7s" }}>
           {hero.stats.map((stat, i) => (
             <div
               key={stat.label}
