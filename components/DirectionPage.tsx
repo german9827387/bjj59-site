@@ -44,7 +44,6 @@ export default function DirectionPage({
   tagline,
   description,
   reasons,
-  emoji,
   image,
   accent = "#3B82F6",
 }: DirectionPageProps) {

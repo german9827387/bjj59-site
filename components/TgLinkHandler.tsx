@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { reachGoal } from "@/lib/lead-utils";
 
 // Названия UTM-источников для подстановки в сообщение
 const SOURCE_LABELS: Record<string, string> = {
@@ -53,13 +54,7 @@ export default function TgLinkHandler() {
         url.origin + url.pathname + "?text=" + encodeURIComponent(fullText);
 
       // Цель в Яндекс Метрике
-      if (typeof window !== "undefined" && (window as any).ym) {
-        (window as any).ym(
-          (window as any).__YM_COUNTER_ID__,
-          "reachGoal",
-          "tg_click"
-        );
-      }
+      reachGoal("tg_click");
 
       window.open(finalUrl, "_blank", "noopener,noreferrer");
     }
@@ -71,13 +66,7 @@ export default function TgLinkHandler() {
       const href = anchor.getAttribute("href") || "";
       if (!href.startsWith("tel:")) return;
 
-      if (typeof window !== "undefined" && (window as any).ym) {
-        (window as any).ym(
-          (window as any).__YM_COUNTER_ID__,
-          "reachGoal",
-          "phone_click"
-        );
-      }
+      reachGoal("phone_click");
     }
 
     // Отслеживаем клики по ВКонтакте
@@ -87,13 +76,7 @@ export default function TgLinkHandler() {
       const href = anchor.getAttribute("href") || "";
       if (!href.includes("vk.com")) return;
 
-      if (typeof window !== "undefined" && (window as any).ym) {
-        (window as any).ym(
-          (window as any).__YM_COUNTER_ID__,
-          "reachGoal",
-          "vk_click"
-        );
-      }
+      reachGoal("vk_click");
     }
 
     document.addEventListener("click", handleClick);

@@ -1,4 +1,5 @@
 import NewsGrid, { VkPost } from './NewsGrid';
+import { pickPhotoUrl, type VkWallResponse } from '@/lib/vk';
 
 async function getPosts(): Promise<VkPost[]> {
   const token = process.env.VK_TOKEN;
@@ -10,27 +11,25 @@ async function getPosts(): Promise<VkPost[]> {
       `https://api.vk.com/method/wall.get?owner_id=${groupId}&count=6&filter=owner&v=5.131&access_token=${token}`,
       { next: { revalidate: 3600 } }
     );
-    const data = await res.json();
+    const data: VkWallResponse = await res.json();
     if (data.error) {
       console.error('[News] VK API error:', data.error);
       return [];
     }
 
     return (data.response?.items ?? [])
-      .filter((p: any) => p.text?.trim())
-      .filter((p: any) => (p.attachments ?? []).some((a: any) => a.type === 'photo'))
+      .filter((p) => p.text?.trim())
+      .filter((p) => (p.attachments ?? []).some((a) => a.type === 'photo'))
       .slice(0, 3)
-      .map((p: any) => {
-        const attachments: any[] = p.attachments ?? [];
-        const photos = attachments
+      .map((p) => ({
+        id: p.id,
+        text: p.text ?? '',
+        date: p.date,
+        photos: (p.attachments ?? [])
           .filter((a) => a.type === 'photo')
-          .map((a) => {
-            const sizes: any[] = a.photo?.sizes ?? [];
-            const img = sizes.find((s: any) => s.type === 'x') ?? sizes.find((s: any) => s.type === 'r') ?? sizes[sizes.length - 1];
-            return img?.url ?? null;
-          })
-          .filter(Boolean) as string[];
-        return { id: p.id, text: p.text, date: p.date, photos };      });
+          .map(pickPhotoUrl)
+          .filter((u): u is string => Boolean(u)),
+      }));
   } catch (e) {
     console.error('[News] fetch error:', e);
     return [];

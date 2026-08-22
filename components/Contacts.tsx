@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { MapPin, Phone, Clock } from "lucide-react";
 import Reveal from "./Reveal";
 import { useRef, useEffect, useState } from "react";

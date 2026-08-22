@@ -26,7 +26,6 @@ function prettyPhone(digits: string): string {
 /** Убирает управляющие символы, которые ломают JSON/вывод, и подрезает длину. */
 function clean(val: unknown, max: number): string {
   return String(val ?? "")
-    // eslint-disable-next-line no-control-regex
     .replace(/[\u0000-\u001f\u007f]/g, " ")
     .replace(/\s+/g, " ")
     .trim()

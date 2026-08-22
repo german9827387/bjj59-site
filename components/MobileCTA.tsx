@@ -2,6 +2,7 @@
 
 import { MessageCircle, X, Send, Phone } from "lucide-react";
 import { useState } from "react";
+import { reachGoal } from "@/lib/lead-utils";
 
 const TG_URL = "https://t.me/+79958636285";
 const MAX_URL = "https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY";
@@ -15,36 +16,30 @@ export default function MobileCTA() {
     window.dispatchEvent(new Event("open-chat"));
   }
 
-  function ymGoal(goal: string) {
-    const ym = (window as any).ym;
-    const id = (window as any).__YM_COUNTER_ID__;
-    if (ym && id) ym(id, "reachGoal", goal);
-  }
-
   const items = [
     {
       label: "Позвонить нам",
       icon: <Phone className="w-5 h-5 text-white" />,
       color: "bg-emerald-600",
-      onClick: () => { setOpen(false); ymGoal("phone_click"); window.location.href = PHONE_URL; },
+      onClick: () => { setOpen(false); reachGoal("phone_click"); window.location.href = PHONE_URL; },
     },
     {
       label: "Написать в Telegram",
       icon: <Send className="w-5 h-5 text-white" />,
       color: "bg-[#229ED9]",
-      onClick: () => { setOpen(false); ymGoal("tg_click"); window.open(TG_URL, "_blank"); },
+      onClick: () => { setOpen(false); reachGoal("tg_click"); window.open(TG_URL, "_blank"); },
     },
     {
       label: "Написать в MAX",
       icon: <span className="text-white font-black text-lg leading-none">M</span>,
       color: "bg-[#168ACD]",
-      onClick: () => { setOpen(false); ymGoal("max_click"); window.open(MAX_URL, "_blank"); },
+      onClick: () => { setOpen(false); reachGoal("max_click"); window.open(MAX_URL, "_blank"); },
     },
     {
       label: "Алина онлайн",
       icon: <MessageCircle className="w-5 h-5 text-white" />,
       color: "bg-gradient-to-br from-blue-600 to-cyan-500",
-      onClick: () => { ymGoal("chat_open"); openChat(); },
+      onClick: () => { reachGoal("chat_open"); openChat(); },
       badge: true,
     },
   ];

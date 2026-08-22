@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircle, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
 import { reachGoal } from "@/lib/lead-utils";
@@ -9,7 +9,7 @@ import LeadModal from "./LeadModal";
 const TG_URL = `https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
 const MAX_URL = "https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY";
 
-const { hero, contacts } = settingsJson;
+const { hero } = settingsJson;
 
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
