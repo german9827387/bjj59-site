@@ -32,21 +32,22 @@ export default function CTA() {
           <Reveal className="relative z-10">
             <div className="inline-flex items-center gap-2 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse" />
-              <span className="text-[#3B82F6] text-xs font-medium uppercase tracking-widest">Остались вопросы?</span>
+              <span className="text-[#3B82F6] text-xs font-medium uppercase tracking-widest">Ещё сомневаетесь?</span>
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
-              Перезвоним и ответим<br />
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">за 30 минут</span>
+              Попробовать —<br />
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">ничего не стоит</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-xl mx-auto mb-10">
-              Оставьте заявку или напишите нам — поможем выбрать направление, подберём расписание и запишем на бесплатное занятие
+              Первое занятие бесплатно, экипировку дадим на месте, группу подберём по вашему уровню.
+              Не подойдёт — просто не придёте снова. Большинство наших учеников начинали с нуля.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setModalOpen(true)}
                 className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-full text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-[#3B82F6]/20"
               >
-                Оставить заявку
+                Записаться на бесплатное
               </button>
               <div ref={messengerRef} className="relative">
                 <button
