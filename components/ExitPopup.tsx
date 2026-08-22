@@ -133,8 +133,27 @@ export default function ExitPopup() {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
     if (mobile) {
-      const t = setTimeout(show, 12_000);
-      return () => clearTimeout(t);
+      // Раньше попап выскакивал через 12 секунд и перекрывал пол-экрана,
+      // пока человек ещё читал первый блок. Теперь ждём либо реального
+      // интереса (прокрутил больше половины), либо долгой паузы.
+      let fired = false;
+      function onScroll() {
+        const seen = (window.scrollY + window.innerHeight) / (document.documentElement.scrollHeight || 1);
+        if (seen > 0.55) fire();
+      }
+      const cleanup = () => {
+        clearTimeout(timer);
+        window.removeEventListener("scroll", onScroll);
+      };
+      const fire = () => {
+        if (fired) return;
+        fired = true;
+        cleanup();
+        show();
+      };
+      const timer = setTimeout(fire, 45_000);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return cleanup;
     } else {
       const handleMouseLeave = (e: MouseEvent) => {
         if (e.relatedTarget === null || (e.clientY <= 10 && !e.relatedTarget)) show();

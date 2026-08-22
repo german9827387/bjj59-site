@@ -3,6 +3,7 @@
 import { MessageCircle, Star } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
+import { reachGoal } from "@/lib/lead-utils";
 import LeadModal from "./LeadModal";
 
 const TG_URL = `https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
@@ -112,7 +113,7 @@ export default function Hero() {
 
         {/* Hook line */}
         <p
-          className="hero-fade text-2xl sm:text-3xl lg:text-4xl font-black text-white/60 mb-6 tracking-tight"
+          className="hero-fade text-xl sm:text-2xl lg:text-3xl font-bold text-white/70 mb-6 tracking-tight"
           style={{ animationDelay: "0.2s" }}
         >
           {hero.title3}
@@ -153,7 +154,7 @@ export default function Hero() {
               href={MAX_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => { const ym = (window as any).ym; const id = (window as any).__YM_COUNTER_ID__; if (ym && id) ym(id, "reachGoal", "max_click"); }}
+              onClick={() => reachGoal("max_click")}
               className="flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-5 rounded-full text-sm hover:bg-blue-500/10 transition-all"
             >
               <span className="w-[18px] h-[18px] rounded-full bg-[#168ACD] flex items-center justify-center shrink-0">
@@ -174,7 +175,7 @@ export default function Hero() {
               </div>
               <span className="text-white font-black text-base">5.0</span>
             </div>
-            <span className="text-gray-400 text-sm"><span className="text-white font-semibold">88 отзывов</span> на Google, Яндексе и 2ГИС</span>
+            <span className="text-gray-400 text-sm">на Google, Яндексе и 2ГИС</span>
           </div>
         </div>
 
@@ -183,7 +184,7 @@ export default function Hero() {
           {hero.stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`text-center p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm ${i >= 2 ? "hidden sm:block" : ""}`}
+              className={`text-center p-4 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md ${i >= 2 ? "hidden sm:block" : ""}`}
             >
               <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
                 <AnimatedCounter target={stat.target} suffix={stat.suffix} />

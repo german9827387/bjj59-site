@@ -138,3 +138,31 @@ body:not([data-scroll-locked]) {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* Видимый фокус для клавиатурной навигации.
+   Специфичность «элемент + псевдокласс» перебивает утилиту outline-none у полей. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+/* Уважаем системную настройку «уменьшить движение» */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Иначе содержимое осталось бы невидимым: .reveal стартует с opacity 0 */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

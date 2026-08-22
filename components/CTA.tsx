@@ -35,7 +35,7 @@ export default function CTA() {
             </div>
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
               Перезвоним и ответим<br />
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">за 5 минут</span>
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">за 30 минут</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-xl mx-auto mb-10">
               Оставьте заявку или напишите нам — поможем выбрать направление, подберём расписание и запишем на бесплатное занятие
