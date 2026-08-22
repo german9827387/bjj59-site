@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Phone, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import Reveal from "./Reveal";
-import { persistUtm, formatPhone, isValidPhone, postLead, reachGoal } from "@/lib/lead-utils";
+import { persistUtm, formatPhone, isValidPhone, postLead, reachGoal, reachGoalOnce } from "@/lib/lead-utils";
 import ConsentCheckbox from "./ConsentCheckbox";
 
 export default function LeadForm() {
@@ -18,6 +18,7 @@ export default function LeadForm() {
   useEffect(() => { persistUtm(); }, []);
 
   const handlePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    reachGoalOnce("form_start");
     setPhone(formatPhone(e.target.value));
     setError("");
   };
@@ -25,7 +26,6 @@ export default function LeadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
-    if (!name.trim()) { setError("Введите ваше имя"); return; }
     if (!isValidPhone(phone)) { setError("Введите номер полностью"); return; }
     if (!agreed) { setError("Подтвердите согласие на обработку персональных данных"); return; }
     setLoading(true);
@@ -94,13 +94,13 @@ export default function LeadForm() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2">Ваше имя</label>
+                    <label className="block text-gray-400 text-sm mb-2">Ваше имя <span className="text-gray-600">— необязательно</span></label>
                     <div className="relative">
                       <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
                       <input
                         type="text"
                         value={name}
-                        onChange={(e) => { setName(e.target.value); setError(""); }}
+                        onChange={(e) => { reachGoalOnce("form_start"); setName(e.target.value); setError(""); }}
                         placeholder="Иван"
                         className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3.5 pl-10 pr-4 outline-none transition-colors text-sm"
                       />

@@ -108,10 +108,6 @@ export async function POST(req: NextRequest) {
       ? (body.utm as Record<string, string>)
       : {};
 
-  if (!name) {
-    return NextResponse.json({ ok: false, error: "Введите имя" }, { status: 422 });
-  }
-
   const digits = normalizePhone(rawPhone);
   if (digits.length !== 11) {
     return NextResponse.json({ ok: false, error: "Введите номер полностью" }, { status: 422 });
@@ -144,7 +140,7 @@ export async function POST(req: NextRequest) {
   }
 
   const lines = [
-    `👤 Имя: ${name}`,
+    `👤 Имя: ${name || "не указано"}`,
     `📞 Телефон: ${phone}`,
     ...(direction ? [`🥊 Направление: ${direction}`] : []),
     ...(dayTime ? [`📅 День и время: ${dayTime}`] : []),

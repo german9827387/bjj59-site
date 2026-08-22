@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { reachGoal } from "@/lib/lead-utils";
+import { reachGoal, reachGoalOnce } from "@/lib/lead-utils";
 
 // Названия UTM-источников для подстановки в сообщение
 const SOURCE_LABELS: Record<string, string> = {
@@ -88,6 +88,23 @@ export default function TgLinkHandler() {
       document.removeEventListener("click", handlePhoneClick);
       document.removeEventListener("click", handleVkClick);
     };
+  }, []);
+
+  // Глубина прокрутки: без неё не отличить «форму не увидели» от
+  // «увидели и не заполнили» — а это разные проблемы с разными решениями.
+  useEffect(() => {
+    function onScroll() {
+      const doc = document.documentElement;
+      const total = doc.scrollHeight - window.innerHeight;
+      if (total <= 0) return;
+      const seen = window.scrollY / total;
+      if (seen >= 0.25) reachGoalOnce("scroll_25");
+      if (seen >= 0.5) reachGoalOnce("scroll_50");
+      if (seen >= 0.75) reachGoalOnce("scroll_75");
+      if (seen >= 0.9) reachGoalOnce("scroll_90");
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return null;

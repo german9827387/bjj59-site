@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { X, Phone, User, ArrowRight, CheckCircle2, Loader2, ChevronLeft } from "lucide-react";
-import { formatPhone, isValidPhone, postLead, reachGoal } from "@/lib/lead-utils";
+import { formatPhone, isValidPhone, postLead, reachGoal, reachGoalOnce } from "@/lib/lead-utils";
 import ConsentCheckbox from "./ConsentCheckbox";
 
 const SESSION_KEY = "exit_popup_shown";
@@ -168,7 +168,6 @@ export default function ExitPopup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
-    if (!name.trim()) { setError("Введите имя"); return; }
     if (!isValidPhone(phone)) { setError("Введите номер полностью"); return; }
     if (!agreed) { setError("Подтвердите согласие на обработку персональных данных"); return; }
     setLoading(true);
@@ -280,8 +279,8 @@ export default function ExitPopup() {
               <input
                 type="text"
                 value={name}
-                onChange={(e) => { setName(e.target.value); setError(""); }}
-                placeholder="Ваше имя"
+                onChange={(e) => { reachGoalOnce("form_start"); setName(e.target.value); setError(""); }}
+                placeholder="Ваше имя (необязательно)"
                 className="w-full bg-white/[0.04] border border-white/10 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none text-sm"
               />
             </div>
@@ -290,7 +289,7 @@ export default function ExitPopup() {
               <input
                 type="tel"
                 value={phone}
-                onChange={(e) => { setPhone(formatPhone(e.target.value)); setError(""); }}
+                onChange={(e) => { reachGoalOnce("form_start"); setPhone(formatPhone(e.target.value)); setError(""); }}
                 placeholder="+7 (000) 000-00-00"
                 className="w-full bg-white/[0.04] border border-white/10 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none text-sm"
               />
