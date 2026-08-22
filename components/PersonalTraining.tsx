@@ -165,7 +165,7 @@ export default function PersonalTraining() {
 
           <Reveal delay={280}>
             <p className="text-gray-500 text-xs text-center mt-8 max-w-xl mx-auto">
-              Тренера, направление и удобное время подберём при записи.
+              Тренеры работают по всем направлениям — удобное время подберём при записи.
             </p>
           </Reveal>
         </div>
