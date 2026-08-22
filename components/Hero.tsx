@@ -1,6 +1,6 @@
 "use client";
 
-import { Star } from "lucide-react";
+import { Star, Check } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
 import { reachGoal } from "@/lib/lead-utils";
@@ -119,13 +119,36 @@ export default function Hero() {
           {hero.title3}
         </p>
 
-        {/* Subtitle */}
-        <p
-          className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+        {/* Подзаголовок — необязательный: если пуст, место занимает оферта */}
+        {hero.subtitle && (
+          <p
+            className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-5 leading-relaxed"
+            style={{ animationDelay: "0.35s" }}
+          >
+            {hero.subtitle}
+          </p>
+        )}
+
+        {/* Оферта: что человек получает, если придёт. Первый пункт — главный,
+            поэтому он ярче остальных. */}
+        <ul
+          className="hero-fade flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-center gap-x-6 gap-y-2 mb-9 w-fit sm:w-auto sm:max-w-4xl mx-auto"
           style={{ animationDelay: "0.35s" }}
         >
-          {hero.subtitle}
-        </p>
+          {hero.offer.map((item, i) => (
+            <li
+              key={item}
+              className={`flex items-center gap-2 ${i === 0 ? "text-white font-bold text-base sm:text-lg" : "text-gray-300 text-sm sm:text-base"}`}
+            >
+              {/* Одинаковый размер у всех — иначе текст пунктов не выровнен по левому краю */}
+              <Check
+                size={16}
+                className={`shrink-0 ${i === 0 ? "text-cyan-400" : "text-blue-400/70"}`}
+              />
+              {item}
+            </li>
+          ))}
+        </ul>
 
         {/* CTA Buttons */}
         <div className="hero-fade flex flex-col items-center gap-4" style={{ animationDelay: "0.5s" }}>
