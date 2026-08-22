@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { User, Users, Check } from "lucide-react";
+import { User, Users, Check, ChevronDown } from "lucide-react";
 import Reveal from "./Reveal";
 import LeadModal from "./LeadModal";
 import {
@@ -10,9 +10,11 @@ import {
   perPerson,
   savingPercent,
   formatPrice,
+  minPerPerson,
   type PersonalFormat,
   type PersonalPlan,
 } from "@/lib/personal";
+import { reachGoalOnce } from "@/lib/lead-utils";
 
 function PlanRow({ plan, format }: { plan: PersonalPlan; format: PersonalFormat }) {
   const each = perSession(plan);
@@ -87,6 +89,9 @@ function PlanRow({ plan, format }: { plan: PersonalPlan; format: PersonalFormat 
 
 export default function PersonalTraining() {
   const [modalOpen, setModalOpen] = useState(false);
+  // Свёрнут по умолчанию: подряд с блоком цен это была четверть страницы
+  // и двенадцать тарифов сразу. Кто пришёл за персоналкой — раскроет.
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -114,6 +119,44 @@ export default function PersonalTraining() {
               </p>
             </Reveal>
           </div>
+
+          {/* Крючок и переключатель — по умолчанию видно только это */}
+          <Reveal delay={80}>
+            <div className="flex flex-col items-center gap-5 mb-2">
+              <p className="text-center">
+                <span className="text-gray-400 text-sm">от </span>
+                <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text align-middle">
+                  {formatPrice(minPerPerson())} ₽
+                </span>
+                <span className="text-gray-400 text-sm"> с человека за тренировку</span>
+              </p>
+              <button
+                type="button"
+                aria-expanded={open}
+                aria-controls="personal-details"
+                onClick={() => {
+                  setOpen((v) => {
+                    if (!v) reachGoalOnce("personal_expand");
+                    return !v;
+                  });
+                }}
+                className="inline-flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-7 rounded-full text-sm hover:bg-blue-500/10 hover:border-blue-400/60 transition-all"
+              >
+                {open ? "Свернуть" : "Смотреть цены и форматы"}
+                <ChevronDown size={16} className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+              </button>
+            </div>
+          </Reveal>
+
+          {/* Содержимое остаётся в разметке и при свёрнутом виде — иначе цены
+              выпали бы из поиска. Сворачивается сеткой 0fr/1fr, без магических
+              высот. */}
+          <div
+            id="personal-details"
+            className={`grid transition-all duration-500 ease-out ${open ? "grid-rows-[1fr] opacity-100 mt-10" : "grid-rows-[0fr] opacity-0 mt-0"}`}
+            aria-hidden={!open}
+          >
+            <div className="overflow-hidden">
 
           {/* Поводы — прайс сам по себе не продаёт */}
           <Reveal delay={100}>
@@ -168,6 +211,9 @@ export default function PersonalTraining() {
               Тренеры работают по всем направлениям — удобное время подберём при записи.
             </p>
           </Reveal>
+
+            </div>
+          </div>
         </div>
       </section>
 

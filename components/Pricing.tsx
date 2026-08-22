@@ -122,7 +122,7 @@ export default function Pricing() {
               </div>
             </div>
             <span className="shrink-0 inline-flex items-center gap-2 text-blue-400 font-bold text-sm border border-blue-500/40 rounded-full px-5 py-2.5 group-hover:bg-blue-500/10 transition-colors">
-              Смотреть цены
+              Подробнее
               <ArrowRight size={16} />
             </span>
           </a>
