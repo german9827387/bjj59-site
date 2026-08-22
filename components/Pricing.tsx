@@ -11,12 +11,12 @@ export default function Pricing() {
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
-    <section id="pricing" className="relative py-20 lg:py-28 bg-[#060d1f] overflow-hidden">
+    <section id="pricing" className="relative py-20 lg:py-28 bg-[#0d1525] overflow-hidden">
       {/* Фоновые эффекты */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-[#060d1f] pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-[#0d1525] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(59,130,246,0.10),transparent)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_100%,rgba(6,182,212,0.07),transparent)] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#060d1f] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#0d1525] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}

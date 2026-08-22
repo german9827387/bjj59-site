@@ -30,7 +30,7 @@ const reasons = [
 
 export default function WhyUs() {
   return (
-    <section className="relative py-16 lg:py-24 bg-[#060d1f] overflow-hidden">
+    <section className="relative py-16 lg:py-24 bg-[#0d1525] overflow-hidden">
       {/* Top transition from ForWhom */}
       <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-[#0a0a0a] to-transparent pointer-events-none" />
 

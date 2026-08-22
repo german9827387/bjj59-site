@@ -54,13 +54,13 @@ export default function DirectionPage({
       {/* Hero */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         {/* Base background */}
-        <div className="absolute inset-0 bg-[#080808]" />
+        <div className="absolute inset-0 bg-[#0a0a0a]" />
 
         {/* Mobile: full-bg image */}
         {image && (
           <div className="absolute inset-0 lg:hidden">
             <Image src={image} alt={title} fill className="object-cover opacity-40" sizes="100vw" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/60 via-[#080808]/55 to-[#080808]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-[#0a0a0a]/55 to-[#0a0a0a]" />
           </div>
         )}
 
@@ -69,9 +69,9 @@ export default function DirectionPage({
           <div className="absolute right-0 top-0 bottom-0 w-[55%] hidden lg:block">
             <Image src={image} alt={title} fill className="object-cover" sizes="55vw" priority />
             {/* Strong left fade */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent" />
             {/* Bottom fade */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-[#080808]/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/40" />
           </div>
         )}
 
@@ -158,7 +158,7 @@ export default function DirectionPage({
       </section>
 
       {/* Reasons */}
-      <section className="py-20 bg-[#060606]">
+      <section className="py-20 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <Reveal>

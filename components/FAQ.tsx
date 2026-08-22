@@ -49,7 +49,7 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="relative py-20 lg:py-28 bg-[#060d1f] overflow-hidden">
+    <section className="relative py-20 lg:py-28 bg-[#0d1525] overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(59,130,246,0.08),transparent)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_80%_80%,rgba(6,182,212,0.05),transparent)] pointer-events-none" />

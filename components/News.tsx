@@ -41,7 +41,7 @@ export default async function News() {
   const posts = await getPosts();
   if (!posts.length) return null;
   return (
-    <section className="relative py-20 lg:py-28 bg-[#080808] overflow-hidden">
+    <section className="relative py-20 lg:py-28 bg-[#0a0a0a] overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(59,130,246,0.07),transparent)] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0a0a0a] to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#0a0a0a] pointer-events-none" />

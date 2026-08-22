@@ -39,7 +39,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (pathname === "/admin/login") return <>{children}</>;
 
   return (
-    <div className="min-h-screen bg-[#080808] flex">
+    <div className="min-h-screen bg-[#0a0a0a] flex">
       {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-60 bg-[#0d0d0d] border-r border-[#1a1a1a] flex flex-col transition-transform duration-300
