@@ -9,7 +9,7 @@ import LeadModal from "./LeadModal";
 
 const navLinks = [
   { label: "Направления", href: "/#directions" },
-  { label: "Тренеры", href: "/#trainers" },
+  // { label: "Тренеры", href: "/#trainers" }, — блок тренеров временно скрыт на главной
   { label: "Отзывы", href: "/#reviews" },
   { label: "Расписание", href: "/schedule" },
   { label: "Цены", href: "/#pricing" },
@@ -170,7 +170,7 @@ export default function Navbar() {
               </a>
               <button
                 onClick={() => { setModalOpen(true); setIsOpen(false); }}
-                className="bg-gradient-to-r from-blue-600 to-cyan-500 text-black font-bold py-3 px-6 rounded-full text-center"
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 px-6 rounded-full text-center"
               >
                 Записаться бесплатно
               </button>

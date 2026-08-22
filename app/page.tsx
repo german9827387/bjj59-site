@@ -4,7 +4,6 @@ import Hero from "@/components/Hero";
 
 const ForWhom = dynamic(() => import("@/components/ForWhom"));
 const Directions = dynamic(() => import("@/components/Directions"));
-const Trainers = dynamic(() => import("@/components/Trainers"));
 const WhyUs = dynamic(() => import("@/components/WhyUs"));
 const Reviews = dynamic(() => import("@/components/Reviews"));
 const LeadForm = dynamic(() => import("@/components/LeadForm"));
@@ -24,7 +23,7 @@ export default function Home() {
       <ForWhom />
       <Directions />
       <GymGallery />
-      {/* <Trainers /> */}
+      {/* <Trainers /> — блок скрыт; при возврате вернуть и ссылку в navLinks (components/Navbar.tsx) */}
       <WhyUs />
       <Reviews />
       <LeadForm />
