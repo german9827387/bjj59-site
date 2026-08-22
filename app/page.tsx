@@ -8,6 +8,7 @@ const WhyUs = dynamic(() => import("@/components/WhyUs"));
 const Reviews = dynamic(() => import("@/components/Reviews"));
 const LeadForm = dynamic(() => import("@/components/LeadForm"));
 const Pricing = dynamic(() => import("@/components/Pricing"));
+const PersonalTraining = dynamic(() => import("@/components/PersonalTraining"));
 const FAQ = dynamic(() => import("@/components/FAQ"));
 const CTA = dynamic(() => import("@/components/CTA"));
 const FirstTraining = dynamic(() => import("@/components/FirstTraining"));
@@ -28,6 +29,7 @@ export default function Home() {
       <Reviews />
       <LeadForm />
       <Pricing />
+      <PersonalTraining />
       <FAQ />
       <CTA />
       <FirstTraining />

@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
-import { Check } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import pricingJson from "@/data/pricing.json";
 import Reveal from "./Reveal";
 import LeadModal from "./LeadModal";
+import { minPerPerson, formatPrice } from "@/lib/personal";
 
 const plans = pricingJson;
+const personalFrom = formatPrice(minPerPerson());
 
 export default function Pricing() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -104,6 +106,27 @@ export default function Pricing() {
             </Reveal>
           ))}
         </div>
+
+        {/* Мостик к персоналкам: не седьмой карточкой — она сломала бы ряд 3+3 */}
+        <Reveal delay={220}>
+          <a
+            href="#personal"
+            className="group mt-4 sm:mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-blue-500/25 bg-gradient-to-r from-blue-500/[0.08] to-cyan-500/[0.04] px-5 sm:px-7 py-5 hover:border-blue-400/50 transition-colors"
+          >
+            <div className="text-center sm:text-left">
+              <div className="text-white font-black text-base sm:text-lg">
+                Нужен результат быстрее?
+              </div>
+              <div className="text-gray-400 text-sm mt-1">
+                Персональные тренировки — от {personalFrom} ₽ с человека за занятие
+              </div>
+            </div>
+            <span className="shrink-0 inline-flex items-center gap-2 text-blue-400 font-bold text-sm border border-blue-500/40 rounded-full px-5 py-2.5 group-hover:bg-blue-500/10 transition-colors">
+              Смотреть цены
+              <ArrowRight size={16} />
+            </span>
+          </a>
+        </Reveal>
       </div>
     </section>
     <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />

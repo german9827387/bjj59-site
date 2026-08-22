@@ -8,9 +8,11 @@ import ConsentCheckbox from "./ConsentCheckbox";
 interface LeadModalProps {
   isOpen: boolean;
   onClose: () => void;
+  /** Метка формы в уведомлении. Позволяет отличать, откуда пришла заявка. */
+  source?: string;
 }
 
-export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
+export default function LeadModal({ isOpen, onClose, source = "Модальное окно" }: LeadModalProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [sent, setSent] = useState(false);
@@ -40,7 +42,7 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
     if (!agreed) { setError("Подтвердите согласие на обработку персональных данных"); return; }
     setLoading(true);
     setError("");
-    const res = await postLead({ name, phone, source: "Модальное окно" });
+    const res = await postLead({ name, phone, source });
     setLoading(false);
     if (!res.ok) { setError(res.error); return; }
     setSent(true);
