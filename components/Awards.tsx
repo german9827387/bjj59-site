@@ -43,7 +43,7 @@ const awards: Award[] = [
 export default function Awards() {
   return (
     <section className="relative py-8 lg:py-12 bg-[#0a0a0a] overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#080808] to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0a0a0a] to-transparent pointer-events-none" />
       <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-[#0d1525] pointer-events-none" />
       {/* Фоновые декоративные элементы */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(59,130,246,0.07),transparent)] pointer-events-none" />
@@ -71,9 +71,11 @@ export default function Awards() {
           </Reveal>
         </div>
 
-        <div className="flex flex-nowrap justify-center items-stretch gap-4 sm:gap-10">
+        {/* На мобильном три карточки в один ряд сжимались до нечитаемых —
+            раскладываем сеткой 2+1, ничего не прячем за прокруткой. */}
+        <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-nowrap sm:justify-center sm:items-stretch sm:gap-10">
           {awards.map((award, i) => (
-            <Reveal key={award.id} delay={i * 120} className="flex flex-col w-36 sm:w-44 self-stretch">
+            <Reveal key={award.id} delay={i * 120} className="flex flex-col self-stretch w-full sm:w-44 last:col-span-2 last:mx-auto last:w-[calc(50%-0.5rem)] sm:last:col-auto sm:last:mx-0 sm:last:w-44">
               <div className="group relative flex flex-col w-full self-stretch h-full">
               <div className="relative w-full flex-1 rounded-[2rem] p-[1px] bg-gradient-to-b from-blue-500/40 via-white/10 to-transparent shadow-xl shadow-blue-950/30">
                 <div className="relative flex flex-col bg-gradient-to-b from-[#111827] to-[#0d1117] rounded-[2rem] overflow-hidden [clip-path:inset(0_round_2rem)] h-full">
@@ -83,8 +85,8 @@ export default function Awards() {
                       src={award.image}
                       alt={award.title}
                       fill
-                      className={award.contain ? "object-contain object-center p-3" : "object-cover object-center"}
-                      sizes="176px"
+                      className={award.contain ? "object-contain object-center p-2 sm:p-3" : "object-cover object-center"}
+                      sizes="(max-width: 640px) 160px, 176px"
                       loading="lazy"
                     />
                     {/* Затемнение и широкие градиенты — только для фотографий; логотип они бы приглушили */}
