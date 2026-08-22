@@ -14,25 +14,20 @@
     "ctaSecondary": "Наши направления",
     "stats": [
       {
+        "target": 513,
+        "suffix": "+",
+        "label": "Учеников",
+        "value": 513
+      },
+      {
         "target": 88,
         "suffix": "+",
-        "label": "Отзывов 5★"
+        "label": "Отзывов"
       },
       {
         "target": 14,
         "suffix": "",
         "label": "Лет в Перми"
-      },
-      {
-        "target": 4,
-        "suffix": "",
-        "label": "Направления"
-      },
-      {
-        "target": 513,
-        "suffix": "+",
-        "label": "Учеников",
-        "value": 513
       }
     ],
     "titleLine1": "",

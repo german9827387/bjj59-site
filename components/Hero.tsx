@@ -39,6 +39,14 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
   return <span ref={ref} suppressHydrationWarning>{display}{suffix}</span>;
 }
 
+// Классы перечислены явными строками: Tailwind вырезает те, что собраны
+// динамически, и сетка молча развалилась бы.
+const STAT_GRID: Record<number, string> = {
+  2: "grid-cols-2",
+  3: "grid-cols-2 sm:grid-cols-3",
+  4: "grid-cols-2 sm:grid-cols-4",
+};
+
 export default function Hero() {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -203,11 +211,11 @@ export default function Hero() {
         </div>
 
         {/* Stats */}
-        <div className="hero-fade grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 max-w-3xl mx-auto" style={{ animationDelay: "0.7s" }}>
+        <div className={`hero-fade grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2 sm:grid-cols-4"} gap-3 sm:gap-4 mt-16 max-w-3xl mx-auto`} style={{ animationDelay: "0.7s" }}>
           {hero.stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`text-center p-4 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md ${i >= 2 ? "hidden sm:block" : ""}`}
+              className={`text-center p-3 sm:p-4 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md ${i >= 2 ? "hidden sm:block" : ""}`}
             >
               <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
                 <AnimatedCounter target={stat.target} suffix={stat.suffix} />
