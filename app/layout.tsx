@@ -20,10 +20,10 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "SportsActivityLocation"],
   "name": "GSAcademy",
-  "url": "https://bjj59.ru",
+  "url": "https://www.bjj59.ru",
   "telephone": "+79958654244",
   "priceRange": "₽₽",
-  "image": "https://bjj59.ru/hero-poster.jpg",
+  "image": "https://www.bjj59.ru/hero-poster.jpg",
   "description": "Академия единоборств в Перми — BJJ, ММА, бокс, тайский бокс, грэпплинг для детей и взрослых.",
   "address": {
     "@type": "PostalAddress",
@@ -69,13 +69,13 @@ const inter = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bjj59.ru"),
+  metadataBase: new URL("https://www.bjj59.ru"),
   title: "GSAcademy — Единоборства в Перми | BJJ, ММА, Бокс",
   description:
     "Академия единоборств в Перми. BJJ, ММА, бокс для детей с 3 лет и взрослых. 14 лет, 513 учеников. Первое занятие бесплатно.",
   keywords: ["академия единоборств Пермь", "BJJ Пермь", "ММА Пермь", "бокс Пермь", "тайский бокс Пермь", "грэпплинг Пермь", "GSAcademy", "джиу-джитсу Пермь"],
   alternates: {
-    canonical: "https://bjj59.ru",
+    canonical: "https://www.bjj59.ru",
   },
   icons: {
     icon: [
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "GSAcademy — Академия единоборств в Перми",
     description: "Бразильское джиу-джитсу, ММА, бокс, тайский бокс, грэпплинг для детей и взрослых в Перми. Первое занятие бесплатно!",
-    url: "https://bjj59.ru",
+    url: "https://www.bjj59.ru",
     siteName: "GSAcademy",
     locale: "ru_RU",
     type: "website",

@@ -29,11 +29,6 @@ function getDirection(title: string): "bjj" | "boxing" | "mma" {
   return "bjj";
 }
 
-const DIR_COLORS: Record<string, string> = {
-  bjj:    "bg-[#1e3a5f] text-blue-100 border-blue-400/50",
-  boxing: "bg-[#3d2a0a] text-amber-100 border-amber-500/50",
-  mma:    "bg-[#2d1f3d] text-purple-100 border-purple-400/50",
-};
 
 const DIR_STYLES: Record<string, React.CSSProperties> = {
   bjj:    { background: "rgba(30,90,200,0.35)",  borderColor: "rgba(96,165,250,0.7)",  color: "#dbeafe" },
@@ -107,11 +102,11 @@ export const metadata: Metadata = {
   title: "Расписание тренировок | GSAcademy Пермь",
   description: "Расписание тренировок по BJJ, ММА, боксу, тайскому боксу и грэпплингу в GSAcademy. Пермь, ул. Аркадия Гайдара 8б.",
   keywords: ["расписание тренировок Пермь", "BJJ расписание", "ММА расписание", "бокс расписание Пермь", "GSAcademy расписание"],
-  alternates: { canonical: "https://bjj59.ru/schedule" },
+  alternates: { canonical: "https://www.bjj59.ru/schedule" },
   openGraph: {
     title: "Расписание тренировок | GSAcademy Пермь",
     description: "Расписание занятий по единоборствам в Перми. BJJ, ММА, бокс, тайский бокс, грэпплинг.",
-    url: "https://bjj59.ru/schedule",
+    url: "https://www.bjj59.ru/schedule",
     siteName: "GSAcademy",
     locale: "ru_RU",
     type: "website",

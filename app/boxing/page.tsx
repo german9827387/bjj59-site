@@ -13,12 +13,12 @@ export const metadata: Metadata = {
     "боксёрская секция Пермь",
     "GSAcademy бокс",
   ],
-  alternates: { canonical: "https://bjj59.ru/boxing" },
+  alternates: { canonical: "https://www.bjj59.ru/boxing" },
   openGraph: {
     title: "Бокс в Перми | GSAcademy",
     description:
       "Секция бокса в Перми. Профессиональные тренеры, тренировки для детей и взрослых. Первое занятие бесплатно!",
-    url: "https://bjj59.ru/boxing",
+    url: "https://www.bjj59.ru/boxing",
     siteName: "GSAcademy",
     locale: "ru_RU",
     type: "website",

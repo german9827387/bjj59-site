@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "грэпплинг для взрослых Пермь",
     "GSAcademy грэпплинг",
   ],
-  alternates: { canonical: "https://bjj59.ru/grappling" },
+  alternates: { canonical: "https://www.bjj59.ru/grappling" },
   openGraph: {
     title: "Грэпплинг в Перми | GSAcademy",
     description:
       "Секция грэпплинга в Перми. Борьба без ударов — техника и стратегия. Первое занятие бесплатно!",
-    url: "https://bjj59.ru/grappling",
+    url: "https://www.bjj59.ru/grappling",
     siteName: "GSAcademy",
     locale: "ru_RU",
     type: "website",

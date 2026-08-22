@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "тайский бокс для взрослых Пермь",
     "GSAcademy муай-тай",
   ],
-  alternates: { canonical: "https://bjj59.ru/muaythai" },
+  alternates: { canonical: "https://www.bjj59.ru/muaythai" },
   openGraph: {
     title: "Тайский бокс (Муай-тай) в Перми | GSAcademy",
     description:
       "Муай-тай в Перми — искусство восьми конечностей. Тренировки для детей и взрослых. Первое занятие бесплатно!",
-    url: "https://bjj59.ru/muaythai",
+    url: "https://www.bjj59.ru/muaythai",
     siteName: "GSAcademy",
     locale: "ru_RU",
     type: "website",

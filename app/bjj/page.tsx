@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "секция джиу-джитсу Пермь",
     "GSAcademy BJJ",
   ],
-  alternates: { canonical: "https://bjj59.ru/bjj" },
+  alternates: { canonical: "https://www.bjj59.ru/bjj" },
   openGraph: {
     title: "Бразильское джиу-джитсу в Перми | GSAcademy",
     description:
       "Тренировки BJJ для детей и взрослых в Перми. 6 чёрных поясов, члены команды Alliance. Первое занятие бесплатно!",
-    url: "https://bjj59.ru/bjj",
+    url: "https://www.bjj59.ru/bjj",
     siteName: "GSAcademy",
     locale: "ru_RU",
     type: "website",

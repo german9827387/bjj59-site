@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "ММА для детей Пермь",
     "GSAcademy ММА",
   ],
-  alternates: { canonical: "https://bjj59.ru/mma" },
+  alternates: { canonical: "https://www.bjj59.ru/mma" },
   openGraph: {
     title: "ММА в Перми | GSAcademy — Смешанные единоборства",
     description:
       "Смешанные единоборства ММА в Перми. Бокс, борьба, BJJ, муай-тай в одном зале. Первое занятие бесплатно!",
-    url: "https://bjj59.ru/mma",
+    url: "https://www.bjj59.ru/mma",
     siteName: "GSAcademy",
     locale: "ru_RU",
     type: "website",
