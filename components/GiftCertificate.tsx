@@ -18,12 +18,6 @@ import { formatPrice } from "@/lib/personal";
 
 const { options, validMonths } = giftJson;
 
-const DELIVERY = [
-  "В мессенджер — картинкой",
-  "На почту — PDF для печати",
-  "Заберу в зале — карточкой",
-];
-
 /** Почему это лучший подарок — то, чем сертификат бьёт свечки и носки. */
 const REASONS = [
   "Не выкинут и не передарят — это событие, а не вещь",
@@ -37,7 +31,6 @@ export default function GiftCertificate() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [to, setTo] = useState("");
-  const [delivery, setDelivery] = useState(DELIVERY[0]);
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -66,10 +59,7 @@ export default function GiftCertificate() {
     const gift = option.price
       ? `${option.title} — ${formatPrice(option.price)} ₽`
       : `${option.title} (сумму уточнить)`;
-    const note = [
-      to.trim() ? `Кому: ${to.trim()}` : "",
-      `Получение: ${delivery}`,
-    ].filter(Boolean).join(" · ");
+    const note = to.trim() ? `Кому: ${to.trim()}` : "";
 
     const res = await postLead({
       name,
@@ -155,7 +145,7 @@ export default function GiftCertificate() {
                 />
               </div>
               <figcaption className="relative text-center text-gray-500 text-xs mt-6">
-                Так выглядит сертификат — пришлём картинкой в мессенджер или PDF на почту
+                Так выглядит сертификат — пришлём картинкой, её удобно переслать
               </figcaption>
             </figure>
           </Reveal>
@@ -237,8 +227,8 @@ export default function GiftCertificate() {
                   </div>
                   <h3 className="text-white font-black text-2xl mb-2">Заявка принята</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">
-                    Перезвоним в течение 30 минут, подтвердим детали и пришлём сертификат
-                    выбранным способом.
+                    Перезвоним в течение 30 минут, подтвердим детали и пришлём
+                    сертификат картинкой — останется только переслать.
                   </p>
                 </div>
               ) : (
@@ -294,27 +284,6 @@ export default function GiftCertificate() {
                         placeholder="Артём"
                         className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3 px-4 outline-none transition-colors text-sm"
                       />
-                    </div>
-
-                    <div>
-                      <label className="block text-gray-400 text-sm mb-2">Как получить сертификат</label>
-                      <div className="grid sm:grid-cols-3 gap-2">
-                        {DELIVERY.map((d) => (
-                          <button
-                            key={d}
-                            type="button"
-                            onClick={() => setDelivery(d)}
-                            aria-pressed={delivery === d}
-                            className={`text-left sm:text-center rounded-xl px-3 py-2.5 text-xs leading-snug transition-colors ${
-                              delivery === d
-                                ? "bg-blue-500/15 border border-blue-500/50 text-white"
-                                : "bg-white/[0.03] border border-white/[0.08] text-gray-400 hover:border-blue-500/30"
-                            }`}
-                          >
-                            {d}
-                          </button>
-                        ))}
-                      </div>
                     </div>
 
                     <ConsentCheckbox id="consent-gift" checked={agreed} onChange={(v) => { setAgreed(v); setError(""); }} />
