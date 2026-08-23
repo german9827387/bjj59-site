@@ -20,7 +20,7 @@ const { options, validMonths } = giftJson;
 
 /** Почему это лучший подарок — то, чем сертификат бьёт свечки и носки. */
 const REASONS = [
-  "Не выкинут и не передарят — это событие, а не вещь",
+  "Не пылится на полке и не отправится в дальний ящик",
   "Подойдёт и ребёнку с 3 лет, и взрослому с нуля",
   "Экипировку на первое занятие дадим — приходить можно налегке",
   `Действует ${validMonths} месяцев, продлим по звонку`,
@@ -103,7 +103,7 @@ export default function GiftCertificate() {
             <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight">
               Подарите не вещь,{" "}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-                а год другой жизни
+                а повод начать
               </span>
             </h1>
             <p className="text-gray-400 text-base sm:text-lg mt-5 leading-relaxed">
