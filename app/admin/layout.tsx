@@ -2,18 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  LayoutDashboard,
-  Users,
-  Layers,
-  Star,
-  Tag,
-  Settings,
-  LogOut,
-  ExternalLink,
-  Menu,
-  X,
-} from "lucide-react";
+import { LayoutDashboard, Users, Layers, Star, Tag, Settings, LogOut, ExternalLink, Menu, X, Gift } from "lucide-react";
 import { useState } from "react";
 
 const NAV = [
@@ -22,6 +11,7 @@ const NAV = [
   { href: "/admin/directions", label: "Направления", icon: Layers },
   { href: "/admin/reviews", label: "Отзывы", icon: Star },
   { href: "/admin/pricing", label: "Цены", icon: Tag },
+  { href: "/admin/certificate", label: "Сертификат", icon: Gift },
   { href: "/admin/settings", label: "Настройки", icon: Settings },
 ];
 

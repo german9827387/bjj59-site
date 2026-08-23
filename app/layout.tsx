@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import TgLinkHandler from "@/components/TgLinkHandler";
 import { ClientShells } from "@/components/ClientShells";
 import ChatWidget from "@/components/ChatWidget";
+import HideOnAdmin from "@/components/HideOnAdmin";
 
 // ← Замени на свой ID счётчика Яндекс.Метрики
 const YM_ID = 44430424;
@@ -143,11 +144,15 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} antialiased min-h-screen bg-background text-foreground`} suppressHydrationWarning>
           <TgLinkHandler />
-          <Navbar />
+          <HideOnAdmin>
+            <Navbar />
+          </HideOnAdmin>
           <main className="pb-20 md:pb-0">{children}</main>
-          <Footer />
-          <ClientShells />
-          <ChatWidget />
+          <HideOnAdmin>
+            <Footer />
+            <ClientShells />
+            <ChatWidget />
+          </HideOnAdmin>
       </body>
     </html>
   );
