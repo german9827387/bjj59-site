@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Gift, Check, Phone, User, Loader2, CheckCircle2, ArrowRight } from "lucide-react";
+import Image from "next/image";
 import giftJson from "@/data/gift.json";
 import Reveal from "./Reveal";
 import ConsentCheckbox from "./ConsentCheckbox";
@@ -85,43 +86,83 @@ export default function GiftCertificate() {
 
   return (
     <div className="relative min-h-screen bg-[#0d1525] pt-24 pb-20 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(59,130,246,0.13),transparent)] pointer-events-none" />
+      {/* Фактура зала под тяжёлым затемнением: даёт глубину, но не спорит с текстом */}
+      <div className="absolute inset-x-0 top-0 h-[900px] pointer-events-none">
+        <Image
+          src="/gym1.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-[0.14]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0d1525]/80 via-[#0d1525]/90 to-[#0d1525]" />
+      </div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(59,130,246,0.14),transparent)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_90%,rgba(6,182,212,0.07),transparent)] pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Заголовок */}
-        <div className="text-center mb-14">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Первый экран: слева обещание, справа сам сертификат.
+            Подарок покупают глазами — показать его важнее, чем описать. */}
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-20 lg:mb-24">
           <Reveal>
             <span className="inline-flex items-center gap-2 text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-5">
               <Gift size={13} />
               Подарочный сертификат
             </span>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+            <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight">
               Подарите не вещь,{" "}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
                 а год другой жизни
               </span>
             </h1>
-            <p className="text-gray-400 text-base sm:text-lg mt-5 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-400 text-base sm:text-lg mt-5 leading-relaxed">
               Сертификат на тренировки в GSAcademy — джиу-джитсу, борьба, бокс, ММА.
               Оформим за 15 минут и пришлём в мессенджер: успеете подарить хоть сегодня вечером.
             </p>
+
+            <ul className="space-y-2.5 mt-7">
+              {REASONS.map((r) => (
+                <li key={r} className="flex items-start gap-3 text-gray-300 text-sm">
+                  <Check size={16} className="text-blue-400 shrink-0 mt-0.5" />
+                  {r}
+                </li>
+              ))}
+            </ul>
+
+            <button
+              type="button"
+              onClick={() => document.getElementById("gift-options")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              className="mt-8 inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3.5 px-8 rounded-full text-sm sm:text-base hover:opacity-90 transition-all hover:scale-[1.02] shadow-2xl shadow-blue-500/25"
+            >
+              Выбрать сертификат
+              <ArrowRight size={17} />
+            </button>
+          </Reveal>
+
+          <Reveal delay={140}>
+            <figure className="relative">
+              <div className="absolute -inset-8 bg-gradient-to-tr from-blue-500/25 via-cyan-400/10 to-transparent blur-3xl rounded-full pointer-events-none" />
+              <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/12 shadow-2xl shadow-blue-950/70 rotate-[-3deg] hover:rotate-0 transition-transform duration-500">
+                <Image
+                  src="/gift-sample.jpg"
+                  alt="Подарочный сертификат GSAcademy — так он выглядит"
+                  width={1400}
+                  height={875}
+                  priority
+                  sizes="(max-width: 1024px) 90vw, 46vw"
+                  className="w-full h-auto"
+                />
+              </div>
+              <figcaption className="relative text-center text-gray-500 text-xs mt-6">
+                Так выглядит сертификат — пришлём картинкой в мессенджер или PDF на почту
+              </figcaption>
+            </figure>
           </Reveal>
         </div>
 
-        {/* Почему это работает как подарок */}
-        <Reveal delay={80}>
-          <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3 max-w-3xl mx-auto mb-14">
-            {REASONS.map((r) => (
-              <li key={r} className="flex items-start gap-3 text-gray-300 text-sm">
-                <Check size={16} className="text-blue-400 shrink-0 mt-0.5" />
-                {r}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
         {/* Варианты */}
+        <div id="gift-options" className="scroll-mt-24" />
         <Reveal delay={140}>
           <h2 className="text-center text-white font-black text-2xl sm:text-3xl mb-8">
             Что подарить
