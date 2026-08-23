@@ -13,6 +13,7 @@ const navLinks = [
   { label: "Отзывы", href: "/#reviews" },
   { label: "Расписание", href: "/schedule" },
   { label: "Цены", href: "/#pricing" },
+  { label: "Сертификат", href: "/gift" },
   { label: "Контакты", href: "/#contacts" },
 ];
 

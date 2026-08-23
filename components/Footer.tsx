@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Clock } from "lucide-react";
+import { MapPin, Phone, Clock, Gift } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import LeadModal from "./LeadModal";
 
@@ -125,6 +125,15 @@ export default function Footer() {
                 </a>
               ))}
             </div>
+            <Link
+              href="/gift"
+              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors"
+            >
+              <span className="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center shrink-0">
+                <Gift size={11} className="text-cyan-400" />
+              </span>
+              Подарочный сертификат
+            </Link>
           </div>
 
           {/* Карта */}

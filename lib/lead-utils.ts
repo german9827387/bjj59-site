@@ -61,6 +61,8 @@ export interface LeadPayload {
   source: string;
   direction?: string;
   dayTime?: string;
+  /** Свободный текст с деталями заказа — например, для подарочного сертификата. */
+  note?: string;
 }
 
 export type LeadResult = { ok: true } | { ok: false; error: string };
@@ -79,6 +81,7 @@ export async function postLead(payload: LeadPayload): Promise<LeadResult> {
     source: payload.source,
     direction: payload.direction ?? "",
     dayTime: payload.dayTime ?? "",
+    note: payload.note ?? "",
     utm: getUtm(),
   });
 

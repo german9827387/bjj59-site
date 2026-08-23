@@ -103,6 +103,7 @@ export async function POST(req: NextRequest) {
   const source = clean(body.source, 200);
   const direction = clean(body.direction, 100);
   const dayTime = clean(body.dayTime, 100);
+  const note = clean(body.note, 600);
   const utm =
     body.utm && typeof body.utm === "object" && !Array.isArray(body.utm)
       ? (body.utm as Record<string, string>)
@@ -125,7 +126,7 @@ export async function POST(req: NextRequest) {
   }).format(new Date());
 
   // Полезная нагрузка для аварийного лога — по ней заявку можно восстановить из логов
-  const leadRecord = { name, phone: telLink, source, direction, dayTime, utm, at: now };
+  const leadRecord = { name, phone: telLink, source, direction, dayTime, note, utm, at: now };
 
   const utmLines = Object.entries(UTM_LABELS)
     .filter(([key]) => utm[key])
@@ -144,6 +145,7 @@ export async function POST(req: NextRequest) {
     `📞 Телефон: ${phone}`,
     ...(direction ? [`🥊 Направление: ${direction}`] : []),
     ...(dayTime ? [`📅 День и время: ${dayTime}`] : []),
+    ...(note ? [`📝 ${note}`] : []),
     `🕐 Время: ${now} (Пермь)`,
     ...(source ? [`📋 Форма: ${source}`] : []),
     ...(utmLines.length ? ["", "Источник трафика:", ...utmLines] : ["", "📍 Источник: прямой заход"]),
@@ -185,6 +187,7 @@ export async function POST(req: NextRequest) {
         <tr><td><b>Время:</b></td><td>${esc(now)} (Пермь)</td></tr>
         ${direction ? `<tr><td><b>Направление:</b></td><td>${esc(direction)}</td></tr>` : ""}
         ${dayTime ? `<tr><td><b>День и время:</b></td><td>${esc(dayTime)}</td></tr>` : ""}
+        ${note ? `<tr><td><b>Детали:</b></td><td>${esc(note)}</td></tr>` : ""}
         ${source ? `<tr><td><b>Форма:</b></td><td>${esc(source)}</td></tr>` : ""}
       </table>
       ${utmHtml}
