@@ -122,8 +122,16 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Яндекс Метрика */}
-        <Script id="ym-init" strategy="lazyOnload">{`
+        {/*
+          Яндекс Метрика.
+
+          `afterInteractive`, а не `lazyOnload`: последний ждёт полной
+          загрузки страницы, а в hero лежит видео. Человек, пришедший с
+          рекламы и ушедший через пару секунд, не успевал попасть в счётчик —
+          визит оплачен, а в отчёте его нет, и данные Метрики расходились с
+          данными Директа именно на самых дорогих быстрых отказах.
+        */}
+        <Script id="ym-init" strategy="afterInteractive">{`
           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
           m[i].l=1*new Date();
           for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
