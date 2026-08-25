@@ -1,23 +1,190 @@
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
 
-export function getUtm(): Record<string, string> {
-  if (typeof window === "undefined") return {};
-  const p = new URLSearchParams(window.location.search);
-  const utm: Record<string, string> = {};
-  for (const key of UTM_KEYS) {
-    const v = p.get(key) || sessionStorage.getItem(key);
-    if (v) utm[key] = v;
-  }
-  return utm;
+/**
+ * Идентификаторы клика рекламных систем.
+ *
+ * Яндекс.Директ с включённой автоматической разметкой не ставит `utm_*`
+ * вовсе — только `yclid`. Без этого списка платный трафик приходил бы в
+ * заявке как «прямой заход», и реклама выглядела бы бесплатной.
+ */
+const CLICK_ID_KEYS = ["yclid", "ysclid", "gclid", "gbraid", "wbraid", "fbclid", "rb_clickid"] as const;
+
+const TRACKED_KEYS: readonly string[] = [...UTM_KEYS, ...CLICK_ID_KEYS];
+
+/** Ключи, где регистр — это шум: «VK» и «vk» иначе разъедутся в отчётах. */
+const LOWERCASE_KEYS = new Set(["utm_source", "utm_medium"]);
+
+const STORE_KEY = "bjj59_attribution";
+
+/**
+ * 90 дней — окно, за которое человек успевает подумать и вернуться.
+ * Раньше метки жили в `sessionStorage`, то есть до закрытия вкладки: пришёл
+ * с рекламы, закрыл, вечером вернулся напрямую — и заявка записывалась как
+ * «прямой заход», хотя её купила реклама.
+ */
+const TTL_MS = 90 * 24 * 60 * 60 * 1000;
+
+interface Touch {
+  /** Метки и clickid из адреса. Пусто — заход без разметки. */
+  params: Record<string, string>;
+  /** Хост внешнего источника перехода. Только хост: путь — это уже чужие данные. */
+  ref: string;
+  at: number;
 }
 
+interface Attribution {
+  /** Первое касание за окно: чем человека привели. */
+  first: Touch;
+  /** Последнее: с чего он пришёл в этот раз. */
+  last: Touch;
+}
+
+/**
+ * Хранилище переживает вкладку, но может быть недоступно: приватный режим
+ * Safari бросает на запись. Тогда откатываемся на сессию — атрибуция в
+ * пределах визита лучше, чем никакой, и ни один сбой хранилища не имеет
+ * права уронить отправку заявки.
+ */
+function writeStore(value: Attribution): void {
+  const raw = JSON.stringify(value);
+  try {
+    localStorage.setItem(STORE_KEY, raw);
+    return;
+  } catch {
+    /* приватный режим или переполнение — пробуем сессию */
+  }
+  try {
+    sessionStorage.setItem(STORE_KEY, raw);
+  } catch {
+    /* хранилища нет вовсе — метки уедут только из текущего адреса */
+  }
+}
+
+function readStore(): Attribution | null {
+  let raw: string | null = null;
+  try {
+    raw = localStorage.getItem(STORE_KEY) ?? sessionStorage.getItem(STORE_KEY);
+  } catch {
+    return null;
+  }
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as Attribution;
+    if (!parsed?.last?.at || !parsed?.first) return null;
+    // Просроченное касание хуже отсутствующего: оно припишет заявку рекламе,
+    // которая крутилась полгода назад.
+    if (Date.now() - parsed.last.at > TTL_MS) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+/** Метки и clickid из текущего адреса. */
+function currentParams(): Record<string, string> {
+  const p = new URLSearchParams(window.location.search);
+  const out: Record<string, string> = {};
+  for (const key of TRACKED_KEYS) {
+    const v = p.get(key)?.trim();
+    if (v) out[key] = (LOWERCASE_KEYS.has(key) ? v.toLowerCase() : v).slice(0, 200);
+  }
+  return out;
+}
+
+/**
+ * Хост, с которого пришёл человек, или пусто.
+ *
+ * Свои же страницы отбрасываем: внутренний переход не источник трафика, а
+ * без этой проверки любая вторая страница выглядела бы переходом с bjj59.ru.
+ */
+function externalReferrer(): string {
+  const ref = document.referrer;
+  if (!ref) return "";
+  try {
+    const host = new URL(ref).hostname.replace(/^www\./, "");
+    if (host === window.location.hostname.replace(/^www\./, "")) return "";
+    return host.slice(0, 100);
+  } catch {
+    return "";
+  }
+}
+
+function touchLabel(touch: Touch): string {
+  const source = touch.params.utm_source;
+  if (source) {
+    const campaign = touch.params.utm_campaign;
+    return campaign ? `${source} / ${campaign}` : source;
+  }
+  const clickId = CLICK_ID_KEYS.find((k) => touch.params[k]);
+  if (clickId) return clickId;
+  return touch.ref;
+}
+
+function touchDate(at: number): string {
+  return new Intl.DateTimeFormat("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date(at));
+}
+
+/**
+ * Запомнить, с чего пришёл человек.
+ *
+ * Вызывается из общего [TgLinkHandler](../components/TgLinkHandler.tsx) на
+ * каждой странице и из форм — вызов идемпотентен по смыслу: заход без меток
+ * в адресе ничего не перезаписывает.
+ */
 export function persistUtm(): void {
   if (typeof window === "undefined") return;
-  const p = new URLSearchParams(window.location.search);
-  for (const key of UTM_KEYS) {
-    const v = p.get(key);
-    if (v) sessionStorage.setItem(key, v);
+
+  const params = currentParams();
+  const stored = readStore();
+
+  // Внутренний переход не имеет права стереть источник: без этой строки
+  // клик по «Расписанию» превращал бы рекламный визит в прямой заход.
+  if (!Object.keys(params).length && stored) return;
+
+  const touch: Touch = { params, ref: externalReferrer(), at: Date.now() };
+  writeStore({ first: stored?.first ?? touch, last: touch });
+}
+
+/**
+ * Что уходит в заявку: метки последнего касания, `referrer` и — если человек
+ * пришёл впервые не оттуда же — первое касание строкой.
+ *
+ * Плоская карта, а не структура: на той стороне
+ * [app/api/lead/route.ts](../app/api/lead/route.ts) подписывает ключи
+ * по-русски и печатает их в сообщение.
+ */
+export function getUtm(): Record<string, string> {
+  if (typeof window === "undefined") return {};
+
+  // Форма могла отрисоваться раньше, чем что-либо успело сохранить метки.
+  persistUtm();
+
+  const store = readStore();
+  if (!store) return {};
+
+  const out: Record<string, string> = { ...store.last.params };
+  if (store.last.ref) out.referrer = store.last.ref;
+
+  const first = touchLabel(store.first);
+  if (first && first !== touchLabel(store.last)) {
+    out.first_touch = `${first} · ${touchDate(store.first.at)}`;
   }
+
+  return out;
+}
+
+/** Источник и кампания для подписи в сообщении Telegram. */
+export function currentSource(): { source: string; campaign: string } {
+  if (typeof window === "undefined") return { source: "", campaign: "" };
+  const store = readStore();
+  return {
+    source: store?.last.params.utm_source ?? "",
+    campaign: store?.last.params.utm_campaign ?? "",
+  };
 }
 
 /**

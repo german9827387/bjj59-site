@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { reachGoal, reachGoalOnce } from "@/lib/lead-utils";
+import { currentSource, persistUtm, reachGoal, reachGoalOnce } from "@/lib/lead-utils";
 
 // Названия UTM-источников для подстановки в сообщение
 const SOURCE_LABELS: Record<string, string> = {
@@ -16,15 +16,12 @@ const SOURCE_LABELS: Record<string, string> = {
 
 export default function TgLinkHandler() {
   useEffect(() => {
-    // Сохраняем UTM в sessionStorage при первом заходе
-    const params = new URLSearchParams(window.location.search);
-    const utm_source = params.get("utm_source");
-    const utm_campaign = params.get("utm_campaign");
-    const utm_medium = params.get("utm_medium");
-
-    if (utm_source) sessionStorage.setItem("utm_source", utm_source);
-    if (utm_campaign) sessionStorage.setItem("utm_campaign", utm_campaign);
-    if (utm_medium) sessionStorage.setItem("utm_medium", utm_medium);
+    // Запоминаем источник. Обработчик висит в layout, то есть на каждой
+    // странице, — поэтому метки сохраняются везде, а не только там, где
+    // отрисована форма. Раньше здесь лежала своя копия этой логики на
+    // sessionStorage и всего с тремя ключами из пяти: два места правды на
+    // один вопрос, и утерянные utm_content с utm_term.
+    persistUtm();
 
     // Перехватываем клики по TG-ссылкам и добавляем UTM в текст
     function handleClick(e: MouseEvent) {
@@ -36,8 +33,7 @@ export default function TgLinkHandler() {
 
       e.preventDefault();
 
-      const source = sessionStorage.getItem("utm_source");
-      const campaign = sessionStorage.getItem("utm_campaign");
+      const { source, campaign } = currentSource();
 
       const url = new URL(href);
       const existingText = url.searchParams.get("text") || "";

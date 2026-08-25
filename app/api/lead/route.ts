@@ -88,7 +88,68 @@ const UTM_LABELS: Record<string, string> = {
   utm_campaign: "Кампания",
   utm_content: "Объявление",
   utm_term: "Ключевое слово",
+  yclid: "Клик Яндекс.Директ",
+  ysclid: "Клик Яндекс",
+  gclid: "Клик Google Ads",
+  gbraid: "Клик Google Ads",
+  wbraid: "Клик Google Ads",
+  fbclid: "Клик Meta",
+  rb_clickid: "Клик VK Реклама",
 };
+
+/** Ключи, наличие которых означает «трафик размечен». */
+const AD_KEYS = Object.keys(UTM_LABELS);
+
+/**
+ * Человеческое имя площадки по хосту перехода.
+ *
+ * Без этого «прямой заход» был свалкой: настоящие прямые заходы, органика
+ * Яндекса, переходы из Telegram-канала и закладки выглядели одинаково — и
+ * по такой строке нельзя решить, куда вкладывать деньги.
+ */
+const REFERRER_LABELS: Array<[RegExp, string]> = [
+  [/(^|\.)yandex\./, "органический поиск Яндекс"],
+  [/(^|\.)ya\.ru$/, "органический поиск Яндекс"],
+  [/(^|\.)google\./, "органический поиск Google"],
+  [/(^|\.)(bing|duckduckgo|mail)\./, "органический поиск"],
+  [/(^|\.)vk\.(com|ru)$/, "ВКонтакте"],
+  [/(^|\.)(t\.me|telegram\.org|telegram\.me)$/, "Telegram"],
+  [/(^|\.)2gis\./, "2ГИС"],
+  [/(^|\.)(instagram|facebook)\./, "Instagram/Facebook"],
+  [/(^|\.)youtube\./, "YouTube"],
+  [/(^|\.)avito\./, "Авито"],
+];
+
+function referrerLabel(host: string): string {
+  const found = REFERRER_LABELS.find(([re]) => re.test(host));
+  return found ? found[1] : `переход с ${host}`;
+}
+
+/**
+ * Строки блока «Источник трафика» — общие для Telegram и письма.
+ *
+ * Заявка без меток больше не считается автоматически прямым заходом:
+ * Яндекс.Директ с автоматической разметкой присылает только `yclid`, а
+ * органика не присылает ничего, кроме referrer'а.
+ */
+function trafficLines(utm: Record<string, string>): string[] {
+  const lines = AD_KEYS.filter((key) => utm[key]).map(
+    (key) => `📌 ${UTM_LABELS[key]}: ${clean(utm[key], 200)}`
+  );
+
+  const ref = clean(utm.referrer, 100);
+
+  if (lines.length) {
+    if (ref) lines.push(`🔗 Переход с: ${ref}`);
+  } else {
+    lines.push(`📍 Источник: ${ref ? referrerLabel(ref) : "прямой заход или закладка"}`);
+  }
+
+  const first = clean(utm.first_touch, 200);
+  if (first) lines.push(`🕓 Первый заход: ${first}`);
+
+  return lines;
+}
 
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
@@ -128,9 +189,7 @@ export async function POST(req: NextRequest) {
   // Полезная нагрузка для аварийного лога — по ней заявку можно восстановить из логов
   const leadRecord = { name, phone: telLink, source, direction, dayTime, note, utm, at: now };
 
-  const utmLines = Object.entries(UTM_LABELS)
-    .filter(([key]) => utm[key])
-    .map(([key, label]) => `📌 ${label}: ${clean(utm[key], 200)}`);
+  const utmLines = trafficLines(utm);
 
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -148,7 +207,9 @@ export async function POST(req: NextRequest) {
     ...(note ? [`📝 ${note}`] : []),
     `🕐 Время: ${now} (Пермь)`,
     ...(source ? [`📋 Форма: ${source}`] : []),
-    ...(utmLines.length ? ["", "Источник трафика:", ...utmLines] : ["", "📍 Источник: прямой заход"]),
+    "",
+    "Источник трафика:",
+    ...utmLines,
   ];
 
   const htmlText = [
@@ -176,9 +237,9 @@ export async function POST(req: NextRequest) {
   const resendKey = process.env.RESEND_API_KEY;
   const notifyEmail = process.env.NOTIFY_EMAIL;
   if (resendKey && notifyEmail) {
-    const utmHtml = utmLines.length
-      ? `<br><b>Источник трафика:</b><br>${utmLines.map((l) => esc(l.replace("📌 ", ""))).join("<br>")}`
-      : "<br>Источник: прямой заход";
+    const utmHtml = `<br><b>Источник трафика:</b><br>${utmLines
+      .map((l) => esc(l))
+      .join("<br>")}`;
     const emailHtml = `
       <h2 style="color:#1d4ed8">🥋 Новая заявка — bjj59.ru</h2>
       <table style="font-size:15px;line-height:1.7">
