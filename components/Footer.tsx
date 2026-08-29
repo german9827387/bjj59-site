@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Clock, Gift } from "lucide-react";
+import { MapPin, Phone, Clock, Gift, Navigation } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import LeadModal from "./LeadModal";
 
@@ -32,6 +32,8 @@ function LazyFooterMap() {
     </div>
   );
 }
+
+const ROUTE_URL = "https://yandex.ru/maps/perm/?rtext=~58.001796,56.29609";
 
 const socials = [
   {
@@ -140,6 +142,24 @@ export default function Footer() {
           <div className="order-3">
             <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-5 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Мы на карте</h3>
             <LazyFooterMap />
+            {/*
+              Кнопка маршрута рядом с картой, а не вместо неё.
+
+              Виджет карты лежит в iframe: внутри него человек не построит
+              маршрут в один клик, а клики там не отследить — это чужой домен.
+              Человек, готовый приехать, до сегодняшнего дня не имел на сайте
+              ни одной кнопки для этого; цель `maps_click` теперь считает
+              именно его — самый горячий сигнал перед приходом в зал.
+            */}
+            <a
+              href={ROUTE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 flex items-center justify-center gap-2 w-full rounded-xl border border-blue-500/30 bg-blue-500/[0.06] hover:bg-blue-500/[0.12] hover:border-blue-500/50 text-blue-400 hover:text-blue-300 text-sm font-semibold py-2.5 transition-all"
+            >
+              <Navigation size={15} className="shrink-0" />
+              Построить маршрут
+            </a>
           </div>
         </div>
 
