@@ -101,8 +101,14 @@ function externalReferrer(): string {
   const ref = document.referrer;
   if (!ref) return "";
   try {
-    const host = new URL(ref).hostname.replace(/^www\./, "");
+    const url = new URL(ref);
+    const host = url.hostname.replace(/^www\./, "");
     if (host === window.location.hostname.replace(/^www\./, "")) return "";
+    // Карты и поиск живут на одном хосте: `yandex.ru/maps` и `yandex.ru/search`
+    // различимы только по пути. Без этой проверки переход из карточки
+    // организации подписывался как «органический поиск» — а это разные каналы
+    // с разными бюджетами. Берём не путь целиком, а только сам факт «/maps».
+    if (/^\/maps(\/|$)/.test(url.pathname)) return `${host}/maps`.slice(0, 100);
     return host.slice(0, 100);
   } catch {
     return "";
@@ -242,6 +248,14 @@ const FALLBACK_ERROR = "Не удалось отправить заявку. Н�
  * Дубль заявки лучше потерянной заявки, поэтому ретраим агрессивно.
  */
 export async function postLead(payload: LeadPayload): Promise<LeadResult> {
+  const utm = getUtm();
+
+  // ClientID кладём рядом с метками: на той стороне он попадёт в сообщение,
+  // а оттуда — в таблицу заявок. Ожидание ограничено сотнями миллисекунд и
+  // не может задержать отправку.
+  const clientId = await getClientId();
+  if (clientId) utm.ym_client_id = clientId;
+
   const body = JSON.stringify({
     name: payload.name.trim(),
     phone: formatPhone(payload.phone),
@@ -249,7 +263,7 @@ export async function postLead(payload: LeadPayload): Promise<LeadResult> {
     direction: payload.direction ?? "",
     dayTime: payload.dayTime ?? "",
     note: payload.note ?? "",
-    utm: getUtm(),
+    utm,
   });
 
   let lastError = FALLBACK_ERROR;
@@ -265,6 +279,7 @@ export async function postLead(payload: LeadPayload): Promise<LeadResult> {
       const data = await res.json().catch(() => ({} as { ok?: boolean; error?: string }));
       if (res.ok && data.ok) return { ok: true };
       if (res.status >= 400 && res.status < 500) {
+        reachGoal("lead_error");
         return { ok: false, error: data.error ?? FALLBACK_ERROR };
       }
       lastError = data.error ?? FALLBACK_ERROR;
@@ -274,6 +289,10 @@ export async function postLead(payload: LeadPayload): Promise<LeadResult> {
     if (attempt < 3) await new Promise((r) => setTimeout(r, attempt * 800));
   }
 
+  // Три попытки исчерпаны — человек видит ошибку, а мы обязаны увидеть её в
+  // отчётах. Без этой цели поломка воронки выглядит просто как «стало меньше
+  // заявок», и обнаружится она по тишине в Telegram через несколько дней.
+  reachGoal("lead_error");
   return { ok: false, error: lastError };
 }
 
@@ -304,15 +323,127 @@ export function reachGoalOnce(goal: string): void {
   reachGoal(goal);
 }
 
+interface YmWindow {
+  ym?: (...a: unknown[]) => void;
+  __YM_COUNTER_ID__?: number;
+}
+
+/**
+ * Цели, отправленные до того, как в странице появился счётчик.
+ *
+ * Скрипт Метрики подключён с `afterInteractive`, а короткая страница может
+ * долистаться до конца раньше. Молча терять такие цели нельзя: `scroll_90`
+ * на первом экране — это не «не долистал», это дыра в данных.
+ */
+const pendingGoals: string[] = [];
+let flushTimer: ReturnType<typeof setInterval> | null = null;
+
+function ym(): ((...a: unknown[]) => void) | null {
+  if (typeof window === "undefined") return null;
+  const w = window as unknown as YmWindow;
+  if (typeof w.ym !== "function" || !w.__YM_COUNTER_ID__) return null;
+  const id = w.__YM_COUNTER_ID__;
+  const fn = w.ym;
+  return (...args: unknown[]) => fn(id, ...args);
+}
+
+function flushGoals(): void {
+  const send = ym();
+  if (!send) return;
+  while (pendingGoals.length) {
+    const goal = pendingGoals.shift() as string;
+    try {
+      send("reachGoal", goal);
+    } catch {
+      /* метрика не должна ломать работу страницы */
+    }
+  }
+  if (flushTimer) {
+    clearInterval(flushTimer);
+    flushTimer = null;
+  }
+}
+
 /** Цель Яндекс.Метрики. Безопасна, если счётчик ещё не загрузился. */
 export function reachGoal(goal: string): void {
   if (typeof window === "undefined") return;
-  const w = window as unknown as { ym?: (...a: unknown[]) => void; __YM_COUNTER_ID__?: number };
-  if (typeof w.ym === "function" && w.__YM_COUNTER_ID__) {
+  const send = ym();
+  if (send) {
     try {
-      w.ym(w.__YM_COUNTER_ID__, "reachGoal", goal);
+      send("reachGoal", goal);
     } catch {
       /* метрика не должна ломать отправку заявки */
     }
+    return;
   }
+  // Счётчика ещё нет — придержим цель и добьём, когда появится.
+  if (pendingGoals.length < 30) pendingGoals.push(goal);
+  if (!flushTimer) flushTimer = setInterval(flushGoals, 400);
+}
+
+/**
+ * Заявка: общая цель плюс уточняющая.
+ *
+ * `lead_submit` — единственная цифра «сколько всего заявок», её и назначаем
+ * ключевой в Директе. Вторая цель отвечает на вопрос «какая форма сработала»:
+ * без неё квиз в exit-попапе и обычная модалка были неразличимы, и усиливать
+ * было нечего — обе выглядели одним числом.
+ */
+export function reachLeadGoal(specific: string): void {
+  reachGoal("lead_submit");
+  reachGoal(specific);
+}
+
+/**
+ * Просмотр страницы при клиентской навигации.
+ *
+ * Счётчик отправляет просмотр только при загрузке документа. Переходы по
+ * `next/link` документ не перезагружают, поэтому маршрут `/` → `/bjj` →
+ * `/schedule` приходил в Метрику одним просмотром: страницы направлений в
+ * отчётах отсутствовали, а цели «просмотр URL» не срабатывали вовсе.
+ */
+export function hit(url: string, referer?: string): void {
+  const send = ym();
+  if (!send) return;
+  try {
+    send("hit", url, referer ? { referer } : undefined);
+  } catch {
+    /* навигация важнее статистики */
+  }
+}
+
+let clientIdCache: string | null = null;
+
+/**
+ * ClientID Метрики — ключ, которым заявка сшивается с визитом.
+ *
+ * Без него заявка в Telegram и визит в Метрике живут в разных мирах: нельзя
+ * ни сопоставить их вручную, ни загрузить обратно офлайн-конверсию «пришёл на
+ * пробное». Метод асинхронный и на счётчике с блокировщиком не ответит
+ * никогда, поэтому ждём ограниченно — заявка не имеет права ждать статистику.
+ */
+export function getClientId(timeoutMs = 700): Promise<string> {
+  if (clientIdCache !== null) return Promise.resolve(clientIdCache);
+  const send = ym();
+  if (!send) return Promise.resolve("");
+
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = (value: string) => {
+      if (done) return;
+      done = true;
+      clientIdCache = value;
+      resolve(value);
+    };
+    const timer = setTimeout(() => finish(""), timeoutMs);
+    try {
+      send("getClientID", (id: string) => {
+        clearTimeout(timer);
+        finish(typeof id === "string" ? id : "");
+      });
+    } catch {
+      clearTimeout(timer);
+      finish("");
+    }
+  });
 }

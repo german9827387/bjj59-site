@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { X, Phone, User, ArrowRight, CheckCircle2, Loader2, ChevronLeft } from "lucide-react";
-import { formatPhone, isValidPhone, postLead, reachGoal, reachGoalOnce } from "@/lib/lead-utils";
+import { formatPhone, isValidPhone, postLead, reachGoal, reachGoalOnce, reachLeadGoal } from "@/lib/lead-utils";
 import ConsentCheckbox from "./ConsentCheckbox";
 
 const SESSION_KEY = "exit_popup_shown";
@@ -127,6 +127,9 @@ export default function ExitPopup() {
     if (sessionStorage.getItem(SESSION_KEY)) return;
     setVisible(true);
     sessionStorage.setItem(SESSION_KEY, "1");
+    // Без цели на показ конверсию попапа не посчитать: видны только заявки,
+    // а сколько людей его вообще увидели — нет. Делить было не на что.
+    reachGoal("exit_shown");
   }, []);
 
   const hide = useCallback(() => setVisible(false), []);
@@ -177,7 +180,7 @@ export default function ExitPopup() {
     setLoading(false);
     if (!res.ok) { setError(res.error); return; }
     setSent(true);
-    reachGoal("lead_submit");
+    reachLeadGoal("lead_exit");
   };
 
   if (!visible) return null;
@@ -281,7 +284,7 @@ export default function ExitPopup() {
                 value={name}
                 onChange={(e) => { reachGoalOnce("form_start"); setName(e.target.value); setError(""); }}
                 placeholder="Ваше имя (необязательно)"
-                className="w-full bg-white/[0.04] border border-white/10 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none text-sm"
+                className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/10 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none text-sm"
               />
             </div>
             <div className="relative">
@@ -291,7 +294,7 @@ export default function ExitPopup() {
                 value={phone}
                 onChange={(e) => { reachGoalOnce("form_start"); setPhone(formatPhone(e.target.value)); setError(""); }}
                 placeholder="+7 (000) 000-00-00"
-                className="w-full bg-white/[0.04] border border-white/10 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none text-sm"
+                className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/10 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none text-sm"
               />
             </div>
             <ConsentCheckbox id="consent-exit" checked={agreed} onChange={(v) => { setAgreed(v); setError(""); }} />

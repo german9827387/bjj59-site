@@ -10,7 +10,7 @@ import {
   formatPhone,
   isValidPhone,
   postLead,
-  reachGoal,
+  reachLeadGoal,
   reachGoalOnce,
   persistUtm,
 } from "@/lib/lead-utils";
@@ -71,7 +71,7 @@ export default function GiftCertificate() {
     setLoading(false);
     if (!res.ok) { setError(res.error); return; }
     setSent(true);
-    reachGoal("gift_submit");
+    reachLeadGoal("gift_submit");
   };
 
   return (
@@ -254,7 +254,7 @@ export default function GiftCertificate() {
                             value={name}
                             onChange={(e) => { reachGoalOnce("form_start"); setName(e.target.value); setError(""); }}
                             placeholder="Мария"
-                            className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none transition-colors text-sm"
+                            className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none transition-colors text-sm"
                           />
                         </div>
                       </div>
@@ -267,7 +267,7 @@ export default function GiftCertificate() {
                             value={phone}
                             onChange={(e) => { reachGoalOnce("form_start"); setPhone(formatPhone(e.target.value)); setError(""); }}
                             placeholder="+7 (000) 000-00-00"
-                            className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none transition-colors text-sm"
+                            className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3 pl-10 pr-4 outline-none transition-colors text-sm"
                           />
                         </div>
                       </div>
@@ -282,7 +282,7 @@ export default function GiftCertificate() {
                         value={to}
                         onChange={(e) => { setTo(e.target.value); setError(""); }}
                         placeholder="Артём"
-                        className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3 px-4 outline-none transition-colors text-sm"
+                        className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3 px-4 outline-none transition-colors text-sm"
                       />
                     </div>
 

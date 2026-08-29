@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { X, Send, Bot } from "lucide-react";
-import { postLead } from "@/lib/lead-utils";
+import { postLead, reachLeadGoal } from "@/lib/lead-utils";
 
 interface Message {
   role: "user" | "assistant";
@@ -107,7 +107,12 @@ export default function ChatWidget() {
           dayTime: data.leadDayTime,
         }).then((r) => {
           // Не смогли отправить — снимаем блокировку, чтобы следующий маркер сработал
-          if (!r.ok) leadSentRef.current = false;
+          if (!r.ok) { leadSentRef.current = false; return; }
+          // Раньше здесь не было ни одной цели: заявка уходила в Telegram, но
+          // в Метрике её не существовало. Источник, приводивший людей в чат,
+          // выглядел источником без конверсий — и его можно было отключить,
+          // приняв работающий канал за пустой.
+          reachLeadGoal("lead_chat");
         });
       }
       setMessages((prev) => [
@@ -158,7 +163,7 @@ export default function ChatWidget() {
           </div>
 
           {/* Сообщения */}
-          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+          <div className="ym-hide-content flex-1 overflow-y-auto px-4 py-3 space-y-3">
             {messages.map((m, i) => (
               <div
                 key={i}
@@ -218,7 +223,7 @@ export default function ChatWidget() {
               }
               placeholder="Напишите вопрос..."
               disabled={loading}
-              className="flex-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-3 py-2 text-white placeholder-gray-600 outline-none focus:border-blue-500/50 transition-colors disabled:opacity-50"
+              className="ym-disable-keys ym-hide-content flex-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-3 py-2 text-white placeholder-gray-600 outline-none focus:border-blue-500/50 transition-colors disabled:opacity-50"
               style={{ fontSize: '16px' }}
             />
             <button

@@ -1,7 +1,6 @@
 "use client";
 
 import { MessageCircle, ChevronDown } from "lucide-react";
-import { reachGoal } from "@/lib/lead-utils";
 import { useState, useRef, useEffect } from "react";
 import Reveal from "./Reveal";
 import LeadModal from "./LeadModal";
@@ -75,8 +74,7 @@ export default function CTA() {
                       href={MAX_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => reachGoal("max_click")}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-500/10 transition-colors text-gray-200 hover:text-white text-sm font-medium"
+                              className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-500/10 transition-colors text-gray-200 hover:text-white text-sm font-medium"
                     >
                       <span className="w-5 h-5 rounded-full bg-[#168ACD] flex items-center justify-center shrink-0">
                         <span className="text-white text-[10px] font-bold leading-none">M</span>

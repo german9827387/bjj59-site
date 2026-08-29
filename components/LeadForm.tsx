@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Phone, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import Reveal from "./Reveal";
-import { persistUtm, formatPhone, isValidPhone, postLead, reachGoal, reachGoalOnce } from "@/lib/lead-utils";
+import { persistUtm, formatPhone, isValidPhone, postLead, reachLeadGoal, reachGoalOnce } from "@/lib/lead-utils";
 import ConsentCheckbox from "./ConsentCheckbox";
 
 export default function LeadForm() {
@@ -34,7 +34,7 @@ export default function LeadForm() {
     setLoading(false);
     if (!res.ok) { setError(res.error); return; }
     setSent(true);
-    reachGoal("lead_submit");
+    reachLeadGoal("lead_form");
   };
 
   return (
@@ -102,7 +102,7 @@ export default function LeadForm() {
                         value={name}
                         onChange={(e) => { reachGoalOnce("form_start"); setName(e.target.value); setError(""); }}
                         placeholder="Иван"
-                        className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3.5 pl-10 pr-4 outline-none transition-colors text-sm"
+                        className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3.5 pl-10 pr-4 outline-none transition-colors text-sm"
                       />
                     </div>
                   </div>
@@ -116,7 +116,7 @@ export default function LeadForm() {
                         value={phone}
                         onChange={handlePhone}
                         placeholder="+7 (000) 000-00-00"
-                        className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3.5 pl-10 pr-4 outline-none transition-colors text-sm"
+                        className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/60 text-white placeholder-gray-600 rounded-xl py-3.5 pl-10 pr-4 outline-none transition-colors text-sm"
                       />
                     </div>
                   </div>

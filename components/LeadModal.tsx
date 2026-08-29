@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Phone, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
-import { persistUtm, formatPhone, isValidPhone, postLead, reachGoal, reachGoalOnce } from "@/lib/lead-utils";
+import { persistUtm, formatPhone, isValidPhone, postLead, reachGoal, reachGoalOnce, reachLeadGoal } from "@/lib/lead-utils";
 import ConsentCheckbox from "./ConsentCheckbox";
 
 interface LeadModalProps {
@@ -50,7 +50,7 @@ export default function LeadModal({ isOpen, onClose, source = "Модально�
     setLoading(false);
     if (!res.ok) { setError(res.error); return; }
     setSent(true);
-    reachGoal("lead_submit");
+    reachLeadGoal("lead_modal");
   };
 
   if (!isOpen) return null;
@@ -128,7 +128,7 @@ export default function LeadModal({ isOpen, onClose, source = "Модально�
                     value={name}
                     onChange={(e) => { reachGoalOnce("form_start"); setName(e.target.value); setError(""); }}
                     placeholder="Ваше имя (необязательно)"
-                    className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3.5 pl-11 pr-4 outline-none transition-colors text-sm"
+                    className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3.5 pl-11 pr-4 outline-none transition-colors text-sm"
                   />
                 </div>
 
@@ -139,7 +139,7 @@ export default function LeadModal({ isOpen, onClose, source = "Модально�
                     value={phone}
                     onChange={(e) => { reachGoalOnce("form_start"); setPhone(formatPhone(e.target.value)); setError(""); }}
                     placeholder="+7 (000) 000-00-00"
-                    className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3.5 pl-11 pr-4 outline-none transition-colors text-sm"
+                    className="ym-disable-keys ym-hide-content w-full bg-white/[0.04] border border-white/[0.10] hover:border-blue-500/30 focus:border-blue-500/50 text-white placeholder-gray-600 rounded-xl py-3.5 pl-11 pr-4 outline-none transition-colors text-sm"
                   />
                 </div>
 

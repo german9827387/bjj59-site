@@ -3,7 +3,6 @@
 import { Star, Check } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
-import { reachGoal } from "@/lib/lead-utils";
 import LeadModal from "./LeadModal";
 
 const TG_URL = `https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
@@ -185,7 +184,6 @@ export default function Hero() {
               href={MAX_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => reachGoal("max_click")}
               className="flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-5 rounded-full text-sm hover:bg-blue-500/10 transition-all"
             >
               <span className="w-[18px] h-[18px] rounded-full bg-[#168ACD] flex items-center justify-center shrink-0">
