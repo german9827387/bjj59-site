@@ -145,9 +145,7 @@ export default function Hero() {
         >
           {hero.title1}
           <br />
-          <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-300 text-transparent bg-clip-text">
-            {hero.title2}
-          </span>
+          <span className="text-slate-400/80">{hero.title2}</span>
         </h1>
 
         {/* Hook line */}
@@ -244,13 +242,13 @@ export default function Hero() {
         {/* На телефоне цифры встают перед кнопкой: на коротком экране они
             иначе оказывались за краем, и человек принимал решение, не увидев
             ни одного доказательства. На десктопе порядок прежний. */}
-        <div className={`hero-fade order-1 sm:order-2 grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2 sm:grid-cols-4"} gap-3 sm:gap-4 mb-5 sm:mb-0 mt-0 sm:mt-16 max-w-3xl mx-auto sm:mx-0 w-full`} style={{ animationDelay: "0.7s" }}>
+        <div className={`hero-fade order-1 sm:order-2 grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2"} gap-3 sm:flex sm:gap-0 sm:border-t sm:border-white/10 sm:pt-5 mb-5 sm:mb-0 mt-0 sm:mt-14 max-w-3xl mx-auto sm:mx-0 sm:max-w-none w-full`} style={{ animationDelay: "0.7s" }}>
           {hero.stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`text-center p-3 sm:p-4 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md ${i >= 2 ? "hidden sm:block" : ""}`}
+              className={`text-center p-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md sm:text-left sm:p-0 sm:px-7 sm:rounded-none sm:bg-transparent sm:border-0 sm:border-l sm:border-white/10 sm:first:pl-0 sm:first:border-l-0 ${i >= 2 ? "hidden sm:block" : ""}`}
             >
-              <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+              <div className="text-3xl sm:text-3xl font-black text-white">
                 <AnimatedCounter target={stat.target} suffix={stat.suffix} />
               </div>
               <div className="text-gray-400 text-xs mt-1 uppercase tracking-wider">{stat.label}</div>
