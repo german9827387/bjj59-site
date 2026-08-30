@@ -109,7 +109,7 @@ export default function Hero() {
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" style={{ left: "10%" }} />
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" style={{ left: "90%" }} />
 
-      <div className="relative z-10 flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left pt-14 sm:pt-20 lg:pt-24 pb-28 sm:pb-0">
+      <div className="relative z-10 flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left pt-14 sm:pt-20 lg:pt-24 pb-28 sm:pb-0">
         {/* Знак вместо пилюли — ровно как в утверждённом макете.
 
             Две ячейки в общей рамке: слева число, справа две строки. Раньше
