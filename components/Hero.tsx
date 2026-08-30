@@ -109,7 +109,7 @@ export default function Hero() {
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" style={{ left: "10%" }} />
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" style={{ left: "90%" }} />
 
-      <div className="relative z-10 flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left pt-14 sm:pt-20 lg:pt-24 pb-28 sm:pb-0">
+      <div className="relative z-10 flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left pt-14 sm:pt-20 lg:pt-24 pb-28 sm:pb-0">
         {/* Знак вместо пилюли — ровно как в утверждённом макете.
 
             Две ячейки в общей рамке: слева число, справа две строки. Раньше
@@ -120,7 +120,7 @@ export default function Hero() {
             одна, и админка не обрастает полями, которые надо держать
             согласованными. Не разобралась — показываем как было. */}
         {badgeParts ? (
-          <div className="hero-fade self-center sm:self-start inline-flex items-stretch rounded-md border border-[rgba(148,178,222,0.18)] bg-[rgba(9,13,22,0.55)] overflow-hidden mb-6 sm:mb-0">
+          <div className="hero-fade order-1 self-start inline-flex items-stretch rounded-md border border-[rgba(148,178,222,0.18)] bg-[rgba(9,13,22,0.55)] overflow-hidden mb-6 sm:mb-0">
             <div className="flex flex-col items-center justify-center px-4 py-3 bg-blue-500/[0.12] border-r border-[rgba(148,178,222,0.14)]">
               <span className="text-[#9CC4FF] text-2xl font-extrabold leading-none tracking-[-0.03em]">{badgeParts.count}</span>
               <span className="text-[#6E86A8] text-[8px] tracking-[0.14em] mt-[3px]">ТИТУЛОВ</span>
@@ -131,7 +131,7 @@ export default function Hero() {
             </div>
           </div>
         ) : (
-          <div className="hero-fade self-center sm:self-start inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-md px-4 py-2 mb-6">
+          <div className="hero-fade self-start inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-md px-4 py-2 mb-6">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
             <span className="text-cyan-300 text-xs font-semibold uppercase tracking-widest">{hero.badge}</span>
           </div>
@@ -139,7 +139,7 @@ export default function Hero() {
 
         {/* Main heading */}
         <h1
-          className="hero-slide text-[34px] sm:text-[52px] lg:text-[66px] font-bold text-white leading-[1.04] tracking-[-0.035em] mt-0 sm:mt-[26px] mb-0 sm:max-w-[15ch]"
+          className="hero-slide order-2 text-[38px] sm:text-[52px] lg:text-[66px] font-extrabold sm:font-bold text-white leading-[1.05] sm:leading-[1.04] tracking-[-0.032em] sm:tracking-[-0.035em] mt-[14px] sm:mt-[26px] mb-0 sm:max-w-[15ch]"
         >
           {hero.title1}
           <br />
@@ -148,7 +148,7 @@ export default function Hero() {
 
         {/* Hook line */}
         <p
-          className="hero-fade text-base sm:text-lg text-[#C6D2E2] mt-3 sm:mt-[14px] mb-0 tracking-normal font-normal"
+          className="hero-fade order-3 text-sm sm:text-lg text-[#C6D2E2] mt-2.5 sm:mt-[14px] mb-0 tracking-normal font-normal"
           style={{ animationDelay: "0.2s" }}
         >
           {hero.title3}
@@ -169,7 +169,7 @@ export default function Hero() {
         {/* Оферта: то, что кнопка не повторяет. «Первая тренировка
             бесплатно» отсюда убрана — ровно это написано на кнопке ниже. */}
         <ul
-          className="hero-fade flex flex-col sm:flex-row flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1.5 mt-5 sm:mt-[26px] mb-6 sm:mb-0 w-fit sm:w-auto mx-auto sm:mx-0"
+          className="hero-fade order-5 sm:order-4 flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-start gap-x-3 gap-y-1.5 mt-4 sm:mt-[26px] mb-0 w-fit sm:w-auto"
           style={{ animationDelay: "0.35s" }}
         >
           {hero.offer.map((item, i) => (
@@ -181,7 +181,7 @@ export default function Hero() {
         </ul>
 
         {/* CTA Buttons */}
-        <div className="hero-fade order-2 sm:order-1 flex flex-col items-center sm:items-start gap-4 mt-0 sm:mt-[30px]" style={{ animationDelay: "0.5s" }}>
+        <div className="hero-fade order-6 sm:order-5 flex flex-col items-stretch sm:items-start gap-3 sm:gap-4 mt-5 sm:mt-[30px]" style={{ animationDelay: "0.5s" }}>
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start items-center">
           <button
@@ -222,27 +222,22 @@ export default function Hero() {
         {/* На телефоне цифры встают перед кнопкой: на коротком экране они
             иначе оказывались за краем, и человек принимал решение, не увидев
             ни одного доказательства. На десктопе порядок прежний. */}
-        <div className={`hero-fade order-1 sm:order-2 grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2"} gap-3 sm:flex sm:gap-0 sm:border-t sm:border-white/10 sm:pt-5 mb-5 sm:mb-0 mt-0 sm:mt-14 max-w-3xl mx-auto sm:mx-0 sm:max-w-none w-full`} style={{ animationDelay: "0.7s" }}>
+        <div className={`hero-fade order-4 sm:order-6 grid grid-cols-2 gap-2 sm:flex sm:gap-0 sm:border-t sm:border-white/10 sm:pt-5 mt-[18px] sm:mt-14 mb-0 w-full sm:max-w-none`} style={{ animationDelay: "0.7s" }}>
           {/* Оценка — первая ячейка ленты, как в макете. На телефоне лента
               превращается в плашки, и оценка уходит отдельной строкой ниже. */}
-          <div className="col-span-2 sm:col-span-1 flex items-center justify-center sm:justify-start gap-2.5 order-last sm:order-first sm:pr-7 sm:border-r sm:border-white/10">
-            <div className="flex items-center gap-0.5 sm:hidden">
-              {[1,2,3,4,5].map((s) => (
-                <Star key={s} size={13} className="text-blue-400 fill-blue-400" />
-              ))}
-            </div>
-            <span className="text-white text-[22px] font-bold tracking-[-0.02em] leading-none">5.0</span>
-            <span className="text-[#5D6B80] text-[11.5px] leading-[1.35] text-left">Google · Яндекс<br className="hidden sm:inline" /> 2ГИС</span>
+          <div className="flex items-baseline gap-2 rounded-md bg-[rgba(9,13,22,0.68)] border border-[rgba(148,178,222,0.13)] px-[13px] py-[11px] sm:items-center sm:gap-2.5 sm:rounded-none sm:bg-transparent sm:border-0 sm:p-0 sm:pr-7 sm:border-r sm:border-white/10">
+            <span className="text-white text-[19px] sm:text-[22px] font-bold tracking-[-0.02em] leading-none">5.0</span>
+            <span className="text-[#7E8CA0] sm:text-[#5D6B80] text-[10.5px] sm:text-[11.5px] leading-[1.35] text-left">оценка<span className="hidden sm:inline"><br />Google · Яндекс · 2ГИС</span></span>
           </div>
           {hero.stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`text-center p-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md sm:text-left sm:p-0 sm:px-7 sm:rounded-none sm:bg-transparent sm:border-0 sm:border-r sm:border-white/10 sm:last:border-r-0 sm:last:pr-0 sm:flex sm:items-baseline ${i >= 2 ? "hidden sm:block" : ""}`}
+              className="flex items-baseline gap-2 rounded-md bg-[rgba(9,13,22,0.68)] border border-[rgba(148,178,222,0.13)] px-[13px] py-[11px] sm:gap-2 sm:px-7 sm:py-0 sm:rounded-none sm:bg-transparent sm:border-0 sm:border-r sm:border-white/10 sm:last:border-r-0 sm:last:pr-0"
             >
-              <div className="text-3xl sm:text-[22px] font-black sm:font-bold text-white sm:tracking-[-0.02em] sm:leading-none">
+              <div className="text-[19px] sm:text-[22px] font-bold text-white tracking-[-0.02em] leading-none">
                 <AnimatedCounter target={stat.target} suffix={stat.suffix} />
               </div>
-              <div className="text-gray-400 text-xs mt-1 uppercase tracking-wider sm:text-[12px] sm:normal-case sm:tracking-normal sm:text-[#7E8CA0] sm:mt-0 sm:ml-2 sm:inline">{stat.label}</div>
+              <div className="text-[#7E8CA0] text-[10.5px] sm:text-[12px] normal-case tracking-normal lowercase">{stat.label}</div>
             </div>
           ))}
         </div>
