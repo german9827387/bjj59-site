@@ -43,7 +43,7 @@ function Stars({ count, size = 14 }: { count: number; size?: number }) {
 function ReviewAvatar({ review, accent, size = 8 }: { review: (typeof reviews)[0]; accent: string; size?: number }) {
   if (review.avatar) {
     return (
-      <div className={`w-${size} h-${size} rounded-full overflow-hidden shrink-0 border border-white/10`}>
+      <div className={`w-${size} h-${size} rounded-md overflow-hidden shrink-0 border border-white/10`}>
         <Image
           src={review.avatar}
           alt={review.name}
@@ -57,7 +57,7 @@ function ReviewAvatar({ review, accent, size = 8 }: { review: (typeof reviews)[0
   }
   return (
     <div
-      className={`w-${size} h-${size} rounded-full flex items-center justify-center shrink-0 text-white font-bold text-sm`}
+      className={`w-${size} h-${size} rounded-md flex items-center justify-center shrink-0 text-white font-bold text-sm`}
       style={{ background: `linear-gradient(135deg, ${accent}, #0ea5e9)` }}
     >
       {review.name[0]}
@@ -195,7 +195,7 @@ export default function Reviews() {
                   {url && <ExternalLink size={11} className="text-gray-500 shrink-0" />}
                 </>
               );
-              const cls = "flex items-center gap-2 bg-white/[0.03] border border-white/[0.07] rounded-full px-4 py-1.5 transition-colors";
+              const cls = "flex items-center gap-2 bg-white/[0.03] border border-white/[0.07] rounded-md px-4 py-1.5 transition-colors";
               return url ? (
                 <a
                   key={p.name}
@@ -265,7 +265,7 @@ export default function Reviews() {
           <div className="hidden md:flex justify-center mb-10">
             <button
               onClick={() => setShowAll(true)}
-              className="group flex items-center gap-2 bg-white/[0.03] border border-blue-500/25 hover:border-blue-500/50 hover:bg-blue-500/[0.08] text-blue-400 font-semibold py-3 px-8 rounded-full transition-all duration-300 text-sm"
+              className="group flex items-center gap-2 bg-white/[0.03] border border-blue-500/25 hover:border-blue-500/50 hover:bg-blue-500/[0.08] text-blue-400 font-semibold py-3 px-8 rounded-md transition-all duration-300 text-sm"
             >
               <span>Показать ещё {reviews.length - INITIAL_SHOWN} {plural(reviews.length - INITIAL_SHOWN, "отзыв", "отзыва", "отзывов")}</span>
               <ChevronRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
@@ -276,7 +276,7 @@ export default function Reviews() {
           <div className="hidden md:flex justify-center mb-10">
             <button
               onClick={() => setShowAll(false)}
-              className="flex items-center gap-2 border border-white/[0.08] text-gray-500 font-medium py-3 px-8 rounded-full hover:bg-white/5 hover:text-gray-400 transition-all text-sm"
+              className="flex items-center gap-2 border border-white/[0.08] text-gray-500 font-medium py-3 px-8 rounded-md hover:bg-white/5 hover:text-gray-400 transition-all text-sm"
             >
               Свернуть
             </button>
@@ -325,7 +325,7 @@ export default function Reviews() {
           </div>
 
           <div className="flex items-center justify-center gap-4 mt-4">
-            <button onClick={handlePrev} aria-label="Предыдущий отзыв" className="p-2 rounded-full border border-white/[0.08] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
+            <button onClick={handlePrev} aria-label="Предыдущий отзыв" className="p-2 rounded-md border border-white/[0.08] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
               <ChevronLeft size={16} />
             </button>
             <div className="flex gap-2">
@@ -334,11 +334,11 @@ export default function Reviews() {
                   key={i}
                   onClick={() => handleDot(i)}
                   aria-label={`Отзыв ${i + 1}`}
-                  className={`rounded-full transition-all duration-300 ${i === active ? "w-5 h-2 bg-blue-500" : "w-2 h-2 bg-[#333]"}`}
+                  className={`rounded-md transition-all duration-300 ${i === active ? "w-5 h-2 bg-blue-500" : "w-2 h-2 bg-[#333]"}`}
                 />
               ))}
             </div>
-            <button onClick={handleNext} aria-label="Следующий отзыв" className="p-2 rounded-full border border-white/[0.08] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
+            <button onClick={handleNext} aria-label="Следующий отзыв" className="p-2 rounded-md border border-white/[0.08] text-gray-500 hover:text-white hover:border-blue-500/40 transition-all">
               <ChevronRight size={16} />
             </button>
           </div>

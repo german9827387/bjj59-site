@@ -45,7 +45,7 @@ export default function PlanRow({ plan, format }: { plan: PersonalPlan; format: 
 
         {saving > 0 && (
           <span
-            className={`shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full tracking-wider ${
+            className={`shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-md tracking-wider ${
               plan.highlight
                 ? "bg-white/20 text-white"
                 : "bg-blue-500/10 text-blue-400 border border-blue-500/20"

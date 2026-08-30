@@ -96,7 +96,7 @@ export default function GiftCertificate() {
             Подарок покупают глазами — показать его важнее, чем описать. */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-20 lg:mb-24">
           <Reveal>
-            <span className="inline-flex items-center gap-2 text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-5">
+            <span className="inline-flex items-center gap-2 text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-md px-4 py-1.5 mb-5">
               <Gift size={13} />
               Подарочный сертификат
             </span>
@@ -123,7 +123,7 @@ export default function GiftCertificate() {
             <button
               type="button"
               onClick={() => document.getElementById("gift-options")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              className="mt-8 inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3.5 px-8 rounded-full text-sm sm:text-base hover:opacity-90 transition-all hover:scale-[1.02] shadow-2xl shadow-blue-500/25"
+              className="mt-8 inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3.5 px-8 rounded-md text-sm sm:text-base hover:opacity-90 transition-all hover:scale-[1.02] shadow-2xl shadow-blue-500/25"
             >
               Выбрать сертификат
               <ArrowRight size={17} />
@@ -132,7 +132,7 @@ export default function GiftCertificate() {
 
           <Reveal delay={140}>
             <figure className="relative">
-              <div className="absolute -inset-8 bg-gradient-to-tr from-blue-500/25 via-cyan-400/10 to-transparent blur-3xl rounded-full pointer-events-none" />
+              <div className="absolute -inset-8 bg-gradient-to-tr from-blue-500/25 via-cyan-400/10 to-transparent blur-3xl rounded-md pointer-events-none" />
               <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/12 shadow-2xl shadow-blue-950/70 rotate-[-3deg] hover:rotate-0 transition-transform duration-500">
                 <Image
                   src="/gift-sample.jpg"
@@ -179,12 +179,12 @@ export default function GiftCertificate() {
                       {o.title}
                     </span>
                     {o.highlight && !active && (
-                      <span className="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 tracking-wider">
+                      <span className="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20 tracking-wider">
                         ЧАЩЕ ВСЕГО
                       </span>
                     )}
                     {active && (
-                      <span className="shrink-0 inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-white tracking-wider">
+                      <span className="shrink-0 inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-white/20 text-white tracking-wider">
                         <Check size={11} /> ВЫБРАНО
                       </span>
                     )}

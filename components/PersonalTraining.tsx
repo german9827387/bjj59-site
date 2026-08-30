@@ -29,7 +29,7 @@ export default function PersonalTraining() {
           {/* Заголовок */}
           <div className="text-center mb-12">
             <Reveal>
-              <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-4">
+              <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-md px-4 py-1.5 mb-4">
                 Быстрее к результату
               </span>
               <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
@@ -65,7 +65,7 @@ export default function PersonalTraining() {
                     return !v;
                   });
                 }}
-                className="inline-flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-7 rounded-full text-sm hover:bg-blue-500/10 hover:border-blue-400/60 transition-all"
+                className="inline-flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-7 rounded-md text-sm hover:bg-blue-500/10 hover:border-blue-400/60 transition-all"
               >
                 {open ? "Свернуть" : "Смотреть цены и форматы"}
                 <ChevronDown size={16} className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} />

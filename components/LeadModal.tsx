@@ -70,11 +70,11 @@ export default function LeadModal({ isOpen, onClose, source = "Модально�
 
         {/* Drag handle — visible only on mobile */}
         <div className="flex justify-center pt-3 pb-1 sm:hidden shrink-0">
-          <div className="w-10 h-1 rounded-full bg-white/20" />
+          <div className="w-10 h-1 rounded-md bg-white/20" />
         </div>
 
         {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-blue-500/10 rounded-md blur-3xl pointer-events-none" />
 
         <div className="relative p-6 sm:p-8 overflow-y-auto">
           {/* Close */}
@@ -105,7 +105,7 @@ export default function LeadModal({ isOpen, onClose, source = "Модально�
             <>
               {/* Header */}
               <div className="mb-6">
-                <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 py-1 mb-4">
+                <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-md px-3 py-1 mb-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                   <span className="text-blue-400 text-xs font-medium uppercase tracking-widest">Первое занятие бесплатно</span>
                 </div>

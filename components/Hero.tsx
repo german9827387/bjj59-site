@@ -47,6 +47,17 @@ const STAT_GRID: Record<number, string> = {
 };
 
 export default function Hero() {
+  /**
+   * «Часть команды Alliance · 16-кратные чемпионы мира» → жетон и две строки.
+   * Разделитель и число берутся из самой подписи, поэтому её можно править в
+   * админке, не трогая вёрстку.
+   */
+  const badgeParts = (() => {
+    const [team, title] = (hero.badge ?? "").split("·").map((x) => x.trim());
+    const count = title?.match(/\d+/)?.[0];
+    return team && title && count ? { team, title, count } : null;
+  })();
+
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -98,29 +109,46 @@ export default function Hero() {
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" style={{ left: "10%" }} />
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" style={{ left: "90%" }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20 lg:pt-24 pb-28 sm:pb-0">
-        {/* Badge — urgency */}
-        <div className="hero-fade inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-2 mb-8">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-          <span className="text-cyan-300 text-xs font-semibold uppercase tracking-widest">
-            {hero.badge}
-          </span>
-        </div>
+      <div className="relative z-10 flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left pt-14 sm:pt-20 lg:pt-24 pb-28 sm:pb-0">
+        {/* Знак вместо пилюли — ровно как в утверждённом макете.
+
+            Две ячейки в общей рамке: слева число, справа две строки. Раньше
+            главный козырь был длинной строкой мелким шрифтом и читался как
+            служебная подпись; теперь «16» видно раньше, чем прочитан текст.
+
+            Разбор строки, а не два новых поля в настройках: подпись остаётся
+            одна, и админка не обрастает полями, которые надо держать
+            согласованными. Не разобралась — показываем как было. */}
+        {badgeParts ? (
+          <div className="hero-fade self-center sm:self-start inline-flex items-stretch rounded-md border border-[rgba(148,178,222,0.18)] bg-[rgba(9,13,22,0.55)] overflow-hidden mb-6 sm:mb-0">
+            <div className="flex flex-col items-center justify-center px-4 py-3 bg-blue-500/[0.12] border-r border-[rgba(148,178,222,0.14)]">
+              <span className="text-[#9CC4FF] text-2xl font-extrabold leading-none tracking-[-0.03em]">{badgeParts.count}</span>
+              <span className="text-[#6E86A8] text-[8px] tracking-[0.14em] mt-[3px]">ТИТУЛОВ</span>
+            </div>
+            <div className="flex flex-col justify-center px-[18px] py-3 text-left">
+              <span className="text-white text-[13.5px] font-semibold leading-tight">{badgeParts.team}</span>
+              <span className="text-[#7E8CA0] text-[11.5px] leading-tight mt-[2px]">{badgeParts.title}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="hero-fade self-center sm:self-start inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-md px-4 py-2 mb-6">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-cyan-300 text-xs font-semibold uppercase tracking-widest">{hero.badge}</span>
+          </div>
+        )}
 
         {/* Main heading */}
         <h1
-          className="hero-slide text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight mb-3"
+          className="hero-slide text-[34px] sm:text-[52px] lg:text-[66px] font-bold text-white leading-[1.04] tracking-[-0.035em] mt-0 sm:mt-[26px] mb-0 sm:max-w-[15ch]"
         >
           {hero.title1}
           <br />
-          <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-300 text-transparent bg-clip-text">
-            {hero.title2}
-          </span>
+          <span className="text-[#6E7F97]">{hero.title2}</span>
         </h1>
 
         {/* Hook line */}
         <p
-          className="hero-fade text-xl sm:text-2xl lg:text-3xl font-bold text-white/70 mb-6 tracking-tight"
+          className="hero-fade text-base sm:text-lg text-[#C6D2E2] mt-3 sm:mt-[14px] mb-0 tracking-normal font-normal"
           style={{ animationDelay: "0.2s" }}
         >
           {hero.title3}
@@ -129,7 +157,7 @@ export default function Hero() {
         {/* Подзаголовок — необязательный: если пуст, место занимает оферта */}
         {hero.subtitle && (
           <p
-            className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-5 leading-relaxed"
+            className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto sm:mx-0 mb-5 leading-relaxed"
             style={{ animationDelay: "0.35s" }}
           >
             {hero.subtitle}
@@ -138,42 +166,37 @@ export default function Hero() {
 
         {/* Оферта: что человек получает, если придёт. Первый пункт — главный,
             поэтому он ярче остальных. */}
+        {/* Оферта: то, что кнопка не повторяет. «Первая тренировка
+            бесплатно» отсюда убрана — ровно это написано на кнопке ниже. */}
         <ul
-          className="hero-fade flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-center gap-x-6 gap-y-2 mb-9 w-fit sm:w-auto sm:max-w-4xl mx-auto"
+          className="hero-fade flex flex-col sm:flex-row flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1.5 mt-5 sm:mt-[26px] mb-6 sm:mb-0 w-fit sm:w-auto mx-auto sm:mx-0"
           style={{ animationDelay: "0.35s" }}
         >
           {hero.offer.map((item, i) => (
-            <li
-              key={item}
-              className={`flex items-center gap-2 ${i === 0 ? "text-white font-bold text-base sm:text-lg" : "text-gray-300 text-sm sm:text-base"}`}
-            >
-              {/* Одинаковый размер у всех — иначе текст пунктов не выровнен по левому краю */}
-              <Check
-                size={16}
-                className={`shrink-0 ${i === 0 ? "text-cyan-400" : "text-blue-400/70"}`}
-              />
+            <li key={item} className="flex items-center gap-3 text-[#93A2B8] text-[13.5px]">
+              {i > 0 && <span className="hidden sm:inline text-[#2A3448]">·</span>}
               {item}
             </li>
           ))}
         </ul>
 
         {/* CTA Buttons */}
-        <div className="hero-fade flex flex-col items-center gap-4" style={{ animationDelay: "0.5s" }}>
+        <div className="hero-fade order-2 sm:order-1 flex flex-col items-center sm:items-start gap-4 mt-0 sm:mt-[30px]" style={{ animationDelay: "0.5s" }}>
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start items-center">
           <button
             onClick={() => setModalOpen(true)}
-            className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3 px-7 sm:py-4 sm:px-10 rounded-full text-base sm:text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-blue-500/30"
+            className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 px-8 rounded-md text-[15px] hover:opacity-90 transition-all shadow-2xl shadow-blue-500/30"
           >
             <span className="relative z-10">{hero.ctaPrimary}</span>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity blur-sm -z-10" />
+            <div className="absolute inset-0 rounded-md bg-gradient-to-r from-blue-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity blur-sm -z-10" />
           </button>
           <div className="flex gap-2">
             <a
               href={TG_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-5 rounded-full text-sm hover:bg-blue-500/10 transition-all"
+              className="flex items-center gap-2 border border-[rgba(148,178,222,0.22)] text-[#DCE5F0] font-medium py-4 px-[22px] rounded-md text-sm hover:bg-white/[0.06] hover:border-[rgba(148,178,222,0.4)] transition-all"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-[#229ED9] shrink-0">
                 <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
@@ -184,7 +207,7 @@ export default function Hero() {
               href={MAX_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 border border-blue-500/40 text-blue-400 font-bold py-3 px-5 rounded-full text-sm hover:bg-blue-500/10 transition-all"
+              className="flex items-center gap-2 border border-[rgba(148,178,222,0.22)] text-[#DCE5F0] font-medium py-4 px-[22px] rounded-md text-sm hover:bg-white/[0.06] hover:border-[rgba(148,178,222,0.4)] transition-all"
             >
               <span className="w-[18px] h-[18px] rounded-full bg-[#168ACD] flex items-center justify-center shrink-0">
                 <span className="text-white text-[9px] font-bold leading-none">M</span>
@@ -193,32 +216,33 @@ export default function Hero() {
             </a>
           </div>
           </div>
-
-          {/* Social proof */}
-          <div className="flex flex-col items-center gap-1 mt-2">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-0.5">
-                {[1,2,3,4,5].map((s) => (
-                  <Star key={s} size={14} className="text-blue-400 fill-blue-400" />
-                ))}
-              </div>
-              <span className="text-white font-black text-base">5.0</span>
-            </div>
-            <span className="text-gray-400 text-sm">на Google, Яндексе и 2ГИС</span>
-          </div>
         </div>
 
         {/* Stats */}
-        <div className={`hero-fade grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2 sm:grid-cols-4"} gap-3 sm:gap-4 mt-10 sm:mt-16 max-w-3xl mx-auto`} style={{ animationDelay: "0.7s" }}>
+        {/* На телефоне цифры встают перед кнопкой: на коротком экране они
+            иначе оказывались за краем, и человек принимал решение, не увидев
+            ни одного доказательства. На десктопе порядок прежний. */}
+        <div className={`hero-fade order-1 sm:order-2 grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2"} gap-3 sm:flex sm:gap-0 sm:border-t sm:border-white/10 sm:pt-5 mb-5 sm:mb-0 mt-0 sm:mt-14 max-w-3xl mx-auto sm:mx-0 sm:max-w-none w-full`} style={{ animationDelay: "0.7s" }}>
+          {/* Оценка — первая ячейка ленты, как в макете. На телефоне лента
+              превращается в плашки, и оценка уходит отдельной строкой ниже. */}
+          <div className="col-span-2 sm:col-span-1 flex items-center justify-center sm:justify-start gap-2.5 order-last sm:order-first sm:pr-7 sm:border-r sm:border-white/10">
+            <div className="flex items-center gap-0.5 sm:hidden">
+              {[1,2,3,4,5].map((s) => (
+                <Star key={s} size={13} className="text-blue-400 fill-blue-400" />
+              ))}
+            </div>
+            <span className="text-white text-[22px] font-bold tracking-[-0.02em] leading-none">5.0</span>
+            <span className="text-[#5D6B80] text-[11.5px] leading-[1.35] text-left">Google · Яндекс<br className="hidden sm:inline" /> 2ГИС</span>
+          </div>
           {hero.stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`text-center p-3 sm:p-4 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md ${i >= 2 ? "hidden sm:block" : ""}`}
+              className={`text-center p-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md sm:text-left sm:p-0 sm:px-7 sm:rounded-none sm:bg-transparent sm:border-0 sm:border-r sm:border-white/10 sm:last:border-r-0 sm:last:pr-0 sm:flex sm:items-baseline ${i >= 2 ? "hidden sm:block" : ""}`}
             >
-              <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+              <div className="text-3xl sm:text-[22px] font-black sm:font-bold text-white sm:tracking-[-0.02em] sm:leading-none">
                 <AnimatedCounter target={stat.target} suffix={stat.suffix} />
               </div>
-              <div className="text-gray-400 text-xs mt-1 uppercase tracking-wider">{stat.label}</div>
+              <div className="text-gray-400 text-xs mt-1 uppercase tracking-wider sm:text-[12px] sm:normal-case sm:tracking-normal sm:text-[#7E8CA0] sm:mt-0 sm:ml-2 sm:inline">{stat.label}</div>
             </div>
           ))}
         </div>

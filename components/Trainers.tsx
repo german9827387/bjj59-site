@@ -19,7 +19,7 @@ function TrainerSheet({ trainer, onClose, onRecord }: { trainer: Trainer; onClos
       <div className="relative w-full bg-[#0d1525] border-t border-white/10 rounded-t-3xl shadow-2xl max-h-[80dvh] flex flex-col">
         {/* drag handle */}
         <div className="flex justify-center pt-3 pb-2 shrink-0">
-          <div className="w-10 h-1 rounded-full bg-white/20" />
+          <div className="w-10 h-1 rounded-md bg-white/20" />
         </div>
 
         <div className="overflow-y-auto px-5 pb-8 pt-2">
@@ -35,7 +35,7 @@ function TrainerSheet({ trainer, onClose, onRecord }: { trainer: Trainer; onClos
               </div>
             )}
             <div>
-              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${trainer.beltBadge} inline-block mb-1`}>{trainer.belt}</span>
+              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${trainer.beltBadge} inline-block mb-1`}>{trainer.belt}</span>
               <h3 className="text-white font-black text-lg leading-tight">{trainer.name}</h3>
               <p className="text-gray-400 text-xs leading-snug mt-0.5">{trainer.role}</p>
             </div>
@@ -97,7 +97,7 @@ function TrainerCard({ trainer, i, onOpen }: { trainer: Trainer; i: number; onOp
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 
         {/* Belt badge */}
-        <span className={`absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full ${trainer.beltBadge} z-10`}>
+        <span className={`absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md ${trainer.beltBadge} z-10`}>
           {trainer.belt}
         </span>
 

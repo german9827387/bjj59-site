@@ -67,7 +67,7 @@ export default function PersonalModal({ isOpen, onClose }: PersonalModalProps) {
           <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
 
           <div className="flex justify-center pt-3 pb-1 sm:hidden shrink-0">
-            <div className="w-10 h-1 rounded-full bg-white/20" />
+            <div className="w-10 h-1 rounded-md bg-white/20" />
           </div>
 
           <div className="relative p-6 sm:p-8 overflow-y-auto">
@@ -79,7 +79,7 @@ export default function PersonalModal({ isOpen, onClose }: PersonalModalProps) {
               <X size={16} />
             </button>
 
-            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5">
+            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-md px-4 py-1.5">
               Быстрее к результату
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-white mt-4 pr-10">

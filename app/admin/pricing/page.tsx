@@ -154,7 +154,7 @@ export default function AdminPricing() {
 
             {/* Mini preview */}
             <div className={`rounded-xl p-3 text-center border ${p.highlight ? "bg-gradient-to-br from-blue-600/10 to-cyan-500/10 border-blue-500/30" : "bg-[#111] border-[#222]"}`}>
-              {p.label && <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full font-semibold mb-1.5 inline-block">{p.label}</span>}
+              {p.label && <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-md font-semibold mb-1.5 inline-block">{p.label}</span>}
               <div className="text-white font-black text-xl">{p.price} <span className="text-gray-500 text-sm font-normal">{p.unit}</span></div>
               <div className="text-gray-400 text-xs">{p.title}</div>
             </div>

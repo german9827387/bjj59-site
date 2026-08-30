@@ -99,7 +99,7 @@ export default function ForWhom() {
         {/* Header */}
         <div className="text-center mb-12">
           <Reveal>
-            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-4">
+            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-md px-4 py-1.5 mb-4">
               Для кого
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
@@ -120,7 +120,7 @@ export default function ForWhom() {
             <button
               key={tab.id}
               onClick={() => setActive(tab.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-200 ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-md font-medium text-sm transition-all duration-200 ${
                 active === tab.id
                   ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.35)]"
                   : "border border-white/10 text-gray-400 hover:border-blue-500/40 hover:text-blue-400 bg-white/[0.03]"

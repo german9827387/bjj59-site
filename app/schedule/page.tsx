@@ -140,7 +140,7 @@ export default async function SchedulePage() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-md px-4 py-2 mb-6">
             <CalendarDays className="w-4 h-4 text-blue-400" />
             <span className="text-blue-400 text-xs font-medium tracking-widest">
               GSacademy
@@ -160,23 +160,23 @@ export default async function SchedulePage() {
         {/* Legend */}
         <div className="flex flex-wrap gap-2 mb-10 justify-center items-center">
           <span className="text-gray-500 text-xs uppercase tracking-widest mr-1">Направление:</span>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold"
             style={{ border: "1px solid rgba(96,165,250,0.6)", background: "rgba(30,90,200,0.25)", color: "#bfdbfe" }}>
             <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "#60a5fa" }} />Джиу-джитсу
           </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold"
             style={{ border: "1px solid rgba(251,191,36,0.6)", background: "rgba(140,70,5,0.35)", color: "#fde68a" }}>
             <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "#fbbf24" }} />Бокс
           </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold"
             style={{ border: "1px solid rgba(192,132,252,0.6)", background: "rgba(100,30,150,0.30)", color: "#e9d5ff" }}>
             <span className="w-2 h-2 rounded-full shrink-0" style={{ background: "#c084fc" }} />ММА
           </div>
           <span className="mx-1 text-white/10">|</span>
           <span className="text-gray-500 text-xs uppercase tracking-widest mr-1">Формат:</span>
-          <span className="text-xs font-black px-2.5 py-1 rounded-full border border-white/50 bg-white/5 text-white">Gi</span>
-          <span className="text-xs font-black px-2.5 py-1 rounded-full border border-white/50 bg-white/5 text-white">No-Gi</span>
-          <span className="text-xs font-black px-2.5 py-1 rounded-full border border-white/50 bg-white/5 text-white">Kids</span>
+          <span className="text-xs font-black px-2.5 py-1 rounded-md border border-white/50 bg-white/5 text-white">Gi</span>
+          <span className="text-xs font-black px-2.5 py-1 rounded-md border border-white/50 bg-white/5 text-white">No-Gi</span>
+          <span className="text-xs font-black px-2.5 py-1 rounded-md border border-white/50 bg-white/5 text-white">Kids</span>
         </div>
 
         {/* Desktop grid */}
@@ -209,7 +209,7 @@ export default async function SchedulePage() {
                             <span className="font-bold text-[11px]">{cls.startTime}–{cls.endTime}</span>
                           </div>
                           {TYPE_BADGE[cls.type] && (
-                            <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full shrink-0 ${BADGE_CLS}`}>
+                            <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-md shrink-0 ${BADGE_CLS}`}>
                               {TYPE_BADGE[cls.type].label}
                             </span>
                           )}
@@ -260,7 +260,7 @@ export default async function SchedulePage() {
                             <span className="font-bold text-[11px]">{cls.startTime}–{cls.endTime}</span>
                           </div>
                           {TYPE_BADGE[cls.type] && (
-                            <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full shrink-0 ${BADGE_CLS}`}>
+                            <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-md shrink-0 ${BADGE_CLS}`}>
                               {TYPE_BADGE[cls.type].label}
                             </span>
                           )}
@@ -290,7 +290,7 @@ export default async function SchedulePage() {
             href={`https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Хочу записаться на тренировку, помогите выбрать время')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3.5 px-10 rounded-full text-base hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-blue-500/30"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3.5 px-10 rounded-md text-base hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-blue-500/30"
           >
             Записаться на тренировку
           </a>

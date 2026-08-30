@@ -71,7 +71,7 @@ export default function AdminDirections() {
               <div className="absolute bottom-2 left-3">
                 <span className="text-white font-black text-lg">{d.title}</span>
               </div>
-              <div className="absolute top-2 right-2 bg-black/60 rounded-full px-2 py-0.5 text-xs text-blue-300 font-bold">{d.short}</div>
+              <div className="absolute top-2 right-2 bg-black/60 rounded-md px-2 py-0.5 text-xs text-blue-300 font-bold">{d.short}</div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">

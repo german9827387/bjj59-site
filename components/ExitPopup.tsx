@@ -204,7 +204,7 @@ export default function ExitPopup() {
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className={`h-1 flex-1 rounded-full transition-all duration-300 ${i <= step ? "bg-blue-500" : "bg-white/10"}`}
+                className={`h-1 flex-1 rounded-md transition-all duration-300 ${i <= step ? "bg-blue-500" : "bg-white/10"}`}
               />
             ))}
           </div>
@@ -322,7 +322,7 @@ export default function ExitPopup() {
       <div className="fixed inset-0 z-[200] flex items-end">
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={hide} />
         <div className="relative w-full bg-[#0d1525] border-t border-blue-500/30 rounded-t-3xl p-6 pb-10 shadow-2xl z-10">
-          <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mb-5" />
+          <div className="w-10 h-1 rounded-md bg-white/20 mx-auto mb-5" />
           <button
             onClick={hide}
             className="absolute top-4 right-4 w-8 h-8 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center text-gray-500 hover:text-white transition-all"
@@ -341,7 +341,7 @@ export default function ExitPopup() {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={hide} />
       <div className="relative w-full max-w-md bg-[#0d1525] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
         <div className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-24 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-24 bg-blue-500/10 rounded-md blur-3xl pointer-events-none" />
         <div className="relative p-8">
           <button
             onClick={hide}

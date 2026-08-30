@@ -96,7 +96,7 @@ export default function DirectionPage({
             {/* Badge */}
             <div className="hero-fade inline-flex items-center gap-2 mb-6">
               <span
-                className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] border"
+                className="px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-[0.2em] border"
                 style={{ color: accent, borderColor: `${accent}50`, background: `${accent}12` }}
               >
                 {subtitle}
@@ -130,7 +130,7 @@ export default function DirectionPage({
             {/* CTA button */}
             <button
               onClick={() => setModalOpen(true)}
-              className="hero-fade inline-block font-black py-4 px-10 rounded-full text-base hover:opacity-90 transition-all hover:scale-[1.03] text-white shadow-lg"
+              className="hero-fade inline-block font-black py-4 px-10 rounded-md text-base hover:opacity-90 transition-all hover:scale-[1.03] text-white shadow-lg"
               style={{
                 background: `linear-gradient(135deg, ${accent}, ${accent}bb)`,
                 boxShadow: `0 8px 32px ${accent}40`,
@@ -188,7 +188,7 @@ export default function DirectionPage({
               >
                 {/* Top accent line on hover */}
                 <div
-                  className="absolute top-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"
+                  className="absolute top-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md"
                   style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
                 />
                 <div

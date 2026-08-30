@@ -42,7 +42,7 @@ export default function Pricing() {
         {/* Header */}
         <div className="text-center mb-16">
           <Reveal>
-            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-4">
+            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-md px-4 py-1.5 mb-4">
               Инвестиции в себя
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
@@ -77,7 +77,7 @@ export default function Pricing() {
               <div className="p-3 sm:p-6 flex flex-col flex-1">
                 {/* Badge */}
                 <span
-                  className={`self-start text-xs font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full mb-2 sm:mb-4 tracking-wider ${plan.highlight ? "bg-white/20 text-white" : "bg-blue-500/10 text-blue-400 border border-blue-500/20"}`}
+                  className={`self-start text-xs font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-md mb-2 sm:mb-4 tracking-wider ${plan.highlight ? "bg-white/20 text-white" : "bg-blue-500/10 text-blue-400 border border-blue-500/20"}`}
                 >
                   {plan.label}
                 </span>
@@ -140,7 +140,7 @@ export default function Pricing() {
                 Персональные тренировки — от {personalFrom} ₽ с человека за занятие
               </div>
             </div>
-            <span className="shrink-0 inline-flex items-center gap-2 text-blue-400 font-bold text-sm border border-blue-500/40 rounded-full px-5 py-2.5 group-hover:bg-blue-500/10 transition-colors">
+            <span className="shrink-0 inline-flex items-center gap-2 text-blue-400 font-bold text-sm border border-blue-500/40 rounded-md px-5 py-2.5 group-hover:bg-blue-500/10 transition-colors">
               Подробнее
               <ArrowRight size={16} />
             </span>
