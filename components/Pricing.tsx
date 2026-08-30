@@ -4,12 +4,30 @@ import { Check, ArrowRight } from "lucide-react";
 import pricingJson from "@/data/pricing.json";
 import Reveal from "./Reveal";
 import LeadModal from "./LeadModal";
+import PersonalModal from "./PersonalModal";
 import { minPerPerson, formatPrice } from "@/lib/personal";
 
 const plans = pricingJson;
 const personalFrom = formatPrice(minPerPerson());
 
 export default function Pricing() {
+  const [personalOpen, setPersonalOpen] = useState(false);
+
+  /**
+   * «Подробнее» у персоналок ведёт на якорь `#personal`, а секция с этим
+   * якорем есть только на главной. Блок цен при этом выводится и на страницах
+   * направлений — там ссылка вела в пустоту, и клик не делал ничего.
+   *
+   * Решаем в момент клика, а не сборки: где секция есть — прокручиваем к ней,
+   * где нет — открываем окно. Одно правило, и оно не сломается, если секцию
+   * когда-нибудь добавят на страницы направлений.
+   */
+  const openPersonal = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (document.getElementById("personal")) return;
+    e.preventDefault();
+    setPersonalOpen(true);
+  };
+
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
@@ -111,6 +129,7 @@ export default function Pricing() {
         <Reveal delay={220}>
           <a
             href="#personal"
+            onClick={openPersonal}
             className="group mt-4 sm:mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-blue-500/25 bg-gradient-to-r from-blue-500/[0.08] to-cyan-500/[0.04] px-5 sm:px-7 py-5 hover:border-blue-400/50 transition-colors"
           >
             <div className="text-center sm:text-left">
@@ -130,6 +149,7 @@ export default function Pricing() {
       </div>
     </section>
     <LeadModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+    <PersonalModal isOpen={personalOpen} onClose={() => setPersonalOpen(false)} />
     </>
   );
 }
