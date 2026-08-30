@@ -109,7 +109,7 @@ export default function Hero() {
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" style={{ left: "10%" }} />
       <div className="absolute top-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent" style={{ left: "90%" }} />
 
-      <div className="relative z-10 flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-14 sm:pt-20 lg:pt-24 pb-28 sm:pb-0">
+      <div className="relative z-10 flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left pt-14 sm:pt-20 lg:pt-24 pb-28 sm:pb-0">
         {/* Знак вместо пилюли.
 
             Главный козырь — принадлежность к Alliance — раньше был длинной
@@ -120,7 +120,7 @@ export default function Hero() {
             одна, и админка не обрастает полями, которые надо держать
             согласованными. Не разобралась — показываем как было. */}
         {badgeParts ? (
-          <div className="hero-fade self-center inline-flex items-center gap-3 bg-cyan-500/10 border border-cyan-500/30 rounded-md p-1.5 pr-4 mb-5 sm:mb-8">
+          <div className="hero-fade self-center sm:self-start inline-flex items-center gap-3 bg-cyan-500/10 border border-cyan-500/30 rounded-md p-1.5 pr-4 mb-5 sm:mb-8">
             <span className="w-11 h-11 rounded-md bg-gradient-to-br from-blue-600 to-cyan-500 flex flex-col items-center justify-center shrink-0">
               <span className="text-white font-black text-[17px] leading-none">{badgeParts.count}</span>
               <span className="text-white/80 text-[6px] tracking-[0.12em] leading-none mt-0.5">ТИТУЛОВ</span>
@@ -131,7 +131,7 @@ export default function Hero() {
             </span>
           </div>
         ) : (
-          <div className="hero-fade self-center inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-md px-4 py-2 mb-8">
+          <div className="hero-fade self-center sm:self-start inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-md px-4 py-2 mb-8">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
             <span className="text-cyan-300 text-xs font-semibold uppercase tracking-widest">
               {hero.badge}
@@ -141,7 +141,7 @@ export default function Hero() {
 
         {/* Main heading */}
         <h1
-          className="hero-slide text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight mb-2 sm:mb-3"
+          className="hero-slide text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight mb-2 sm:mb-3 sm:max-w-[15ch]"
         >
           {hero.title1}
           <br />
@@ -161,7 +161,7 @@ export default function Hero() {
         {/* Подзаголовок — необязательный: если пуст, место занимает оферта */}
         {hero.subtitle && (
           <p
-            className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-5 leading-relaxed"
+            className="hero-fade text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto sm:mx-0 mb-5 leading-relaxed"
             style={{ animationDelay: "0.35s" }}
           >
             {hero.subtitle}
@@ -171,7 +171,7 @@ export default function Hero() {
         {/* Оферта: что человек получает, если придёт. Первый пункт — главный,
             поэтому он ярче остальных. */}
         <ul
-          className="hero-fade flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-center gap-x-6 gap-y-2 mb-5 sm:mb-9 w-fit sm:w-auto sm:max-w-4xl mx-auto"
+          className="hero-fade flex flex-col sm:flex-row flex-wrap items-start sm:items-center sm:justify-start gap-x-6 gap-y-2 mb-5 sm:mb-9 w-fit sm:w-auto sm:max-w-4xl mx-auto sm:mx-0"
           style={{ animationDelay: "0.35s" }}
         >
           {hero.offer.map((item, i) => (
@@ -190,9 +190,9 @@ export default function Hero() {
         </ul>
 
         {/* CTA Buttons */}
-        <div className="hero-fade order-2 sm:order-1 flex flex-col items-center gap-4" style={{ animationDelay: "0.5s" }}>
+        <div className="hero-fade order-2 sm:order-1 flex flex-col items-center sm:items-start gap-4" style={{ animationDelay: "0.5s" }}>
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start items-center">
           <button
             onClick={() => setModalOpen(true)}
             className="group relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-3 px-7 sm:py-4 sm:px-10 rounded-md text-base sm:text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-blue-500/30"
@@ -227,7 +227,7 @@ export default function Hero() {
           </div>
 
           {/* Social proof */}
-          <div className="flex flex-col items-center gap-1 mt-2">
+          <div className="flex flex-col items-center sm:items-start gap-1 mt-2">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-0.5">
                 {[1,2,3,4,5].map((s) => (
@@ -244,7 +244,7 @@ export default function Hero() {
         {/* На телефоне цифры встают перед кнопкой: на коротком экране они
             иначе оказывались за краем, и человек принимал решение, не увидев
             ни одного доказательства. На десктопе порядок прежний. */}
-        <div className={`hero-fade order-1 sm:order-2 grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2 sm:grid-cols-4"} gap-3 sm:gap-4 mb-5 sm:mb-0 mt-0 sm:mt-16 max-w-3xl mx-auto w-full`} style={{ animationDelay: "0.7s" }}>
+        <div className={`hero-fade order-1 sm:order-2 grid ${STAT_GRID[hero.stats.length] ?? "grid-cols-2 sm:grid-cols-4"} gap-3 sm:gap-4 mb-5 sm:mb-0 mt-0 sm:mt-16 max-w-3xl mx-auto sm:mx-0 w-full`} style={{ animationDelay: "0.7s" }}>
           {hero.stats.map((stat, i) => (
             <div
               key={stat.label}
