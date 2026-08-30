@@ -222,7 +222,7 @@ export default function Results() {
                       {/* Медаль-бейджик сверху */}
                       {medal && (
                         <div
-                          className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full text-[10px] font-bold text-white backdrop-blur-sm"
+                          className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md text-[10px] font-bold text-white backdrop-blur-sm"
                           style={{ background: `${medal.glow}33`, border: `1px solid ${medal.glow}60` }}
                         >
                           {medal.label}

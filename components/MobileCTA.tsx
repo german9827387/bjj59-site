@@ -58,11 +58,11 @@ export default function MobileCTA() {
               transitionDelay: open ? `${i * 60}ms` : "0ms",
             }}
           >
-            <span className="bg-[#111]/90 backdrop-blur text-white text-xs px-3 py-1.5 rounded-full border border-[#2a2a2a] whitespace-nowrap shadow flex items-center gap-2">
+            <span className="bg-[#111]/90 backdrop-blur text-white text-xs px-3 py-1.5 rounded-md border border-[#2a2a2a] whitespace-nowrap shadow flex items-center gap-2">
               {item.badge && (
                 <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-md bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-md h-2 w-2 bg-green-400" />
                 </span>
               )}
               {item.label}

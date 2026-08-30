@@ -188,7 +188,7 @@ export default function ChatWidget() {
                   <button
                     key={q}
                     onClick={() => send(q)}
-                    className="text-xs px-3 py-1.5 rounded-full border border-blue-500/40 text-blue-400 hover:bg-blue-500/10 transition-colors"
+                    className="text-xs px-3 py-1.5 rounded-md border border-blue-500/40 text-blue-400 hover:bg-blue-500/10 transition-colors"
                   >
                     {q}
                   </button>

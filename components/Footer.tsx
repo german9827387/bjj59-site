@@ -101,7 +101,7 @@ export default function Footer() {
             </ul>
             <button
               onClick={() => setModalOpen(true)}
-              className="mt-6 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-2.5 px-6 rounded-full text-sm hover:opacity-90 transition-opacity"
+              className="mt-6 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-2.5 px-6 rounded-md text-sm hover:opacity-90 transition-opacity"
             >
               Записаться
             </button>

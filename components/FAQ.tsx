@@ -64,7 +64,7 @@ export default function FAQ() {
         {/* Header */}
         <Reveal>
           <div className="text-center mb-14">
-            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-full px-4 py-1.5 mb-4">
+            <span className="inline-block text-[#3B82F6] text-xs font-semibold uppercase tracking-widest border border-blue-500/20 bg-blue-500/5 rounded-md px-4 py-1.5 mb-4">
               Отвечаем честно
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
@@ -95,7 +95,7 @@ export default function FAQ() {
                 >
                   <div className="p-5">
                     {/* Tag */}
-                    <span className={`inline-block text-[10px] font-bold uppercase tracking-widest border rounded-full px-2.5 py-0.5 mb-3 ${TAG_COLORS[faq.tag]}`}>
+                    <span className={`inline-block text-[10px] font-bold uppercase tracking-widest border rounded-md px-2.5 py-0.5 mb-3 ${TAG_COLORS[faq.tag]}`}>
                       {faq.tag}
                     </span>
 

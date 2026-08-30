@@ -92,7 +92,7 @@ export default function Navbar() {
               href="https://app.bjj59.ru"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 border border-blue-500/50 bg-blue-500/8 text-blue-300 hover:bg-blue-500/15 hover:border-blue-400 hover:text-white transition-all duration-200 text-sm font-semibold tracking-wide uppercase py-1.5 px-4 rounded-full"
+              className="flex items-center gap-1.5 border border-blue-500/50 bg-blue-500/8 text-blue-300 hover:bg-blue-500/15 hover:border-blue-400 hover:text-white transition-all duration-200 text-sm font-semibold tracking-wide uppercase py-1.5 px-4 rounded-md"
             >
               <User size={14} className="shrink-0" />
               Личный кабинет
@@ -110,7 +110,7 @@ export default function Navbar() {
             </a>
             <button
               onClick={() => setModalOpen(true)}
-              className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-2 px-5 rounded-full text-sm hover:opacity-90 transition-opacity"
+              className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-2 px-5 rounded-md text-sm hover:opacity-90 transition-opacity"
             >
               Записаться
             </button>
@@ -171,7 +171,7 @@ export default function Navbar() {
               </a>
               <button
                 onClick={() => { setModalOpen(true); setIsOpen(false); }}
-                className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 px-6 rounded-full text-center"
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3 px-6 rounded-md text-center"
               >
                 Записаться бесплатно
               </button>

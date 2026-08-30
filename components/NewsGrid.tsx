@@ -141,7 +141,7 @@ function OverlayCard({ post, featured = false, onClick }: { post: VkPost; featur
 
       {/* Photo count badge */}
       {hasMultiplePhotos && (
-        <div className="absolute top-3 right-3 flex items-center gap-1 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1 text-white/80 text-xs font-medium">
+        <div className="absolute top-3 right-3 flex items-center gap-1 bg-black/50 backdrop-blur-sm rounded-md px-2.5 py-1 text-white/80 text-xs font-medium">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="18" height="18" rx="2"/>
             <circle cx="8.5" cy="8.5" r="1.5"/>

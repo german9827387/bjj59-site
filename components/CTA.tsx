@@ -29,7 +29,7 @@ export default function CTA() {
         <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#3B82F6]/10 via-[#0d0d0d] to-[#0d0d0d] border border-[#3B82F6]/20 p-8 sm:p-12 lg:p-16 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-[#3B82F6]/10 rounded-full blur-3xl" />
           <Reveal className="relative z-10">
-            <div className="inline-flex items-center gap-2 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full px-4 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-md px-4 py-2 mb-6">
               <span className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse" />
               <span className="text-[#3B82F6] text-xs font-medium uppercase tracking-widest">Ещё сомневаетесь?</span>
             </div>
@@ -44,14 +44,14 @@ export default function CTA() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setModalOpen(true)}
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-full text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-[#3B82F6]/20"
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-black py-4 px-10 rounded-md text-lg hover:opacity-90 transition-all hover:scale-105 shadow-2xl shadow-[#3B82F6]/20"
               >
                 Записаться на бесплатное
               </button>
               <div ref={messengerRef} className="relative">
                 <button
                   onClick={() => setMessengerOpen((o) => !o)}
-                  className="flex items-center justify-center gap-2 border border-[#3B82F6]/40 text-[#3B82F6] font-bold py-4 px-10 rounded-full text-lg hover:bg-[#3B82F6]/10 transition-all"
+                  className="flex items-center justify-center gap-2 border border-[#3B82F6]/40 text-[#3B82F6] font-bold py-4 px-10 rounded-md text-lg hover:bg-[#3B82F6]/10 transition-all"
                 >
                   <MessageCircle size={18} />
                   Написать нам

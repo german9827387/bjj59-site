@@ -35,13 +35,13 @@ export default function WhyUs() {
       <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-[#0a0a0a] to-transparent pointer-events-none" />
 
       {/* Background glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[350px] bg-blue-600/8 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[350px] bg-blue-600/8 rounded-md blur-[130px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
           <Reveal>
-            <span className="inline-block text-cyan-400 text-xs font-semibold uppercase tracking-widest border border-cyan-500/25 bg-cyan-500/8 rounded-full px-4 py-1.5 mb-4">
+            <span className="inline-block text-cyan-400 text-xs font-semibold uppercase tracking-widest border border-cyan-500/25 bg-cyan-500/8 rounded-md px-4 py-1.5 mb-4">
               Почему выбирают нас
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-white mt-2">
@@ -80,7 +80,7 @@ export default function WhyUs() {
 
                   {/* Expanding bottom bar */}
                   <div
-                    className="mt-6 h-[2px] w-10 rounded-full transition-all duration-500 group-hover:w-24"
+                    className="mt-6 h-[2px] w-10 rounded-md transition-all duration-500 group-hover:w-24"
                     style={{ background: `linear-gradient(to right, ${r.color}, ${r.color}30)` }}
                   />
                 </div>
