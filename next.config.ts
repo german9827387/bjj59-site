@@ -16,11 +16,18 @@ const nextConfig: NextConfig = {
           "default-src 'self'",
           "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru",
           "style-src 'self' 'unsafe-inline'",
-          "img-src 'self' data: blob: https://**.userapi.com https://**.vk-cdn.net https://**.okcdn.ru https://avatars.mds.yandex.net https://mc.yandex.ru",
+          // Синтаксис хоста в CSP — не тот же, что в `remotePatterns` ниже:
+          // `**.userapi.com` браузер считает невалидным источником и молча
+          // выбрасывает всю запись. В CSP одна звёздочка и так закрывает
+          // любую глубину поддоменов.
+          "img-src 'self' data: blob: https://*.userapi.com https://*.vk-cdn.net https://*.okcdn.ru https://avatars.mds.yandex.net https://mc.yandex.ru",
           "media-src 'self' blob:",
           "font-src 'self'",
-          "connect-src 'self' https://api.vk.com https://mc.yandex.ru",
-          "frame-src https://yandex.ru",
+          // Метрика ходит на свой домен ещё и вебсокетом (`wss://mc.yandex.ru/solid.ws`)
+          // и подгружает синхронизирующий iframe с `mc.yandex.ru` — без этих двух
+          // источников браузер резал их на каждой странице.
+          "connect-src 'self' https://api.vk.com https://mc.yandex.ru wss://mc.yandex.ru",
+          "frame-src https://yandex.ru https://mc.yandex.ru",
           "frame-ancestors 'none'",
         ].join("; "),
       },
