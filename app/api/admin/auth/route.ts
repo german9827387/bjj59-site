@@ -2,30 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import crypto from "crypto";
 import { createSessionToken, verifySessionToken } from "@/lib/session";
+import { allow, clientIp } from "@/lib/rate-limit";
 
 const SESSION_COOKIE = "admin_session";
 const IS_PROD = process.env.NODE_ENV === "production";
 
-// Simple in-memory rate limiter for brute-force protection
-const loginAttempts = new Map<string, { count: number; resetAt: number }>();
-const MAX_ATTEMPTS = 10;
-const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
-
-function checkLoginRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const record = loginAttempts.get(ip);
-  if (!record || now > record.resetAt) {
-    loginAttempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
-    return true;
-  }
-  if (record.count >= MAX_ATTEMPTS) return false;
-  record.count++;
-  return true;
-}
-
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (!checkLoginRateLimit(ip)) {
+  // 10 попыток за 15 минут с адреса — на подбор пароля этого не хватит.
+  if (!allow(`login:${clientIp(req.headers)}`, 10, 15 * 60_000)) {
     return NextResponse.json({ error: "Слишком много попыток. Попробуйте позже." }, { status: 429 });
   }
 

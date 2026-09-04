@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { allow, clientIp, mark, recent } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -163,7 +164,34 @@ function trafficLines(utm: Record<string, string>): string[] {
   return lines;
 }
 
+/**
+ * Замок на форму.
+ *
+ * До этого `/api/lead` был единственным открытым API без ограничений:
+ * скрипт в цикле заваливал Telegram тысячей «заявок», настоящие тонули в
+ * мусоре, а бот рисковал получить flood-бан. Три сита:
+ *  - с одного адреса — не больше 5 заявок за 10 минут (семья, записывающая
+ *    троих детей, укладывается; скрипт — нет);
+ *  - на весь инстанс — не больше 40 за 10 минут, чтобы распределённая
+ *    атака не пробила лимит по адресам;
+ *  - один и тот же телефон — не чаще раза в 5 минут: повторный клик по
+ *    кнопке или ретрай клиента не рождает дубль в чате.
+ */
+const IP_LIMIT = 5;
+const GLOBAL_LIMIT = 40;
+const WINDOW_MS = 10 * 60_000;
+const PHONE_WINDOW_MS = 5 * 60_000;
+
 export async function POST(req: NextRequest) {
+  const ip = clientIp(req.headers);
+  if (!allow(`lead:ip:${ip}`, IP_LIMIT, WINDOW_MS) || !allow("lead:all", GLOBAL_LIMIT, WINDOW_MS)) {
+    console.warn("[lead] rate limit", ip);
+    return NextResponse.json(
+      { ok: false, error: "Слишком много заявок. Позвоните нам или напишите в Telegram." },
+      { status: 429 }
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();
@@ -188,6 +216,15 @@ export async function POST(req: NextRequest) {
   }
   const phone = prettyPhone(digits);
   const telLink = `+${digits}`;
+
+  // Дубль: тот же номер за последние минуты уже ушёл — отвечаем «принято»,
+  // чтобы человек не видел ошибку, но в чат второй раз не шлём. Отметка
+  // ставится только после успешной доставки (см. ниже), иначе ретрай
+  // после сбоя Telegram считался бы дублем.
+  if (recent(`lead:phone:${digits}`)) {
+    console.warn("[lead] duplicate phone within window", telLink);
+    return NextResponse.json({ ok: true, dedup: true });
+  }
 
   const now = new Intl.DateTimeFormat("ru-RU", {
     timeZone: "Asia/Yekaterinburg",
@@ -242,18 +279,31 @@ export async function POST(req: NextRequest) {
   if (!sent.ok) {
     // Последний рубеж: заявка обязана остаться в логах Vercel, даже если Telegram лежит
     console.error("[LEAD_LOST] Telegram недоступен:", sent.status, sent.error, JSON.stringify(leadRecord));
-    return NextResponse.json({ ok: false, error: "Ошибка отправки" }, { status: 502 });
   }
 
-  // Email-дубль через Resend (опционально). Не блокирует ответ и не влияет на успех заявки.
+  /*
+    Письмо — запасной канал, а не дубль для красоты.
+
+    Раньше оно уходило только ПОСЛЕ успешной отправки в Telegram — то есть
+    ровно в тот момент, когда Telegram лежал и письмо было нужнее всего,
+    его не было. Теперь письмо идёт всегда, а при сбое Telegram его тема
+    начинается с предупреждения, чтобы такое письмо нельзя было пропустить.
+    Ждём ответ Resend: на serverless функция может завершиться раньше
+    «висящего» fetch, и письмо просто не отправится.
+  */
   const resendKey = process.env.RESEND_API_KEY;
   const notifyEmail = process.env.NOTIFY_EMAIL;
+  let mailed = false;
   if (resendKey && notifyEmail) {
     const utmHtml = `<br><b>Источник трафика:</b><br>${utmLines
       .map((l) => esc(l))
       .join("<br>")}`;
+    const alert = sent.ok
+      ? ""
+      : `<p style="color:#b91c1c"><b>⚠️ Telegram недоступен — заявка пришла только этим письмом. Перезвоните.</b></p>`;
     const emailHtml = `
       <h2 style="color:#1d4ed8">🥋 Новая заявка — bjj59.ru</h2>
+      ${alert}
       <table style="font-size:15px;line-height:1.7">
         <tr><td><b>Имя:</b></td><td>${esc(name)}</td></tr>
         <tr><td><b>Телефон:</b></td><td><a href="tel:${esc(telLink)}">${esc(phone)}</a></td></tr>
@@ -265,20 +315,35 @@ export async function POST(req: NextRequest) {
       </table>
       ${utmHtml}
     `;
-    fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${resendKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "GSAcademy <leads@bjj59.ru>",
-        to: [notifyEmail],
-        subject: `Новая заявка: ${name} ${phone}`,
-        html: emailHtml,
-      }),
-    }).catch((e) => console.error("Resend error:", e));
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8000);
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "GSAcademy <leads@bjj59.ru>",
+          to: [notifyEmail],
+          subject: `${sent.ok ? "" : "⚠️ Telegram недоступен · "}Новая заявка: ${name} ${phone}`,
+          html: emailHtml,
+        }),
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      mailed = res.ok;
+      if (!res.ok) console.error("[lead] Resend error:", res.status, await res.text().catch(() => ""));
+    } catch (e) {
+      console.error("[lead] Resend error:", (e as Error).message);
+    }
   }
+
+  if (!sent.ok && !mailed) {
+    return NextResponse.json({ ok: false, error: "Ошибка отправки" }, { status: 502 });
+  }
+  mark(`lead:phone:${digits}`, PHONE_WINDOW_MS);
 
   return NextResponse.json({ ok: true });
 }

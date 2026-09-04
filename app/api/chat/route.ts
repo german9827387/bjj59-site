@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import settingsData from "@/data/settings.json";
 import pricingData from "@/data/pricing.json";
+import { yearsInPerm } from "@/lib/academy";
+import { allow, clientIp } from "@/lib/rate-limit";
 
 export const maxDuration = 55;
 
@@ -292,32 +294,16 @@ ${pricingText}
 Первое занятие БЕСПЛАТНО. Взять с собой: футболка + шорты (или рашгард), сланцы для душевой, вода 0.5–1 л. Экипировку на первый раз выдадим на месте — приходить можно прямо сейчас.
 
 == ПРО АКАДЕМИЮ ==
-GSAcademy, Пермь, 13 лет, 513+ учеников, 88+ отзывов 5★, награды Яндекс и 2ГИС (2024), часть Alliance — 16-кратные чемпионы мира (2026). Педагогическое образование у всех тренеров. Малышам 3–5 — игровая форма, никакого контакта. Взрослым 18–50+ — с нуля, без давления. Семейный абонемент: 5900₽ + 5000₽ за второго ребёнка.
+GSAcademy, Пермь, ${yearsInPerm()} лет, 513+ учеников, 88+ отзывов 5★, награды Яндекс и 2ГИС (2024), часть Alliance — 16-кратные чемпионы мира (2026). Педагогическое образование у всех тренеров. Малышам 3–5 — игровая форма, никакого контакта. Взрослым 18–50+ — с нуля, без давления. Семейный абонемент: 5900₽ + 5000₽ за второго ребёнка.
 
 == FAQ ==
 Опыт/физподготовка нужны? Нет. Не рано 3–5 лет? Нет. Травмы? Начинающим — только техника. Взрослому не поздно? 18–50+ лет — норма.`;
 
 
-// In-memory rate limiter: max 20 requests per IP per minute
-const chatRateLimit = new Map<string, { count: number; resetAt: number }>();
-const CHAT_MAX_RPM = 20;
-const CHAT_WINDOW_MS = 60 * 1000;
-
-function checkChatRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const rec = chatRateLimit.get(ip);
-  if (!rec || now > rec.resetAt) {
-    chatRateLimit.set(ip, { count: 1, resetAt: now + CHAT_WINDOW_MS });
-    return true;
-  }
-  if (rec.count >= CHAT_MAX_RPM) return false;
-  rec.count++;
-  return true;
-}
-
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (!checkChatRateLimit(ip)) {
+  // 20 сообщений в минуту с одного адреса — человек столько не напишет,
+  // а скрипт, жгущий токены Groq, упрётся сразу.
+  if (!allow(`chat:${clientIp(req.headers)}`, 20, 60_000)) {
     return NextResponse.json({ error: "Слишком много запросов. Подождите немного." }, { status: 429 });
   }
 
