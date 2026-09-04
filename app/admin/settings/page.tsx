@@ -2,15 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { Save, Plus, Trash2 } from "lucide-react";
+import { saveAdminData, saveLabel, type SaveState } from "@/lib/admin-client";
 
+/*
+  Поля здесь — ровно те, что читает сайт (см. data/settings.json и
+  components/Hero.tsx, Reviews.tsx, app/api/chat/route.ts).
+
+  Прежняя версия страницы была скопирована из другого проекта: правила
+  «WhatsApp URL», «VK URL», «titleLine1» — ключи, которых на сайте нет.
+  Человек менял их, видел галочку, а на сайте ничего не менялось, потому
+  что Hero читает `title1`, а футер — `vk`.
+*/
 type Stat = { target: number; suffix: string; label: string };
+
 type SiteSettings = {
   hero: {
     badge: string;
-    titleLine1: string;
-    titleLine2: string;
-    titleLine3: string;
+    title1: string;
+    title2: string;
+    title3: string;
     subtitle: string;
+    offer: string[];
     ctaPrimary: string;
     ctaSecondary: string;
     stats: Stat[];
@@ -18,17 +30,25 @@ type SiteSettings = {
   contacts: {
     address: string;
     phone: string;
-    whatsappUrl: string;
-    vkUrl: string;
-    yandexMapsUrl: string;
-    reviewsCount: number;
+    phoneLink: string;
+    telegram: string;
+    vk: string;
+    yandexMaps: string;
+    yandexReviews: string;
+    reviewsCount: string;
+    reviewLinks: Record<string, string>;
   };
 };
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+const REVIEW_PLATFORMS = ["Яндекс", "2ГИС", "Google", "ВКонтакте"];
+
+function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-gray-400 text-xs font-medium mb-1.5">{label}</label>
+      <label className="block text-gray-400 text-xs font-medium mb-1.5">
+        {label}
+        {hint && <span className="text-gray-600 font-normal"> — {hint}</span>}
+      </label>
       {children}
     </div>
   );
@@ -43,74 +63,95 @@ function SectionCard({ title, children }: { title: string; children: React.React
   );
 }
 
-const DEFAULT_SETTINGS: SiteSettings = {
-  hero: {
-    badge: "🥋 Боевые искусства",
-    titleLine1: "Стань",
-    titleLine2: "сильнее",
-    titleLine3: "в клубе",
-    subtitle: "Профессиональные тренировки по BJJ, грэпплингу, MMA и боксу в Оренбурге",
-    ctaPrimary: "Записаться на занятие",
-    ctaSecondary: "Узнать расписание",
-    stats: [
-      { target: 8, suffix: "", label: "Тренеров" },
-      { target: 5, suffix: "", label: "Направлений" },
-      { target: 200, suffix: "+", label: "Учеников" },
-      { target: 10, suffix: "", label: "Лет опыта" },
-    ],
-  },
-  contacts: {
-    address: "ул. Примерная, 1",
-    phone: "+7 (999) 000-00-00",
-    whatsappUrl: "https://wa.me/79990000000",
-    vkUrl: "https://vk.com/bjj59",
-    yandexMapsUrl: "",
-    reviewsCount: 128,
-  },
-};
+/** `tel:` из того, что человек набрал в поле телефона: 8 (995) … → tel:+7995… */
+function toPhoneLink(pretty: string): string {
+  let digits = pretty.replace(/\D/g, "");
+  if (digits.startsWith("8")) digits = "7" + digits.slice(1);
+  return digits ? `tel:+${digits}` : "";
+}
 
 export default function AdminSettings() {
-  const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const [loadError, setLoadError] = useState("");
+  const [save, setSave] = useState<SaveState>("idle");
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     fetch("/api/admin/settings")
-      .then((r) => r.json())
-      .then((d) => { setSettings(d); setLoading(false); })
-      .catch(() => setLoading(false));
+      .then(async (r) => {
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error ?? `Ошибка ${r.status}`);
+        return d as SiteSettings;
+      })
+      .then((d) => {
+        // Старые ключи (`titleLine1` и подобные) из прошлой версии админки
+        // сайт не читает — при следующем сохранении они исчезнут.
+        setSettings({
+          hero: {
+            badge: d.hero?.badge ?? "",
+            title1: d.hero?.title1 ?? "",
+            title2: d.hero?.title2 ?? "",
+            title3: d.hero?.title3 ?? "",
+            subtitle: d.hero?.subtitle ?? "",
+            offer: d.hero?.offer ?? [],
+            ctaPrimary: d.hero?.ctaPrimary ?? "",
+            ctaSecondary: d.hero?.ctaSecondary ?? "",
+            stats: (d.hero?.stats ?? []).map((s) => ({ target: s.target, suffix: s.suffix ?? "", label: s.label })),
+          },
+          contacts: {
+            address: d.contacts?.address ?? "",
+            phone: d.contacts?.phone ?? "",
+            phoneLink: d.contacts?.phoneLink ?? "",
+            telegram: d.contacts?.telegram ?? "",
+            vk: d.contacts?.vk ?? "",
+            yandexMaps: d.contacts?.yandexMaps ?? "",
+            yandexReviews: d.contacts?.yandexReviews ?? "",
+            reviewsCount: String(d.contacts?.reviewsCount ?? ""),
+            reviewLinks: d.contacts?.reviewLinks ?? {},
+          },
+        });
+      })
+      .catch((e) => setLoadError((e as Error).message));
   }, []);
 
-  async function save() {
-    setSaving(true);
-    await fetch("/api/admin/settings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(settings) });
-    setSaving(false); setSaved(true); setTimeout(() => setSaved(false), 2500);
+  async function handleSave() {
+    if (!settings) return;
+    setSave("saving");
+    setSaveError("");
+    const r = await saveAdminData("/api/admin/settings", settings);
+    if (r.ok) {
+      setSave("saved");
+      setTimeout(() => setSave("idle"), 6000);
+    } else {
+      setSave("error");
+      setSaveError(r.error);
+    }
   }
 
   function patchHero(patch: Partial<SiteSettings["hero"]>) {
-    setSettings((s) => ({ ...s, hero: { ...s.hero, ...patch } }));
+    setSettings((s) => s && { ...s, hero: { ...s.hero, ...patch } });
   }
 
   function patchContacts(patch: Partial<SiteSettings["contacts"]>) {
-    setSettings((s) => ({ ...s, contacts: { ...s.contacts, ...patch } }));
+    setSettings((s) => s && { ...s, contacts: { ...s.contacts, ...patch } });
   }
 
   function updateStat(idx: number, patch: Partial<Stat>) {
+    if (!settings) return;
     const stats = [...settings.hero.stats];
     stats[idx] = { ...stats[idx], ...patch };
     patchHero({ stats });
   }
 
-  function addStat() {
-    patchHero({ stats: [...settings.hero.stats, { target: 0, suffix: "", label: "Новое" }] });
+  function updateOffer(idx: number, value: string) {
+    if (!settings) return;
+    const offer = [...settings.hero.offer];
+    offer[idx] = value;
+    patchHero({ offer });
   }
 
-  function removeStat(idx: number) {
-    patchHero({ stats: settings.hero.stats.filter((_, i) => i !== idx) });
-  }
-
-  if (loading) return <div className="text-gray-500 text-sm">Загрузка...</div>;
+  if (loadError) return <div className="text-red-400 text-sm">Не удалось загрузить настройки: {loadError}</div>;
+  if (!settings) return <div className="text-gray-500 text-sm">Загрузка...</div>;
 
   const { hero, contacts } = settings;
 
@@ -119,48 +160,73 @@ export default function AdminSettings() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-white text-2xl font-black">Настройки сайта</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Hero секция и контакты</p>
+          <p className="text-gray-500 text-sm mt-0.5">Первый экран и контакты</p>
         </div>
-        <button onClick={save} disabled={saving} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-sm px-5 py-2 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60">
+        <button onClick={handleSave} disabled={save === "saving"} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-sm px-5 py-2 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60">
           <Save size={16} />
-          {saving ? "Сохранение..." : saved ? "Сохранено ✓" : "Сохранить"}
+          {saveLabel(save)}
         </button>
       </div>
 
+      {saveError && (
+        <p className="mb-4 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">Не сохранилось: {saveError}</p>
+      )}
+
       <div className="space-y-4">
-        {/* Hero */}
-        <SectionCard title="Hero — Главный экран">
-          <Field label="Значок (badge)">
+        <SectionCard title="Первый экран">
+          <Field label="Плашка над заголовком" hint="«Команда · N-кратные чемпионы» — число берётся из текста">
             <input value={hero.badge} onChange={(e) => patchHero({ badge: e.target.value })} className="admin-input" />
           </Field>
           <div className="grid grid-cols-3 gap-3">
-            <Field label="Заголовок строка 1">
-              <input value={hero.titleLine1} onChange={(e) => patchHero({ titleLine1: e.target.value })} className="admin-input" />
+            <Field label="Заголовок, строка 1">
+              <input value={hero.title1} onChange={(e) => patchHero({ title1: e.target.value })} className="admin-input" />
             </Field>
-            <Field label="Заголовок строка 2 (градиент)">
-              <input value={hero.titleLine2} onChange={(e) => patchHero({ titleLine2: e.target.value })} className="admin-input" />
+            <Field label="Строка 2" hint="серым">
+              <input value={hero.title2} onChange={(e) => patchHero({ title2: e.target.value })} className="admin-input" />
             </Field>
-            <Field label="Заголовок строка 3">
-              <input value={hero.titleLine3} onChange={(e) => patchHero({ titleLine3: e.target.value })} className="admin-input" />
+            <Field label="Строка под заголовком">
+              <input value={hero.title3} onChange={(e) => patchHero({ title3: e.target.value })} className="admin-input" />
             </Field>
           </div>
-          <Field label="Подзаголовок">
+          <Field label="Подзаголовок" hint="можно оставить пустым">
             <textarea value={hero.subtitle} onChange={(e) => patchHero({ subtitle: e.target.value })} className="admin-input resize-none" rows={2} />
           </Field>
+
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-gray-400 text-xs font-medium">Что обещаем</label>
+              <button onClick={() => patchHero({ offer: [...hero.offer, ""] })} className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                <Plus size={12} /> Добавить
+              </button>
+            </div>
+            <div className="space-y-2">
+              {hero.offer.map((line, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <input value={line} onChange={(e) => updateOffer(idx, e.target.value)} className="admin-input flex-1" />
+                  <button onClick={() => patchHero({ offer: hero.offer.filter((_, i) => i !== idx) })} className="text-red-500/50 hover:text-red-400 shrink-0">
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Кнопка 1 (главная)">
+            <Field label="Главная кнопка">
               <input value={hero.ctaPrimary} onChange={(e) => patchHero({ ctaPrimary: e.target.value })} className="admin-input" />
             </Field>
-            <Field label="Кнопка 2 (вторичная)">
+            <Field label="Вторая кнопка">
               <input value={hero.ctaSecondary} onChange={(e) => patchHero({ ctaSecondary: e.target.value })} className="admin-input" />
             </Field>
           </div>
 
-          {/* Stats */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-gray-400 text-xs font-medium">Счётчики статистики</label>
-              <button onClick={addStat} className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1">
+              <label className="text-gray-400 text-xs font-medium">
+                Счётчики
+                <span className="text-gray-600 font-normal"> — «лет» считается от года открытия само, число здесь не используется</span>
+              </label>
+              <button onClick={() => patchHero({ stats: [...hero.stats, { target: 0, suffix: "", label: "Новое" }] })} className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1">
                 <Plus size={12} /> Добавить
               </button>
             </div>
@@ -187,7 +253,7 @@ export default function AdminSettings() {
                     className="flex-1 bg-transparent text-gray-300 text-xs border-0 outline-none"
                     placeholder="Подпись..."
                   />
-                  <button onClick={() => removeStat(idx)} className="text-red-500/50 hover:text-red-400 flex-shrink-0">
+                  <button onClick={() => patchHero({ stats: hero.stats.filter((_, i) => i !== idx) })} className="text-red-500/50 hover:text-red-400 flex-shrink-0">
                     <Trash2 size={13} />
                   </button>
                 </div>
@@ -196,32 +262,53 @@ export default function AdminSettings() {
           </div>
         </SectionCard>
 
-        {/* Contacts */}
         <SectionCard title="Контакты">
           <div className="grid grid-cols-2 gap-3">
             <Field label="Адрес">
               <input value={contacts.address} onChange={(e) => patchContacts({ address: e.target.value })} className="admin-input" />
             </Field>
-            <Field label="Телефон">
-              <input value={contacts.phone} onChange={(e) => patchContacts({ phone: e.target.value })} className="admin-input" placeholder="+7 (999) 000-00-00" />
-            </Field>
-            <Field label="WhatsApp URL">
-              <input value={contacts.whatsappUrl} onChange={(e) => patchContacts({ whatsappUrl: e.target.value })} className="admin-input" placeholder="https://wa.me/7..." />
-            </Field>
-            <Field label="VK URL">
-              <input value={contacts.vkUrl} onChange={(e) => patchContacts({ vkUrl: e.target.value })} className="admin-input" placeholder="https://vk.com/..." />
-            </Field>
-            <Field label="Яндекс.Карты URL">
-              <input value={contacts.yandexMapsUrl} onChange={(e) => patchContacts({ yandexMapsUrl: e.target.value })} className="admin-input" placeholder="https://yandex.ru/maps/..." />
-            </Field>
-            <Field label="Кол-во отзывов (для Яндекс.Карт)">
+            <Field label="Телефон" hint="как показывать на сайте">
               <input
-                type="number"
-                value={contacts.reviewsCount}
-                onChange={(e) => patchContacts({ reviewsCount: Number(e.target.value) })}
+                value={contacts.phone}
+                onChange={(e) => patchContacts({ phone: e.target.value, phoneLink: toPhoneLink(e.target.value) })}
                 className="admin-input"
+                placeholder="8 (995) 865-42-44"
               />
             </Field>
+            <Field label="Telegram" hint="один на весь сайт">
+              <input value={contacts.telegram} onChange={(e) => patchContacts({ telegram: e.target.value })} className="admin-input" placeholder="https://t.me/..." />
+            </Field>
+            <Field label="ВКонтакте">
+              <input value={contacts.vk} onChange={(e) => patchContacts({ vk: e.target.value })} className="admin-input" placeholder="https://vk.com/..." />
+            </Field>
+            <Field label="Карточка на Яндекс Картах">
+              <input value={contacts.yandexMaps} onChange={(e) => patchContacts({ yandexMaps: e.target.value })} className="admin-input" placeholder="https://yandex.ru/maps/org/..." />
+            </Field>
+            <Field label="Отзывы на Яндекс Картах">
+              <input value={contacts.yandexReviews} onChange={(e) => patchContacts({ yandexReviews: e.target.value })} className="admin-input" placeholder="https://yandex.ru/maps/org/.../reviews/" />
+            </Field>
+            <Field label="Сколько отзывов" hint="показывается в блоке отзывов">
+              <input value={contacts.reviewsCount} onChange={(e) => patchContacts({ reviewsCount: e.target.value })} className="admin-input" placeholder="88" />
+            </Field>
+          </div>
+
+          <div>
+            <label className="block text-gray-400 text-xs font-medium mb-2">
+              Ссылки «оставить отзыв»
+              <span className="text-gray-600 font-normal"> — пустую площадку сайт не показывает</span>
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {REVIEW_PLATFORMS.map((platform) => (
+                <Field key={platform} label={platform}>
+                  <input
+                    value={contacts.reviewLinks[platform] ?? ""}
+                    onChange={(e) => patchContacts({ reviewLinks: { ...contacts.reviewLinks, [platform]: e.target.value } })}
+                    className="admin-input"
+                    placeholder="https://..."
+                  />
+                </Field>
+              ))}
+            </div>
           </div>
         </SectionCard>
       </div>

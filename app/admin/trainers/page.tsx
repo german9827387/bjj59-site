@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { saveAdminData, saveLabel, type SaveState } from "@/lib/admin-client";
 import { Plus, Trash2, Save, ChevronDown, ChevronUp, GripVertical, Image as ImageIcon } from "lucide-react";
 
 type Trainer = {
@@ -31,8 +32,8 @@ function slugify(name: string) {
 export default function AdminTrainers() {
   const [trainers, setTrainers] = useState<Trainer[]>([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [save, setSave] = useState<SaveState>("idle");
+  const [saveError, setSaveError] = useState("");
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
@@ -42,16 +43,17 @@ export default function AdminTrainers() {
       .catch(() => setLoading(false));
   }, []);
 
-  async function save() {
-    setSaving(true);
-    await fetch("/api/admin/trainers", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(trainers),
-    });
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+  async function handleSave() {
+    setSave("saving");
+    setSaveError("");
+    const r = await saveAdminData("/api/admin/trainers", trainers);
+    if (r.ok) {
+      setSave("saved");
+      setTimeout(() => setSave("idle"), 6000);
+    } else {
+      setSave("error");
+      setSaveError(r.error);
+    }
   }
 
   function addTrainer() {
@@ -120,12 +122,16 @@ export default function AdminTrainers() {
             <Plus size={16} />
             Добавить
           </button>
-          <button onClick={save} disabled={saving} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-sm px-5 py-2 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60">
+          <button onClick={handleSave} disabled={save === "saving"} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-sm px-5 py-2 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60">
             <Save size={16} />
-            {saving ? "Сохранение..." : saved ? "Сохранено ✓" : "Сохранить"}
+            {saveLabel(save)}
           </button>
         </div>
       </div>
+      {saveError && (
+        <p className="mb-4 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">Не сохранилось: {saveError}</p>
+      )}
+
 
       <div className="space-y-3">
         {trainers.map((trainer) => (

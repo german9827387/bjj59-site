@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { saveAdminData, saveLabel, type SaveState } from "@/lib/admin-client";
 import { Save, Plus, Trash2, Star } from "lucide-react";
 
 type PricingPlan = {
@@ -17,17 +18,24 @@ type PricingPlan = {
 export default function AdminPricing() {
   const [plans, setPlans] = useState<PricingPlan[]>([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [save, setSave] = useState<SaveState>("idle");
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     fetch("/api/admin/pricing").then((r) => r.json()).then((d) => { setPlans(d); setLoading(false); });
   }, []);
 
-  async function save() {
-    setSaving(true);
-    await fetch("/api/admin/pricing", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(plans) });
-    setSaving(false); setSaved(true); setTimeout(() => setSaved(false), 2500);
+  async function handleSave() {
+    setSave("saving");
+    setSaveError("");
+    const r = await saveAdminData("/api/admin/pricing", plans);
+    if (r.ok) {
+      setSave("saved");
+      setTimeout(() => setSave("idle"), 6000);
+    } else {
+      setSave("error");
+      setSaveError(r.error);
+    }
   }
 
   function update(id: string, patch: Partial<PricingPlan>) {
@@ -82,12 +90,16 @@ export default function AdminPricing() {
           <button onClick={add} className="flex items-center gap-2 border border-[#2a2a2a] text-gray-300 font-semibold text-sm px-4 py-2 rounded-xl hover:bg-[#1a1a1a] transition-colors">
             <Plus size={16} /> Добавить
           </button>
-          <button onClick={save} disabled={saving} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-sm px-5 py-2 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60">
+          <button onClick={handleSave} disabled={save === "saving"} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-sm px-5 py-2 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-60">
             <Save size={16} />
-            {saving ? "Сохранение..." : saved ? "Сохранено ✓" : "Сохранить"}
+            {saveLabel(save)}
           </button>
         </div>
       </div>
+      {saveError && (
+        <p className="mb-4 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">Не сохранилось: {saveError}</p>
+      )}
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {plans.map((p) => (
