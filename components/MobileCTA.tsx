@@ -3,10 +3,8 @@
 import { MessageCircle, X, Send, Phone } from "lucide-react";
 import { useState } from "react";
 import { reachGoal } from "@/lib/lead-utils";
+import { TG_URL, MAX_URL, PHONE_URL } from "@/lib/contacts";
 
-const TG_URL = "https://t.me/+79958636285";
-const MAX_URL = "https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY";
-const PHONE_URL = "tel:+79958654244";
 
 export default function MobileCTA() {
   const [open, setOpen] = useState(false);
@@ -27,7 +25,10 @@ export default function MobileCTA() {
       label: "Написать в Telegram",
       icon: <Send className="w-5 h-5 text-white" />,
       color: "bg-[#229ED9]",
-      onClick: () => { setOpen(false); reachGoal("tg_click"); window.open(TG_URL, "_blank"); },
+      // Ссылка, а не window.open: клик по `t.me/GSAcademy59` перехватывает
+      // TgLinkHandler — он же добавляет в сообщение источник и считает цель.
+      href: TG_URL,
+      onClick: () => setOpen(false),
     },
     {
       label: "Написать в MAX",
@@ -67,12 +68,26 @@ export default function MobileCTA() {
               )}
               {item.label}
             </span>
-            <button
-              onClick={item.onClick}
-              className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center shadow-lg active:scale-95 transition-transform`}
-            >
-              {item.icon}
-            </button>
+            {item.href ? (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={item.onClick}
+                aria-label={item.label}
+                className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center shadow-lg active:scale-95 transition-transform`}
+              >
+                {item.icon}
+              </a>
+            ) : (
+              <button
+                onClick={item.onClick}
+                aria-label={item.label}
+                className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center shadow-lg active:scale-95 transition-transform`}
+              >
+                {item.icon}
+              </button>
+            )}
           </div>
         ))}
 

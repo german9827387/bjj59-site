@@ -8,6 +8,7 @@ import TgLinkHandler from "@/components/TgLinkHandler";
 import { ClientShells } from "@/components/ClientShells";
 import ChatWidget from "@/components/ChatWidget";
 import HideOnAdmin from "@/components/HideOnAdmin";
+import { yearsInPerm } from "@/lib/academy";
 
 // ← Замени на свой ID счётчика Яндекс.Метрики
 const YM_ID = 44430424;
@@ -72,8 +73,7 @@ const inter = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.bjj59.ru"),
   title: "GSAcademy — Единоборства в Перми | BJJ, ММА, Бокс",
-  description:
-    "Академия единоборств в Перми. BJJ, ММА, бокс для детей с 3 лет и взрослых. 14 лет, 513 учеников. Первое занятие бесплатно.",
+  description: `Академия единоборств в Перми. BJJ, ММА, бокс для детей с 3 лет и взрослых. ${yearsInPerm()} лет, 513 учеников. Первое занятие бесплатно.`,
   keywords: ["академия единоборств Пермь", "BJJ Пермь", "ММА Пермь", "бокс Пермь", "грэпплинг Пермь", "GSAcademy", "джиу-джитсу Пермь"],
   alternates: {
     canonical: "https://www.bjj59.ru",

@@ -1,12 +1,11 @@
 "use client";
 
-import { Star, Check } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import settingsJson from "@/data/settings.json";
 import LeadModal from "./LeadModal";
+import { TG_URL, MAX_URL } from "@/lib/contacts";
+import { yearsInPerm } from "@/lib/academy";
 
-const TG_URL = `https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
-const MAX_URL = "https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY";
 
 const { hero } = settingsJson;
 
@@ -38,13 +37,15 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
   return <span ref={ref} suppressHydrationWarning>{display}{suffix}</span>;
 }
 
-// Классы перечислены явными строками: Tailwind вырезает те, что собраны
-// динамически, и сетка молча развалилась бы.
-const STAT_GRID: Record<number, string> = {
-  2: "grid-cols-2",
-  3: "grid-cols-2 sm:grid-cols-3",
-  4: "grid-cols-2 sm:grid-cols-4",
-};
+
+/**
+ * «Лет в Перми» не берём из настроек — считаем от года открытия, иначе
+ * цифру пришлось бы вспоминать и править каждый январь. Остальные счётчики
+ * остаются редактируемыми в админке.
+ */
+function statTarget(stat: { target: number; label: string }): number {
+  return /лет/i.test(stat.label) ? yearsInPerm() : stat.target;
+}
 
 export default function Hero() {
   /**
@@ -229,13 +230,13 @@ export default function Hero() {
             <span className="text-white text-[19px] sm:text-[22px] font-bold tracking-[-0.02em] leading-none">5.0</span>
             <span className="text-[#7E8CA0] sm:text-[#5D6B80] text-[10.5px] sm:text-[11.5px] leading-[1.35] text-left">оценка<span className="hidden sm:inline"><br />Google · Яндекс · 2ГИС</span></span>
           </div>
-          {hero.stats.map((stat, i) => (
+          {hero.stats.map((stat) => (
             <div
               key={stat.label}
               className="flex items-baseline gap-2 rounded-md bg-[rgba(9,13,22,0.68)] border border-[rgba(148,178,222,0.13)] px-[13px] py-[11px] sm:gap-2 sm:px-7 sm:py-0 sm:rounded-none sm:bg-transparent sm:border-0 sm:border-r sm:border-white/10 sm:last:border-r-0 sm:last:pr-0"
             >
               <div className="text-[19px] sm:text-[22px] font-bold text-white tracking-[-0.02em] leading-none">
-                <AnimatedCounter target={stat.target} suffix={stat.suffix} />
+                <AnimatedCounter target={statTarget(stat)} suffix={stat.suffix} />
               </div>
               <div className="text-[#7E8CA0] text-[10.5px] sm:text-[12px] normal-case tracking-normal lowercase">{stat.label}</div>
             </div>

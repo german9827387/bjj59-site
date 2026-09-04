@@ -4,9 +4,8 @@ import { MessageCircle, ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import Reveal from "./Reveal";
 import LeadModal from "./LeadModal";
+import { TG_URL, MAX_URL } from "@/lib/contacts";
 
-const TG_URL = `https://t.me/GSAcademy59?text=${encodeURIComponent('Здравствуйте! Пишу с сайта, хочу записаться на пробное занятие')}`;
-const MAX_URL = "https://max.ru/u/f9LHodD0cOLuAXIcg9-hGCKGfQUdnBrwUFaDAOL8u57Ecr8xdBN439inrnY";
 
 export default function CTA() {
   const [modalOpen, setModalOpen] = useState(false);

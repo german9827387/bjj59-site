@@ -6,6 +6,7 @@ import CTA from "./CTA";
 import Pricing from "./Pricing";
 import Link from "next/link";
 import Reveal from "./Reveal";
+import { yearsInPerm } from "@/lib/academy";
 import LeadModal from "./LeadModal";
 
 interface Reason {
@@ -34,7 +35,7 @@ const advantages = [
 ];
 
 const stats = [
-  { num: "14", label: "лет в Перми" },
+  { num: String(yearsInPerm()), label: "лет в Перми" },
   { num: "513+", label: "учеников" },
 ];
 
