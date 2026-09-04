@@ -15,8 +15,7 @@
       {
         "target": 513,
         "suffix": "+",
-        "label": "Учеников",
-        "value": 513
+        "label": "Учеников"
       },
       {
         "target": 88,
@@ -28,10 +27,7 @@
         "suffix": "",
         "label": "Лет в Перми"
       }
-    ],
-    "titleLine1": "",
-    "titleLine2": "",
-    "titleLine3": ""
+    ]
   },
   "contacts": {
     "address": "г. Пермь, ул. Аркадия Гайдара 8б",
