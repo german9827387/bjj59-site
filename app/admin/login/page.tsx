@@ -74,9 +74,6 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <p className="text-gray-700 text-xs text-center mt-6">
-          Пароль задаётся в <code className="text-gray-500">.env.local</code> → <code className="text-gray-500">ADMIN_PASSWORD</code>
-        </p>
       </div>
     </div>
   );
