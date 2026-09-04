@@ -43,6 +43,38 @@ function LazyFooterMap() {
 const ROUTE_URL =
   "https://yandex.ru/maps/50/perm/?mode=routes&rtext=~58.001796%2C56.29609&rtt=auto&z=16";
 
+/**
+ * Кнопка маршрута: на телефоне — в текущей вкладке, на десктопе — в новой.
+ *
+ * С `target="_blank"` на мобильном получалось так: браузер открывал пустую
+ * вкладку, ссылку на Яндекс Карты перехватывало приложение Карт, а ненужная
+ * вкладка тут же закрывалась — человека выбрасывало обратно на сайт, и
+ * кнопка выглядела сломанной. В текущей вкладке любой исход оставляет его
+ * у карты: приложение не перехватило — открылась веб-версия, перехватило —
+ * назад по кнопке «Назад» браузера.
+ *
+ * `pointer: coarse` — палец, а не мышь; проверяем после монтирования, потому
+ * что на сервере ширины экрана нет и разметка обязана совпасть с клиентской.
+ */
+function RouteButton() {
+  const [sameTab, setSameTab] = useState(false);
+  useEffect(() => {
+    setSameTab(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
+  return (
+    <a
+      href={ROUTE_URL}
+      target={sameTab ? undefined : "_blank"}
+      rel="noopener noreferrer"
+      className="mt-3 flex items-center justify-center gap-2 w-full rounded-xl border border-blue-500/30 bg-blue-500/[0.06] hover:bg-blue-500/[0.12] hover:border-blue-500/50 text-blue-400 hover:text-blue-300 text-sm font-semibold py-2.5 transition-all"
+    >
+      <Navigation size={15} className="shrink-0" />
+      Построить маршрут
+    </a>
+  );
+}
+
 const socials = [
   {
     label: "ВКонтакте",
@@ -159,15 +191,7 @@ export default function Footer() {
               ни одной кнопки для этого; цель `maps_click` теперь считает
               именно его — самый горячий сигнал перед приходом в зал.
             */}
-            <a
-              href={ROUTE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 flex items-center justify-center gap-2 w-full rounded-xl border border-blue-500/30 bg-blue-500/[0.06] hover:bg-blue-500/[0.12] hover:border-blue-500/50 text-blue-400 hover:text-blue-300 text-sm font-semibold py-2.5 transition-all"
-            >
-              <Navigation size={15} className="shrink-0" />
-              Построить маршрут
-            </a>
+            <RouteButton />
           </div>
         </div>
 
