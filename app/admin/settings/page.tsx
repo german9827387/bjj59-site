@@ -6,7 +6,7 @@ import { saveAdminData, saveLabel, type SaveState } from "@/lib/admin-client";
 
 /*
   Поля здесь — ровно те, что читает сайт (см. data/settings.json и
-  components/Hero.tsx, Reviews.tsx, app/api/chat/route.ts).
+  components/Hero.tsx, Reviews.tsx).
 
   Прежняя версия страницы была скопирована из другого проекта: правила
   «WhatsApp URL», «VK URL», «titleLine1» — ключи, которых на сайте нет.

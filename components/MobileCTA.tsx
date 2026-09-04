@@ -9,11 +9,6 @@ import { TG_URL, MAX_URL, PHONE_URL } from "@/lib/contacts";
 export default function MobileCTA() {
   const [open, setOpen] = useState(false);
 
-  function openChat() {
-    setOpen(false);
-    window.dispatchEvent(new Event("open-chat"));
-  }
-
   const items = [
     {
       label: "Позвонить нам",
@@ -36,13 +31,6 @@ export default function MobileCTA() {
       color: "bg-[#168ACD]",
       onClick: () => { setOpen(false); reachGoal("max_click"); window.open(MAX_URL, "_blank"); },
     },
-    {
-      label: "Алина онлайн",
-      icon: <MessageCircle className="w-5 h-5 text-white" />,
-      color: "bg-gradient-to-br from-blue-600 to-cyan-500",
-      onClick: () => { reachGoal("chat_open"); openChat(); },
-      badge: true,
-    },
   ];
 
   return (
@@ -60,12 +48,6 @@ export default function MobileCTA() {
             }}
           >
             <span className="bg-[#111]/90 backdrop-blur text-white text-xs px-3 py-1.5 rounded-md border border-[#2a2a2a] whitespace-nowrap shadow flex items-center gap-2">
-              {item.badge && (
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-md bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-md h-2 w-2 bg-green-400" />
-                </span>
-              )}
               {item.label}
             </span>
             {item.href ? (

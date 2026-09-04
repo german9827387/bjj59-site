@@ -6,7 +6,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TgLinkHandler from "@/components/TgLinkHandler";
 import { ClientShells } from "@/components/ClientShells";
-import ChatWidget from "@/components/ChatWidget";
 import HideOnAdmin from "@/components/HideOnAdmin";
 import { yearsInPerm } from "@/lib/academy";
 
@@ -159,7 +158,6 @@ export default function RootLayout({
           <HideOnAdmin>
             <Footer />
             <ClientShells />
-            <ChatWidget />
           </HideOnAdmin>
       </body>
     </html>
