@@ -134,24 +134,50 @@ function touchDate(at: number): string {
   }).format(new Date(at));
 }
 
+/** Одно и то же ли касание: те же метки и тот же источник перехода. */
+function sameTouch(a: Touch, b: Touch): boolean {
+  if (a.ref !== b.ref) return false;
+  const ka = Object.keys(a.params).sort();
+  const kb = Object.keys(b.params).sort();
+  return (
+    ka.length === kb.length && ka.every((k, i) => k === kb[i] && a.params[k] === b.params[k])
+  );
+}
+
 /**
  * Запомнить, с чего пришёл человек.
  *
  * Вызывается из общего [TgLinkHandler](../components/TgLinkHandler.tsx) на
- * каждой странице и из форм — вызов идемпотентен по смыслу: заход без меток
- * в адресе ничего не перезаписывает.
+ * каждой странице и из форм.
+ *
+ * Обновляем сохранённое касание, если в адресе есть метки ИЛИ человек пришёл
+ * с внешнего сайта. Раньше проверялись только метки — и переход из поиска
+ * Яндекса, с 2ГИС или из карт не перебивал старый источник: человек, впервые
+ * пришедший из ВК, ещё 90 дней приходил в заявках «из ВК», откуда бы ни
+ * заходил на самом деле.
+ *
+ * Заход без меток и без внешнего перехода — это либо прямой заход, либо
+ * переход внутри сайта. В обоих случаях сохранённый источник не трогаем:
+ * иначе клик по «Расписанию» превращал бы рекламный визит в прямой заход, а
+ * возврат по закладке стирал бы рекламу, которая этого человека привела.
  */
 export function persistUtm(): void {
   if (typeof window === "undefined") return;
 
   const params = currentParams();
+  const ref = externalReferrer();
   const stored = readStore();
 
-  // Внутренний переход не имеет права стереть источник: без этой строки
-  // клик по «Расписанию» превращал бы рекламный визит в прямой заход.
-  if (!Object.keys(params).length && stored) return;
+  if (!Object.keys(params).length && !ref && stored) return;
 
-  const touch: Touch = { params, ref: externalReferrer(), at: Date.now() };
+  const touch: Touch = { params, ref, at: Date.now() };
+
+  // Тот же источник, что и в прошлый раз, — оставляем как есть, чтобы в
+  // заявке осталась дата настоящего перехода, а не последнего клика по сайту.
+  // Внутри приложения `document.referrer` не меняется при переходах по
+  // ссылкам, и без этой проверки дата обновлялась бы на каждой странице.
+  if (stored && sameTouch(stored.last, touch)) return;
+
   writeStore({ first: stored?.first ?? touch, last: touch });
 }
 
@@ -174,6 +200,13 @@ export function getUtm(): Record<string, string> {
 
   const out: Record<string, string> = { ...store.last.params };
   if (store.last.ref) out.referrer = store.last.ref;
+
+  // Дата перехода — только если он был не сегодня. Человек мог прийти из ВК
+  // на прошлой неделе, а заявку оставить сегодня, зайдя напрямую: источник
+  // по-прежнему ВК (так считают все системы аналитики), но без даты строка
+  // «Источник: ВКонтакте» читается как «он только что пришёл из ВК».
+  const touchDay = touchDate(store.last.at);
+  if (touchDay !== touchDate(Date.now())) out.source_at = touchDay;
 
   const first = touchLabel(store.first);
   if (first && first !== touchLabel(store.last)) {

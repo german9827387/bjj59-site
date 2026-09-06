@@ -144,10 +144,17 @@ function trafficLines(utm: Record<string, string>): string[] {
 
   const ref = clean(utm.referrer, 100);
 
+  // Дата перехода приходит, только если он был не сегодня: значит, человек
+  // пришёл раньше, а заявку оставил в этот раз напрямую. Без этой подписи
+  // «Источник: ВКонтакте» выглядело как ошибка — заходили-то напрямую.
+  const at = clean(utm.source_at, 20);
+  const when = at ? ` · переход ${at}` : "";
+
   if (lines.length) {
-    if (ref) lines.push(`🔗 Переход с: ${ref}`);
+    if (ref) lines.push(`🔗 Переход с: ${ref}${when}`);
+    else if (at) lines.push(`🕓 Переход по метке: ${at}`);
   } else {
-    lines.push(`📍 Источник: ${ref ? referrerLabel(ref) : "прямой заход или закладка"}`);
+    lines.push(`📍 Источник: ${ref ? referrerLabel(ref) : "прямой заход или закладка"}${when}`);
   }
 
   const first = clean(utm.first_touch, 200);
