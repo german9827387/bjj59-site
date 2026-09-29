@@ -56,7 +56,7 @@ export default function OfferPage() {
         потребителей».
       </p>
 
-      <OperatorRequisites heading="6. Реквизиты Исполнителя" />
+      <OperatorRequisites heading="6. Реквизиты Исполнителя" withBank />
     </LegalPage>
   );
 }

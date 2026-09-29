@@ -27,7 +27,7 @@ export default function LegalPage({
 }
 
 /** Реквизиты — одинаковый блок в конце каждого документа. */
-export function OperatorRequisites({ heading }: { heading: string }) {
+export function OperatorRequisites({ heading, withBank = false }: { heading: string; withBank?: boolean }) {
   return (
     <>
       <h2>{heading}</h2>
@@ -49,6 +49,18 @@ export function OperatorRequisites({ heading }: { heading: string }) {
         Электронная почта: <a href={`mailto:${OPERATOR.email}`}>{OPERATOR.email}</a>
         <br />
         Сайт: https://www.{OPERATOR.site}
+        {withBank && (
+          <>
+            <br />
+            Расчётный счёт: {OPERATOR.bank.account}
+            <br />
+            Банк: {OPERATOR.bank.name}
+            <br />
+            БИК: {OPERATOR.bank.bik}
+            <br />
+            Корреспондентский счёт: {OPERATOR.bank.corrAccount}
+          </>
+        )}
       </p>
     </>
   );
