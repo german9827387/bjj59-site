@@ -58,7 +58,7 @@ export default function Pricing() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {plans.map((plan, i) => (
             <Reveal
               key={plan.title}
@@ -125,7 +125,7 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Мостик к персоналкам: не седьмой карточкой — она сломала бы ряд 3+3 */}
+        {/* Мостик к персоналкам: не лишней карточкой — она сломала бы сетку 4+4 */}
         <Reveal delay={220}>
           <a
             href="#personal"
