@@ -52,11 +52,6 @@ export const PROCESSORS = [
     crossBorder: true,
   },
   {
-    name: "Groq, Inc. (США)",
-    purpose: "работа онлайн-консультанта на сайте: обработка текста переписки в чате",
-    crossBorder: true,
-  },
-  {
     name: "Сервис электронной почты",
     purpose: "дублирование заявок на электронную почту академии",
     crossBorder: true,
